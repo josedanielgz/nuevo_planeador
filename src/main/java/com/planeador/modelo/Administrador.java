@@ -21,7 +21,7 @@ public class Administrador {
 	@Column
 	private String nombre;
 	
-	@Column
+	@Column(unique=true)
 	private String email;
 	
 	public Integer getId() {

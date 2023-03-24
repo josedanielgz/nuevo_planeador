@@ -44,6 +44,16 @@
 										<h1 class="h4 text-gray-900 mb-4">Inicio de Sesión -
 											Administrador</h1>
 									</div>
+
+									<div class="alert alert-danger alert-dismissible fade show"
+										role="alert" th:if="${loginError != null }">
+										<label th:text="${loginError}"></label>
+										<button type="button" class="close" data-dismiss="alert"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+
 									<form action="#" class="card-body cardbody-color p-lg-5"
 										th:action="@{/admin/login}" method="post">
 										<div class="form-group">
@@ -97,7 +107,7 @@
 
 	<!-- Bootstrap core JavaScript-->
 	<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-	<script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
 	<!-- Core plugin JavaScript-->
 	<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>

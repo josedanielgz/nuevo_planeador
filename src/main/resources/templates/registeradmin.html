@@ -47,23 +47,29 @@
 										<input type="text" class="form-control" name="nombre"
 											placeholder="Nombre" required="required">
 									</div>
-									<div class="col-sm-6">
+<!-- 									<div class="col-sm-6"> -->
+<!-- 										<input type="text" class="form-control" name="email" -->
+<!-- 											aria-describedby="emailHelp" placeholder="Correo" -->
+<!-- 											required="required"> -->
+<!-- 									</div> -->
+								</div>
+
+								<div class="form-group row">
+									<div class="col-sm-6 mb-3 mb-sm-0">
 										<input type="text" class="form-control" name="email"
 											aria-describedby="emailHelp" placeholder="Correo"
 											required="required">
 									</div>
-								</div>
-								<div class="form-group row">
 									<div class="col-sm-6 mb-3 mb-sm-0">
 										<input type="password" class="form-control" name="password"
 											placeholder="Contraseña" required="required">
 									</div>
-									<div class="col-sm-6">
-										<input type="password" class="form-control form-control-user"
-											id="exampleRepeatPassword" placeholder="Repeat Password">
-									</div>
+									<!-- 									<div class="col-sm-6"> -->
+									<!-- 										<input type="password" class="form-control form-control-user" -->
+									<!-- 											id="exampleRepeatPassword" placeholder="Repeat Password"> -->
+									<!-- 									</div> -->
 								</div>
-								<button type="submit" class="btn btn-color px-5 mb-5 w-100">Registrar</button>
+								<button type="submit" class="btn btn-info px-5 mb-5 w-100">Registrar</button>
 
 								<!-- 								<a href="login.html" class="btn btn-primary btn-user btn-block"> -->
 								<!-- 									Register Account </a> -->
@@ -76,14 +82,14 @@
 								<!-- 								</a> -->
 							</form>
 							<hr>
-<!-- 							<div class="text-center"> -->
-<!-- 								<a class="small" href="forgot-password.html">Forgot -->
-<!-- 									Password?</a> -->
-<!-- 							</div> -->
-								<div id="emailHelp" class="form-text text-center mb-5 text-dark">
-									¿Ya estás registrado? <a th:href="@{/adulamstore/login}"><br>Inicia
-										sesión</a>
-								</div>
+							<!-- 							<div class="text-center"> -->
+							<!-- 								<a class="small" href="forgot-password.html">Forgot -->
+							<!-- 									Password?</a> -->
+							<!-- 							</div> -->
+							<div id="emailHelp" class="form-text text-center mb-5 text-dark">
+								¿Ya estás registrado? <a th:href="@{/admin}"><br>Inicia
+									sesión</a>
+							</div>
 						</div>
 					</div>
 				</div>
