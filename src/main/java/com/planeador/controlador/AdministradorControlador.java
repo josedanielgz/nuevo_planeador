@@ -69,8 +69,11 @@ public class AdministradorControlador {
 //	del admin. y mostrarlos en el perfil
 	
 	@GetMapping("/profile")
-	public String perfilAdministrador() {
+	public String perfilAdministrador(HttpServletRequest request, Model model) {
 //		Nota, le cambié el nombre de tables a profile para probar
+		int admin_id = (int) request.getSession().getAttribute("admin_id");
+		Administrador adm = this.administradorService.get(admin_id);
+		model.addAttribute("admin", adm);
 		return "profile";
 	}
 	
