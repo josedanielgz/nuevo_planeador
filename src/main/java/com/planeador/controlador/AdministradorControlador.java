@@ -39,10 +39,10 @@ public class AdministradorControlador {
 
 		if (admin != null) {
 			request.getSession().setAttribute("admin_id", admin.getId());
-			return "redirect:/admin/index";
+			return "redirect:/admin/profile";
 		} else {
 			att.addFlashAttribute("loginError", "Usuario o contraseña incorrecta");
-			return "redirect:/admin/";
+			return "redirect:/admin";
 		}
 	}
 
@@ -58,9 +58,21 @@ public class AdministradorControlador {
 		att.addFlashAttribute("accion", "Administrador registrado con éxito!");
 		return "redirect:/admin/";
 	}
-
+	
 	@GetMapping("/new")
 	public String showForm(Model model) {
 		return "registeradmin";
 	}
+	
+//	Esto está basado en ProductoController.java del ejercicio de refencia, luego
+//	pensamos bien si moverlo a otro lado, básicamente para recuperar los datos
+//	del admin. y mostrarlos en el perfil
+	
+	@GetMapping("/profile")
+	public String perfilAdministrador() {
+//		Nota, le cambié el nombre de tables a profile para probar
+		return "profile";
+	}
+	
+
 }
