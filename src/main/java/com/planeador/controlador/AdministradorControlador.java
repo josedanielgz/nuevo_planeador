@@ -77,5 +77,15 @@ public class AdministradorControlador {
 		return "profile";
 	}
 	
+	@GetMapping("/perfil")
+	public String elPerfil(HttpServletRequest request, Model model) {
+		int admin_id = (int) request.getSession().getAttribute("admin_id");
+		Administrador adm = this.administradorService.get(admin_id);
+		// Se resolverá después
+//		Administrador adm = (Administrador) request.getSession().getAttribute("admin");
+		model.addAttribute("admin", adm);
+		return "perfil";
+	}
+	
 
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
 
@@ -326,7 +327,7 @@
 							<div
 								class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 								aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="#"> <i
+								<a class="dropdown-item" th:href="@{/admin/perfil}"> <i
 									class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Perfil
 								</a> <a class="dropdown-item" href="#"> <i
 									class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -391,7 +392,14 @@
 											<th>Salary</th>
 										</tr>
 									</tfoot>
-									<tbody>
+									<tbody th:each="adm: ${admin}">
+										<tr>
+										<td th:text="${adm.nombre}"></td>
+										<td th:text="${adm.nombre}"></td>
+										<td th:text="${adm.nombre}"></td>
+										<td th:text="${adm.nombre}"></td>
+										<td th:text="${adm.nombre}"></td>
+										</tr>
 										<tr>
 											<td>Tiger Nixon</td>
 											<td>System Architect</td>
@@ -894,7 +902,8 @@
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
-				<div class="modal-body">Confirme que desea salir de la aplicación.</div>
+				<div class="modal-body">Confirme que desea salir de la
+					aplicación.</div>
 				<div class="modal-footer">
 					<!-- 				Posiblemente borrar este botón en el futuro -->
 					<button class="btn btn-secondary" type="button"
