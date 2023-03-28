@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
-<head th:replace="fragments/header :: head(~{::title})">
-<title>Planeador Académico - Perfil de Administrador</title>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head(_)">
+<title></title>
 </head>
 <body id="page-top">
-
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 
@@ -863,38 +860,5 @@
 		<!-- End of Content Wrapper -->
 
 	</div>
-	<!-- End of Page Wrapper -->
-
-	<!-- Scroll to Top Button-->
-	<a class="scroll-to-top rounded" href="#page-top"> <i
-		class="fas fa-angle-up"></i>
-	</a>
-
-	<!-- Logout Modal-->
-	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Abandono de
-						Sesión</h5>
-					<button class="close" type="button" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">×</span>
-					</button>
-				</div>
-				<div class="modal-body">Confirme que desea salir de la
-					aplicación.</div>
-				<div class="modal-footer">
-					<!-- 				Posiblemente borrar este botón en el futuro -->
-					<button class="btn btn-secondary" type="button"
-						data-dismiss="modal">Cancelar</button>
-					<a class="btn btn-primary" th:href="@{/admin/logout}">Cerrar
-						Sesión.</a>
-				</div>
-			</div>
-		</div>
-	</div>
 </body>
-
 </html>

@@ -3,15 +3,10 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
+<head th:replace="fragments/header :: head(~{::title})">
+<title>Planeador Académico - Registro de Administrador</title>
+</head>
 
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
-
-<title>Registro de Administrador</title>
 
 <!-- Custom fonts for this template-->
 <link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
@@ -47,11 +42,11 @@
 										<input type="text" class="form-control" name="nombre"
 											placeholder="Nombre" required="required">
 									</div>
-<!-- 									<div class="col-sm-6"> -->
-<!-- 										<input type="text" class="form-control" name="email" -->
-<!-- 											aria-describedby="emailHelp" placeholder="Correo" -->
-<!-- 											required="required"> -->
-<!-- 									</div> -->
+									<!-- 									<div class="col-sm-6"> -->
+									<!-- 										<input type="text" class="form-control" name="email" -->
+									<!-- 											aria-describedby="emailHelp" placeholder="Correo" -->
+									<!-- 											required="required"> -->
+									<!-- 									</div> -->
 								</div>
 
 								<div class="form-group row">
@@ -97,17 +92,6 @@
 		</div>
 
 	</div>
-
-	<!-- Bootstrap core JavaScript-->
-	<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-	<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-
-	<!-- Core plugin JavaScript-->
-	<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
-
-	<!-- Custom scripts for all pages-->
-	<script th:src="@{/js/sb-admin-2.min.js}"></script>
-
 </body>
 
 </html>

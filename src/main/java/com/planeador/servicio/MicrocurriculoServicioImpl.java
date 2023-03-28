@@ -23,6 +23,7 @@ public class MicrocurriculoServicioImpl extends GenericServiceImp<Microcurriculo
 		return repositorioMicrocurriculo;
 	}
 
+//	https://stackoverflow.com/q/56499565
 	@Override
 	public List<Microcurriculo> listaDeMicrocurriculos() {
 		// TODO Auto-generated method stub
