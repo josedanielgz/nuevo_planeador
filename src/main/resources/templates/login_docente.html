@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="fragments/header :: head(~{::title})">
+<title>Planeador Académico - Inicio de Sesión</title>
+</head>
+
+<body class="bg-gradient-primary">
+
+	<div class="container">
+
+		<!-- Outer Row -->
+		<div class="row justify-content-center">
+
+			<div class="col-xl-10 col-lg-12 col-md-9">
+				<div class="card o-hidden border-0 shadow-lg my-5">
+				<div class="card-body p-0">
+					<!-- Nested Row within Card Body -->
+					<div class="row">
+						<div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+						<div class="col-lg-6">
+							<div class="p-5">
+								<div class="text-center">
+									<h1 class="h4 text-gray-900 mb-4">Inicio de Sesión -
+										Docente</h1>
+								</div>
+
+								<div class="alert alert-danger alert-dismissible fade show"
+									role="alert" th:if="${loginError != null }">
+									<label th:text="${loginError}"></label>
+									<button type="button" class="close" data-dismiss="alert"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+
+								<form action="#" class="card-body cardbody-color p-lg-5"
+									th:action="@{/docente/login}" method="post">
+									<div class="form-group">
+										<input type="text" class="form-control" name="email"
+											aria-describedby="emailHelp" placeholder="Correo"
+											required="required">
+									</div>
+									<div class="form-group">
+										<input type="password" class="form-control" name="password"
+											placeholder="Contraseña" required="required">
+									</div>
+									<button class="btn btn-primary btn-user btn-block"
+										type="submit">Iniciar Sesión</button>
+								</form>
+
+								<div class="text-center">
+									¿Es usted un usuario <span>Administrador</span>? inicie sesión <a
+										class="mark" th:href="@{/admin/}">aquí</a>
+								</div>
+
+								<hr>
+
+								<div class="text-center">
+									<a class="small" href="forgot-password.html">¿Olvidó su
+										contraseña?</a>
+								</div>
+								<div class="text-center">
+									<a class="small" th:href="@{/docente/new}">Crear una cuenta</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	</div>
+</body>
+
+</html>

@@ -26,9 +26,9 @@ public class DocenteControlador {
 	@GetMapping("")
 	public String login(HttpServletRequest request, HttpSession session, Model model) {
 		if (request.getSession().getAttribute("docente_id") != null) {
-			return "index";
+			return "profile";
 		} else
-			return "logindocente";
+			return "login_docente";
 	}
 
 	@PostMapping("/login")

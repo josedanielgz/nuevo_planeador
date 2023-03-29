@@ -26,19 +26,26 @@ public class AdministradorControlador {
 	@GetMapping("")
 	public String login(HttpServletRequest request, HttpSession session, Model model) {
 		if (request.getSession().getAttribute("admin_id") != null) {
-			return "index";
+			return "profile";
 		} else
-			return "loginadmin";
+			return "login_admin";
+	}
+	
+	@GetMapping("login")
+	public String loginPage(HttpServletRequest request, HttpSession session, Model model) {
+//		request.getSession().setAttribute("es_admin", true);
+		return "login_admin";
 	}
 
 	@PostMapping("/login")
 	public String validate(RedirectAttributes att, @RequestParam String email, @RequestParam String password,
 			HttpServletRequest request, HttpSession session, Model model) {
-		
+
 		Administrador admin = administradorService.select(email, password);
 
 		if (admin != null) {
-			request.getSession().setAttribute("admin_id", admin.getId());
+//			request.getSession().setAttribute("admin_id", admin.getId());
+			request.getSession().setAttribute("administrador", admin);
 			return "redirect:/admin/profile";
 		} else {
 			att.addFlashAttribute("loginError", "Usuario o contraseña incorrecta");
@@ -58,16 +65,16 @@ public class AdministradorControlador {
 		att.addFlashAttribute("accion", "Administrador registrado con éxito!");
 		return "redirect:/admin/";
 	}
-	
+
 	@GetMapping("/new")
 	public String showForm(Model model) {
 		return "registeradmin";
 	}
-	
+
 //	Esto está basado en ProductoController.java del ejercicio de refencia, luego
 //	pensamos bien si moverlo a otro lado, básicamente para recuperar los datos
 //	del admin. y mostrarlos en el perfil
-	
+
 	@GetMapping("/profile")
 	public String perfilAdministrador(HttpServletRequest request, Model model) {
 //		Nota, le cambié el nombre de tables a profile para probar
@@ -76,7 +83,7 @@ public class AdministradorControlador {
 		model.addAttribute("admin", adm);
 		return "profile";
 	}
-	
+
 	@GetMapping("/perfil")
 	public String elPerfil(HttpServletRequest request, Model model) {
 		int admin_id = (int) request.getSession().getAttribute("admin_id");
@@ -86,6 +93,5 @@ public class AdministradorControlador {
 		model.addAttribute("admin", adm);
 		return "perfil";
 	}
-	
 
 }

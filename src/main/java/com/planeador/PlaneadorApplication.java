@@ -25,15 +25,15 @@ public class PlaneadorApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		List<Microcurriculo> nuevosMicrocurriculos = new ArrayList<>();
-		nuevosMicrocurriculos.add(new Microcurriculo("ANALISIS DE ALGORITMOS","1151404",false,120,4));
-		nuevosMicrocurriculos.add(new Microcurriculo("ANALISIS DE DATOS CON PYTHON","1151817",false,100,8));
-		nuevosMicrocurriculos.add(new Microcurriculo("INFORMATICA EDUCATIVA","1151501",false,80,8));
-		for (Microcurriculo m : nuevosMicrocurriculos) {
-			this.microcurriculos.save(m);
-		}
-		
-		
+//		List<Microcurriculo> nuevosMicrocurriculos = new ArrayList<>();
+//		nuevosMicrocurriculos.add(new Microcurriculo("ANALISIS DE ALGORITMOS","1151404",false,120,4));
+//		nuevosMicrocurriculos.add(new Microcurriculo("ANALISIS DE DATOS CON PYTHON","1151817",false,100,8));
+//		nuevosMicrocurriculos.add(new Microcurriculo("INFORMATICA EDUCATIVA","1151501",false,80,8));
+//		for (Microcurriculo m : nuevosMicrocurriculos) {
+//			this.microcurriculos.save(m);
+//		}
+//		
+//		
 	}
 
 }

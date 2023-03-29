@@ -11,6 +11,6 @@ public class PruebaControlador {
 //	a "/"
 	@GetMapping("/")
 	public String probar() {
-		return "test_file";
+		return "redirect:/admin/logout";
 	}
 }
