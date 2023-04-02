@@ -8,11 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import lombok.Data;
-
 @Entity
 @Table (name="administrador", uniqueConstraints = {@UniqueConstraint(name = "unique_email", columnNames= {"email"})})
-@Data
 public class Administrador {
 	
 	@Id

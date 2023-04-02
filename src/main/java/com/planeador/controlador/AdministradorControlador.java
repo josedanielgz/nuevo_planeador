@@ -31,11 +31,12 @@ public class AdministradorControlador {
 			return "login_admin";
 	}
 	
-	@GetMapping("login")
-	public String loginPage(HttpServletRequest request, HttpSession session, Model model) {
-//		request.getSession().setAttribute("es_admin", true);
-		return "login_admin";
-	}
+//	@GetMapping("login")
+//	public String loginPage(HttpServletRequest request, HttpSession session, Model model) {
+////		request.getSession().setAttribute("es_admin", true);
+//		request.getSession().invalidate();
+//		return "login_admin";
+//	}
 
 	@PostMapping("/login")
 	public String validate(RedirectAttributes att, @RequestParam String email, @RequestParam String password,
@@ -44,8 +45,8 @@ public class AdministradorControlador {
 		Administrador admin = administradorService.select(email, password);
 
 		if (admin != null) {
-//			request.getSession().setAttribute("admin_id", admin.getId());
-			request.getSession().setAttribute("administrador", admin);
+			request.getSession().setAttribute("admin_id", admin.getId());
+//			request.getSession().setAttribute("administrador", admin);
 			return "redirect:/admin/profile";
 		} else {
 			att.addFlashAttribute("loginError", "Usuario o contraseña incorrecta");

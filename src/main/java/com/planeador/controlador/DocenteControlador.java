@@ -61,7 +61,7 @@ public class DocenteControlador {
 	
 	@GetMapping("/new")
 	public String showForm(Model model) {
-		return "registerdocente";
+		return "register_docente";
 	}
 	
 //	Esto está basado en ProductoController.java del ejercicio de refencia, luego
