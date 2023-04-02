@@ -26,16 +26,17 @@ public class AdministradorControlador {
 	@GetMapping("")
 	public String login(HttpServletRequest request, HttpSession session, Model model) {
 		if (request.getSession().getAttribute("admin_id") != null) {
-			return "profile";
+			return "main";
 		} else
 			return "login_admin";
 	}
 	
-	@GetMapping("login")
-	public String loginPage(HttpServletRequest request, HttpSession session, Model model) {
-//		request.getSession().setAttribute("es_admin", true);
-		return "login_admin";
-	}
+//	@GetMapping("login")
+//	public String loginPage(HttpServletRequest request, HttpSession session, Model model) {
+////		request.getSession().setAttribute("es_admin", true);
+//		request.getSession().invalidate();
+//		return "login_admin";
+//	}
 
 	@PostMapping("/login")
 	public String validate(RedirectAttributes att, @RequestParam String email, @RequestParam String password,
@@ -44,9 +45,9 @@ public class AdministradorControlador {
 		Administrador admin = administradorService.select(email, password);
 
 		if (admin != null) {
-//			request.getSession().setAttribute("admin_id", admin.getId());
-			request.getSession().setAttribute("administrador", admin);
-			return "redirect:/admin/profile";
+			request.getSession().setAttribute("admin_id", admin.getId());
+//			request.getSession().setAttribute("administrador", admin);
+			return "redirect:/admin/main";
 		} else {
 			att.addFlashAttribute("loginError", "Usuario o contraseña incorrecta");
 			return "redirect:/admin";
@@ -75,13 +76,13 @@ public class AdministradorControlador {
 //	pensamos bien si moverlo a otro lado, básicamente para recuperar los datos
 //	del admin. y mostrarlos en el perfil
 
-	@GetMapping("/profile")
+	@GetMapping("/main")
 	public String perfilAdministrador(HttpServletRequest request, Model model) {
-//		Nota, le cambié el nombre de tables a profile para probar
+//		Nota, le cambié el nombre de profile a main para probar
 		int admin_id = (int) request.getSession().getAttribute("admin_id");
 		Administrador adm = this.administradorService.get(admin_id);
 		model.addAttribute("admin", adm);
-		return "profile";
+		return "main";
 	}
 
 	@GetMapping("/perfil")

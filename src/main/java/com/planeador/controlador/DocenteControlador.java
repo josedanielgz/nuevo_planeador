@@ -26,7 +26,7 @@ public class DocenteControlador {
 	@GetMapping("")
 	public String login(HttpServletRequest request, HttpSession session, Model model) {
 		if (request.getSession().getAttribute("docente_id") != null) {
-			return "profile";
+			return "main";
 		} else
 			return "login_docente";
 	}
@@ -39,7 +39,7 @@ public class DocenteControlador {
 
 		if (docente != null) {
 			request.getSession().setAttribute("docente_id", docente.getId());
-			return "redirect:/docente/profile";
+			return "redirect:/docente/main";
 		} else {
 			att.addFlashAttribute("loginError", "Usuario o contraseña incorrecta");
 			return "redirect:/docente";
@@ -61,20 +61,20 @@ public class DocenteControlador {
 	
 	@GetMapping("/new")
 	public String showForm(Model model) {
-		return "registerdocente";
+		return "register_docente";
 	}
 	
 //	Esto está basado en ProductoController.java del ejercicio de refencia, luego
 //	pensamos bien si moverlo a otro lado, básicamente para recuperar los datos
 //	del docente. y mostrarlos en el perfil
 	
-	@GetMapping("/profile")
+	@GetMapping("/main")
 	public String perfilDocente(HttpServletRequest request, Model model) {
-//		Nota, le cambié el nombre de tables a profile para probar
+//		Nota, le cambié el nombre de profile a main para probar
 		int docente_id = (int) request.getSession().getAttribute("docente_id");
 		Docente doc = this.DocenteService.get(docente_id);
 		model.addAttribute("docente", doc);
-		return "profile";
+		return "main";
 	}
 	
 	@GetMapping("/perfil")
