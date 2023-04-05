@@ -8,9 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import lombok.Data;
+
 @Entity
-@Table (name="administrador", uniqueConstraints = {@UniqueConstraint(name = "unique_email", columnNames= {"email"})})
-public class Administrador {
+@Table (name="docente", uniqueConstraints = {@UniqueConstraint(name = "unique_email", columnNames= {"email"})})
+@Data
+public class Docente {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -58,9 +61,9 @@ public class Administrador {
 	private String password;
 	
 	
-	public Administrador(){};
+	public Docente(){};
 	
-	public Administrador(String email, String password) {
+	public Docente(String email, String password) {
 		this.email = email;
 		this.password = password;
 	}

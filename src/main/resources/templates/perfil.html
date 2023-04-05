@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="fragments/header :: head(~{::title})">
+<title>Planeador Académico - Perfil de Prueba</title>
+</head>
+
+<body id="page-top">
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+		<ul
+			th:replace="${session.admin_id != null} ? ~{fragments/sidebar :: administrador} : ~{fragments/sidebar :: docente}"></ul>
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+			<!-- Main Content -->
+			<div id="content">
+				<!-- Topbar -->
+				<nav th:replace="fragments/topbar :: top_bar"></nav>
+
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
+					<div class="card mb-4">
+						<div class="card-header">Perfil de Usuario</div>
+						<div class="card-body" th:each="adm: ${admin}">
+							<div class="row">
+								<div class="col-sm-3">
+									<p class="mb-0">Nombre</p>
+								</div>
+								<div class="col-sm-9">
+									<p class="text-muted mb-0" th:text="${adm.nombre}"></p>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-3">
+									<p class="mb-0">Correo electrónico</p>
+								</div>
+								<div class="col-sm-9">
+									<p class="text-muted mb-0" th:text="${adm.email}"></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End of Page Wrapper -->
+
+				<!-- Scroll to Top Button-->
+				<a class="scroll-to-top rounded" href="#page-top"> <i
+					class="fas fa-angle-up"></i>
+				</a>
+
+				<!-- Logout Modal-->
+				<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+					aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Abandono de
+									Sesión</h5>
+								<button class="close" type="button" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							<div class="modal-body">Confirme que desea salir de la
+								aplicación.</div>
+							<div class="modal-footer">
+								<!-- 				Posiblemente borrar este botón en el futuro -->
+								<button class="btn btn-secondary" type="button"
+									data-dismiss="modal">Cancelar</button>
+								<a class="btn btn-primary" th:href="@{/admin/logout}">Cerrar
+									Sesión.</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

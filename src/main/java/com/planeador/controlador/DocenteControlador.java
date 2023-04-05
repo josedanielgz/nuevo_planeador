@@ -12,87 +12,80 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.planeador.servicio.AdministradorServicio;
+import com.planeador.servicio.DocenteServicio;
 
-import com.planeador.modelo.Administrador;
+import com.planeador.modelo.Docente;
 
 @Controller
-@RequestMapping("/admin")
-public class AdministradorControlador {
+@RequestMapping("/docente")
+public class DocenteControlador {
 
 	@Autowired
-	private AdministradorServicio administradorService;
+	private DocenteServicio DocenteService;
 
 	@GetMapping("")
 	public String login(HttpServletRequest request, HttpSession session, Model model) {
-		if (request.getSession().getAttribute("admin_id") != null) {
+		if (request.getSession().getAttribute("docente_id") != null) {
 			return "main";
 		} else
-			return "login_admin";
+			return "login_docente";
 	}
-	
-//	@GetMapping("login")
-//	public String loginPage(HttpServletRequest request, HttpSession session, Model model) {
-////		request.getSession().setAttribute("es_admin", true);
-//		request.getSession().invalidate();
-//		return "login_admin";
-//	}
 
 	@PostMapping("/login")
 	public String validate(RedirectAttributes att, @RequestParam String email, @RequestParam String password,
 			HttpServletRequest request, HttpSession session, Model model) {
+		
+		Docente docente = DocenteService.select(email, password);
 
-		Administrador admin = administradorService.select(email, password);
-
-		if (admin != null) {
-			request.getSession().setAttribute("admin_id", admin.getId());
-//			request.getSession().setAttribute("administrador", admin);
-			return "redirect:/admin/main";
+		if (docente != null) {
+			request.getSession().setAttribute("docente_id", docente.getId());
+			return "redirect:/docente/main";
 		} else {
 			att.addFlashAttribute("loginError", "Usuario o contraseña incorrecta");
-			return "redirect:/admin";
+			return "redirect:/docente";
 		}
 	}
 
 	@GetMapping("/logout")
 	public String logout(HttpServletRequest request, HttpSession session, Model model) {
 		request.getSession().invalidate();
-		return "redirect:/admin/";
+		return "redirect:/docente/";
 	}
 
 	@PostMapping("/save")
-	public String insertAdmin(RedirectAttributes att, Administrador admin, Model model) {
-		administradorService.save(admin);
-		att.addFlashAttribute("accion", "Administrador registrado con éxito!");
-		return "redirect:/admin/";
+	public String insertdocente(RedirectAttributes att, Docente docente, Model model) {
+		DocenteService.save(docente);
+		att.addFlashAttribute("accion", "Docente registrado con éxito!");
+		return "redirect:/docente/";
 	}
-
+	
 	@GetMapping("/new")
 	public String showForm(Model model) {
-		return "registeradmin";
+		return "register_docente";
 	}
-
+	
 //	Esto está basado en ProductoController.java del ejercicio de refencia, luego
 //	pensamos bien si moverlo a otro lado, básicamente para recuperar los datos
-//	del admin. y mostrarlos en el perfil
-
+//	del docente. y mostrarlos en el perfil
+	
 	@GetMapping("/main")
-	public String perfilAdministrador(HttpServletRequest request, Model model) {
+	public String perfilDocente(HttpServletRequest request, Model model) {
 //		Nota, le cambié el nombre de profile a main para probar
-		int admin_id = (int) request.getSession().getAttribute("admin_id");
-		Administrador adm = this.administradorService.get(admin_id);
-		model.addAttribute("admin", adm);
+		int docente_id = (int) request.getSession().getAttribute("docente_id");
+		Docente doc = this.DocenteService.get(docente_id);
+		model.addAttribute("docente", doc);
 		return "main";
 	}
-
+	
 	@GetMapping("/perfil")
 	public String elPerfil(HttpServletRequest request, Model model) {
-		int admin_id = (int) request.getSession().getAttribute("admin_id");
-		Administrador adm = this.administradorService.get(admin_id);
+		int docente_id = (int) request.getSession().getAttribute("docente_id");
+		Docente doc = this.DocenteService.get(docente_id);
 		// Se resolverá después
-//		Administrador adm = (Administrador) request.getSession().getAttribute("admin");
-		model.addAttribute("admin", adm);
+//		Docente doc = (Docente) request.getSession().getAttribute("docente");
+		model.addAttribute("docente", doc);
 		return "perfil";
 	}
+	
 
 }
