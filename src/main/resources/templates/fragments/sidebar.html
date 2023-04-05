@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<!-- https://studygyaan.com/spring-boot/fragments-in-thymeleaf -->
-<!-- 	https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#flexible-layouts-beyond-mere-fragment-insertion -->
-<!-- https://www.wimdeblauwe.com/blog/2021/09/14/thymeleaf-iteration-and-fragments/ -->
-
 <body>
 	<!-- Sidebar Administradores -->
 	<ul th:fragment="_sidebar(user_type)"
@@ -90,7 +86,7 @@
 		</a></li>
 		<!-- Nav Item - Tables -->
 		<li class="nav-item active"><a class="nav-link"
-			href="tables.html"> <i class="fas fa-fw fa-table"> </i> <span>Tables
+			th:href="@{/docente/logout}"> <i class="fas fa-fw fa-table"> </i> <span>Cerrar Sesión
 			</span>
 		</a></li>
 		<!-- Divider -->
@@ -101,7 +97,7 @@
 			</button>
 		</div>
 	</ul>
-	<!-- Fin Sidebar Administradores -->
+	<!-- Fin Sidebar -->
 </body>
 
 </html>
