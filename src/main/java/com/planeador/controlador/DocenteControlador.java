@@ -34,12 +34,19 @@ public class DocenteControlador {
 	@PostMapping("/login")
 	public String validate(RedirectAttributes att, @RequestParam String email, @RequestParam String password,
 			HttpServletRequest request, HttpSession session, Model model) {
-		
+
 		Docente docente = DocenteService.select(email, password);
 
 		if (docente != null) {
-			request.getSession().setAttribute("docente_id", docente.getId());
-			return "redirect:/docente/main";
+			
+			if (docente.getAprobado()) {
+				request.getSession().setAttribute("docente_id", docente.getId());
+				return "redirect:/docente/main";
+			}
+
+			att.addFlashAttribute("loginError", "El docente aún no se encuentra autorizado para acceder");
+			return "redirect:/docente";
+
 		} else {
 			att.addFlashAttribute("loginError", "Usuario o contraseña incorrecta");
 			return "redirect:/docente";
@@ -54,20 +61,21 @@ public class DocenteControlador {
 
 	@PostMapping("/save")
 	public String insertdocente(RedirectAttributes att, Docente docente, Model model) {
+		docente.setAprobado(false);
 		DocenteService.save(docente);
 		att.addFlashAttribute("accion", "Docente registrado con éxito!");
 		return "redirect:/docente/";
 	}
-	
+
 	@GetMapping("/new")
 	public String showForm(Model model) {
 		return "register_docente";
 	}
-	
+
 //	Esto está basado en ProductoController.java del ejercicio de refencia, luego
 //	pensamos bien si moverlo a otro lado, básicamente para recuperar los datos
 //	del docente. y mostrarlos en el perfil
-	
+
 	@GetMapping("/main")
 	public String perfilDocente(HttpServletRequest request, Model model) {
 //		Nota, le cambié el nombre de profile a main para probar
@@ -76,7 +84,7 @@ public class DocenteControlador {
 		model.addAttribute("docente", doc);
 		return "main";
 	}
-	
+
 	@GetMapping("/perfil")
 	public String elPerfil(HttpServletRequest request, Model model) {
 		int docente_id = (int) request.getSession().getAttribute("docente_id");
@@ -86,6 +94,5 @@ public class DocenteControlador {
 		model.addAttribute("docente", doc);
 		return "perfil";
 	}
-	
 
 }

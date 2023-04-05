@@ -1,5 +1,7 @@
 package com.planeador.controlador;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -13,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.planeador.servicio.AdministradorServicio;
-
+import com.planeador.servicio.DocenteServicio;
 import com.planeador.modelo.Administrador;
+import com.planeador.modelo.Docente;
 
 @Controller
 @RequestMapping("/admin")
@@ -22,6 +25,8 @@ public class AdministradorControlador {
 
 	@Autowired
 	private AdministradorServicio administradorService;
+	@Autowired
+	private DocenteServicio docenteService;
 
 	@GetMapping("")
 	public String login(HttpServletRequest request, HttpSession session, Model model) {
@@ -95,4 +100,10 @@ public class AdministradorControlador {
 		return "perfil";
 	}
 
+	@GetMapping("/solicitudes")
+	public String solicitudesRegistro(HttpServletRequest request, Model model){
+		List<Docente> solicitudes = this.docenteService.findPendingRequests();
+		model.addAttribute("solicitudes", solicitudes);
+		return "solicitudes";
+	}
 }
