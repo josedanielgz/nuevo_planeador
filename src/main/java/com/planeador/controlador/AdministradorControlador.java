@@ -1,6 +1,12 @@
 package com.planeador.controlador;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -35,7 +41,7 @@ public class AdministradorControlador {
 		} else
 			return "login_admin";
 	}
-	
+
 //	@GetMapping("login")
 //	public String loginPage(HttpServletRequest request, HttpSession session, Model model) {
 ////		request.getSession().setAttribute("es_admin", true);
@@ -101,9 +107,22 @@ public class AdministradorControlador {
 	}
 
 	@GetMapping("/solicitudes")
-	public String solicitudesRegistro(HttpServletRequest request, Model model){
+	public String solicitudesRegistro(HttpServletRequest request, Model model) {
+
+//		https://stackoverflow.com/questions/50348166/java-8-list-of-objects-to-mapstring-list-of-values
+//		https://www.appsloveworld.com/springboot/100/35/how-can-i-create-dynamic-table-in-thymeleaf
 		List<Docente> solicitudes = this.docenteService.findPendingRequests();
-		model.addAttribute("solicitudes", solicitudes);
+		List<String> headers = Arrays.asList("Nombre", "Email", "Aprobación");
+		List<Map<String, Object>> rows = solicitudes.stream().map(docente -> {
+			Map<String, Object> um = new HashMap<>();
+			um.put(headers.get(0), docente.getNombre());
+			um.put(headers.get(1), docente.getEmail());
+			um.put(headers.get(2), docente.getId());
+			return um;
+		}).collect(Collectors.toList());
+
+		model.addAttribute("headers", headers);
+		model.addAttribute("rows", rows);
 		return "solicitudes";
 	}
 }

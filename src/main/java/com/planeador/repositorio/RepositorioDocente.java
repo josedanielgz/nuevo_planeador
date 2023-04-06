@@ -11,7 +11,7 @@ public interface RepositorioDocente extends CrudRepository<Docente, Integer> {
 
 	public abstract Docente findByEmailAndPassword(String email, String password);
 	
-	@Query(value="SELECT * FROM docente WHERE docente.aprovado = FALSE", nativeQuery = true)
+	@Query(value="SELECT * FROM docente WHERE docente.aprobado = FALSE", nativeQuery = true)
 	List<Docente> findPendingRequests();
 	
 	}
