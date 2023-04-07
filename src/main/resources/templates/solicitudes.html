@@ -29,6 +29,27 @@
 						<h6 class="m-0 font-weight-bold text-primary">Solicitudes de
 							admisión</h6>
 					</div>
+
+					<div th:if="${msjAprobacion != null}"
+						class="alert alert-primary alert-dismissible fade show"
+						role="alert">
+						<label th:text="${msjRechazo}"></label>
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+
+					<div th:if="${msjRechazo != null}"
+						class="alert alert-primary alert-dismissible fade show"
+						role="alert">
+						<label th:text="${msjRechazo}"></label>
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+
 					<div class="card-body">
 						<div class="table-responsive">
 							<table class="table table-bordered" id="dataTable" width="100%"
@@ -46,7 +67,16 @@
 								</tfoot>
 								<tbody>
 									<tr th:each="row: ${rows}">
-										<td th:each="header: ${headers}" th:text="${row.get(header)}" />
+										<td th:each="header: ${headers}"><a
+											class="btn btn-primary" th:if="${header == 'Aprobación'}"
+											th:href="@{/admin/aprobar/{id}(id=${row.get('Aprobación')})}">Aprobar</a>
+
+											<a class="btn btn-danger" th:if="${header == 'Aprobación'}"
+											th:href="@{/admin/rechazar/{id}(id=${row.get('Aprobación')})}"
+											onclick="return confirm('Confirme que desea proceder a rechazar esta solicitud');">Rechazar</a>
+
+											<span th:if="${header != 'Aprobación'}"
+											th:text="${row.get(header)}"></span></td>
 									</tr>
 								</tbody>
 							</table>

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -124,5 +125,24 @@ public class AdministradorControlador {
 		model.addAttribute("headers", headers);
 		model.addAttribute("rows", rows);
 		return "solicitudes";
+	}
+	
+	@GetMapping("/aprobar/{id}")
+	public String aceptarSolicitud(@PathVariable Integer id, Model model){
+		Docente porAprobar = this.docenteService.get(id);
+		porAprobar.setAprobado(true);
+//		Aparentemente este método también actualiza
+		docenteService.save(porAprobar);
+		model.addAttribute("msjAprobacion", "Solicitud aprobada con éxito");
+		return "redirect:/admin/solicitudes/";
+		
+	}
+	
+	@GetMapping("/rechazar/{id}")
+	public String rechazarSolicitud(@PathVariable Integer id, Model model){
+		this.docenteService.delete(id);
+		model.addAttribute("msjRechazo", "Solicitud aprobada con éxito");
+		return "redirect:/admin/solicitudes/";
+		
 	}
 }
