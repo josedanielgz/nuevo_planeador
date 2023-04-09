@@ -11,7 +11,7 @@
 	<div id="wrapper">
 
 		<ul
-			th:replace="${session.admin_id != null} ? ~{fragments/sidebar :: _sidebar(admin)} : ~{fragments/sidebar :: _sidebar(docente)}"></ul>
+			th:replace="${session.admin_id != null} ? ~{fragments/sidebar :: _sidebar(_admin)} : ~{fragments/sidebar :: _sidebar(_docente)}"></ul>
 
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
@@ -22,32 +22,32 @@
 
 				<!-- Topbar -->
 				<nav
-					th:replace="${session.admin_id != null} ? ~{fragments/topbar :: top_bar(admin)} : ~{fragments/topbar :: top_bar(docente)}"></nav>
+					th:replace="${session.admin_id != null} ? ~{fragments/topbar :: top_bar(_admin)} : ~{fragments/topbar :: top_bar(_docente)}"></nav>
+
+				<div th:if="${msjAprobacion != null}"
+					class="alert alert-primary alert-dismissible fade show"
+					role="alert">
+					<label th:text="${msjRechazo}"></label>
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div th:if="${msjRechazo != null}"
+					class="alert alert-primary alert-dismissible fade show"
+					role="alert">
+					<label th:text="${msjRechazo}"></label>
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
 
 				<div class="card shadow mb-4">
 					<div class="card-header py-3">
 						<h6 class="m-0 font-weight-bold text-primary">Solicitudes de
 							admisión</h6>
-					</div>
-
-					<div th:if="${msjAprobacion != null}"
-						class="alert alert-primary alert-dismissible fade show"
-						role="alert">
-						<label th:text="${msjRechazo}"></label>
-						<button type="button" class="close" data-dismiss="alert"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-
-					<div th:if="${msjRechazo != null}"
-						class="alert alert-primary alert-dismissible fade show"
-						role="alert">
-						<label th:text="${msjRechazo}"></label>
-						<button type="button" class="close" data-dismiss="alert"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
 					</div>
 
 					<div class="card-body">
@@ -88,6 +88,9 @@
 				<a class="scroll-to-top rounded" href="#page-top"> <i
 					class="fas fa-angle-up"></i>
 				</a>
+
+				<div
+					th:replace="${session.admin_id != 0} ? ~{fragments/topbar :: logout_modal('_admin')} : ~{fragments/topbar :: logout_modal('_docente')}"></div>
 </body>
 
 </html>

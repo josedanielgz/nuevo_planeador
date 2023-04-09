@@ -1,5 +1,7 @@
 package com.planeador.modelo;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +12,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table (name="administrador", uniqueConstraints = {@UniqueConstraint(name = "unique_email", columnNames= {"email"})})
-public class Administrador {
+public class Administrador implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -54,6 +56,10 @@ public class Administrador {
 		this.password = password;
 	}
 
+	public Boolean isEmpty() {
+		return this.id == 0;
+	}
+	
 	@Column
 	private String password;
 	

@@ -20,7 +20,7 @@
 				<!-- 				Posiblemente borrar este botón en el futuro -->
 				<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
 				<a class="btn btn-primary"
-					th:href="${user_type == 'admin'} ? @{/admin/logout} : @{/docente/logout}">Cerrar
+					th:href="@{/admin/logout} : @{/docente/logout}">Cerrar
 					Sesión</a>
 
 			</div>

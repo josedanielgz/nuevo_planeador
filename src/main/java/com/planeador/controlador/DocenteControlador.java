@@ -7,13 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.planeador.servicio.DocenteServicio;
-
+import com.planeador.modelo.Administrador;
 import com.planeador.modelo.Docente;
 
 @Controller
@@ -22,11 +23,31 @@ public class DocenteControlador {
 
 	@Autowired
 	private DocenteServicio DocenteService;
+	
+	@ModelAttribute("docente")
+	public Docente getDocenteActual(Model model, HttpServletRequest request) {
+		Docente docente = (Docente) model.getAttribute("admin");
+		if (docente == null || docente.isEmpty()) {
+			int docente_id;
+			try {
+				docente_id = (int) request.getSession().getAttribute("docente_id");
+			} catch (NullPointerException e) {
+				docente_id = 0;
+			}
+			if (docente_id == 0) {
+				docente = new Docente();
+			} else {
+				docente = this.DocenteService.get(docente_id);
+			}
+			model.addAttribute("docente", docente);
+		}
+		return docente;
+	}
 
 	@GetMapping("")
 	public String login(HttpServletRequest request, HttpSession session, Model model) {
 		if (request.getSession().getAttribute("docente_id") != null) {
-			return "main";
+			return "redirect:/docente/main";
 		} else
 			return "login_docente";
 	}
@@ -78,20 +99,19 @@ public class DocenteControlador {
 
 	@GetMapping("/main")
 	public String perfilDocente(HttpServletRequest request, Model model) {
-//		Nota, le cambié el nombre de profile a main para probar
-		int docente_id = (int) request.getSession().getAttribute("docente_id");
-		Docente doc = this.DocenteService.get(docente_id);
-		model.addAttribute("docente", doc);
+//		Probando si el ModelAttribute funciona
+//		int docente_id = (int) request.getSession().getAttribute("docente_id");
+//		Docente doc = this.DocenteService.get(docente_id);
+//		model.addAttribute("docente", doc);
 		return "main";
 	}
 
 	@GetMapping("/perfil")
 	public String elPerfil(HttpServletRequest request, Model model) {
-		int docente_id = (int) request.getSession().getAttribute("docente_id");
-		Docente doc = this.DocenteService.get(docente_id);
-		// Se resolverá después
-//		Docente doc = (Docente) request.getSession().getAttribute("docente");
-		model.addAttribute("docente", doc);
+//		Probando si el ModelAttribute funciona
+//		int docente_id = (int) request.getSession().getAttribute("docente_id");
+//		Docente doc = this.DocenteService.get(docente_id);
+//		model.addAttribute("docente", doc);
 		return "perfil";
 	}
 

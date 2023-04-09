@@ -62,7 +62,7 @@ public class Docente {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public Boolean getAprobado() {
 		return aprobado;
 	}
@@ -78,6 +78,10 @@ public class Docente {
 		this.email = email;
 		this.password = password;
 		this.aprobado = false;
+	}
+
+	public Boolean isEmpty() {
+		return this.id == 0;
 	}
 
 }

@@ -7,7 +7,7 @@
 <!-- 		</a></li> -->
 
 
-<ul th:fragment="_sidebar(user_type)" th:if="${user_type} == 'admin'"
+<ul th:fragment="_sidebar(user_type)" th:if="${user_type} == '_admin'"
 	class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
 	id="accordionSidebar">
 	<!-- Sidebar - Brand -->
@@ -101,7 +101,7 @@
 	</div>
 </ul>
 
-<ul th:fragment="_sidebar(user_type)" th:if="${user_type} == 'docente'"
+<ul th:fragment="_sidebar(user_type)" th:if="${user_type} == '_docente'"
 	class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
 	id="accordionSidebar">
 	<!-- Sidebar - Brand -->
