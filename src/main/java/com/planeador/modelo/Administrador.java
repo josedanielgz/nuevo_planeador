@@ -1,6 +1,6 @@
 package com.planeador.modelo;
 
-import java.io.Serializable;
+//import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +12,8 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table (name="administrador", uniqueConstraints = {@UniqueConstraint(name = "unique_email", columnNames= {"email"})})
-public class Administrador implements Serializable {
+//Chequear si esto necesita implements Serializable 
+public class Administrador {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

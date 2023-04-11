@@ -9,14 +9,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.planeador.modelo.Microcurriculo;
-import com.planeador.repositorio.RepositorioMicrocurriculo;
+import com.planeador.repositorio.RepositorioMateria;
 
 @SpringBootApplication
 public class PlaneadorApplication implements CommandLineRunner {
 
 	// Objetos de prueba para verificar cierta funcionalidad
 	@Autowired
-	private RepositorioMicrocurriculo microcurriculos;
+	private RepositorioMateria microcurriculos;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(PlaneadorApplication.class, args);

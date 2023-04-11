@@ -12,7 +12,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "curso")
 
-public class Microcurriculo {
+public class Planeador {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +27,7 @@ public class Microcurriculo {
 //	Por hacer:
 //	Arreglo de Clase unidad
 
-	public Microcurriculo() {
+	public Planeador() {
 		super();
 	}
 

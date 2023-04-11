@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.planeador.generico.GenericServiceImp;
 import com.planeador.modelo.Microcurriculo;
-import com.planeador.repositorio.RepositorioMicrocurriculo;
+import com.planeador.repositorio.RepositorioMateria;
 
 @Service
 public class MicrocurriculoServicioImpl extends GenericServiceImp<Microcurriculo, Integer>
 		implements MicrocurriculoServicio {
 
 	@Autowired
-	private RepositorioMicrocurriculo repositorioMicrocurriculo;
+	private RepositorioMateria repositorioMicrocurriculo;
 
 	@Override
 	public CrudRepository<Microcurriculo, Integer> getDao() {
