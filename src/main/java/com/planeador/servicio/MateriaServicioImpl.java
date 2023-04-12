@@ -10,26 +10,27 @@ import com.planeador.generico.GenericServiceImp;
 import com.planeador.modelo.Materia;
 import com.planeador.modelo.Microcurriculo;
 import com.planeador.repositorio.RepositorioMateria;
-import com.planeador.repositorio.RepositorioMicrocurriculo;
 import com.planeador.servicio.MateriaServicio;
 
 @Service
-public class MicrocurriculoServicioImpl extends GenericServiceImp<Microcurriculo, Integer>
-		implements MicrocurriculoServicio {
+public class MateriaServicioImpl extends GenericServiceImp<Materia, Integer> implements MateriaServicio {
 
 	@Autowired
-	private RepositorioMicrocurriculo repositorioMicrocurriculo;
+	private RepositorioMateria repositorioMateria;
 
 	@Override
-	public CrudRepository<Microcurriculo, Integer> getDao() {
+	public CrudRepository<Materia, Integer> getDao() {
 		// TODO Auto-generated method stub
-		return repositorioMicrocurriculo;
+		return repositorioMateria;
 	}
 
 	@Override
-	public List<Microcurriculo> listaDeMicrocurriculos() {
-		// TODO Auto-generated method stub
-		return this.repositorioMicrocurriculo.findAll();
+	public List<Materia> listaDeMaterias() {
+		return repositorioMateria.findAll();
+	}
+	
+	public List<Microcurriculo> microcurriculosPorMateria(Integer idMicrocurriculo){
+		return repositorioMateria.microcurriculoByMateriaID(idMicrocurriculo);
 	}
 
 }

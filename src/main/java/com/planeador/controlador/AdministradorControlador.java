@@ -24,8 +24,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.planeador.servicio.AdministradorServicio;
 import com.planeador.servicio.DocenteServicio;
+import com.planeador.servicio.MateriaServicio;
 import com.planeador.modelo.Administrador;
 import com.planeador.modelo.Docente;
+import com.planeador.modelo.Materia;
 
 @Controller
 @RequestMapping("/admin")
@@ -35,6 +37,8 @@ public class AdministradorControlador {
 	private AdministradorServicio administradorService;
 	@Autowired
 	private DocenteServicio docenteService;
+	@Autowired
+	private MateriaServicio materiaService;
 
 //	De manera temporal para rastrear las sesiones de Admin, buscar una
 //	solución más estable en el futuro
@@ -167,5 +171,22 @@ public class AdministradorControlador {
 		model.addAttribute("msjRechazo", "Solicitud aprobada con éxito");
 		return "redirect:/admin/solicitudes/";
 
+	}
+	
+	@GetMapping("/materias")
+	public String listaDeMaterias (Model model){
+		List<Materia> materias = this.materiaService.getAll();
+		List<String> headers = Arrays.asList("Nombre","# de Créditos","Semestre", "Acción");
+		List<Map<String, Object>> rows = materias.stream().map(materia -> {
+			Map<String, Object> um = new HashMap<>();
+			um.put(headers.get(0), materia.getNombre());
+			um.put(headers.get(1), materia.getCreditos());
+			um.put(headers.get(2), materia.getSemestre());
+			um.put(headers.get(2), materia.getId());
+			return um;
+		}).collect(Collectors.toList());
+		model.addAttribute("headers", headers);
+		model.addAttribute("rows", rows);
+		return "materias";
 	}
 }
