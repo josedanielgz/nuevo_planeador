@@ -72,4 +72,10 @@ public class Administrador {
 		this.password = password;
 	}
 
+	public Administrador(String nombre, String email, String password) {
+		this.nombre = nombre;
+		this.email = email;
+		this.password = password;
+	}
+
 }

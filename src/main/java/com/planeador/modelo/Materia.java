@@ -27,8 +27,11 @@ public class Materia {
 	@Column
 	private Integer semestre;
 
+
+
 	@OneToMany(mappedBy = "materia")
 	List<Microcurriculo> microcurriculos;
+
 
 	public Integer getId() {
 		return id;
@@ -80,9 +83,8 @@ public class Materia {
 		this.microcurriculos = microcurriculos;
 	}
 
-	public Materia(Integer id, String nombre, Integer creditos, Integer semestre) {
+	public Materia(String nombre, Integer creditos, Integer semestre) {
 		super();
-		this.id = id;
 		this.nombre = nombre;
 		this.creditos = creditos;
 		this.semestre = semestre;

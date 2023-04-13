@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head th:replace="fragments/header :: head(~{::title})">
-<title>Planeador Académico - Lista de Microcurrículos</title>
+<title>Planeador Académico - Lista de Materias</title>
 </head>
 
 <body id="page-top">
@@ -66,15 +66,7 @@
 								</tfoot>
 								<tbody>
 									<tr th:each="row: ${rows}">
-										<td th:each="header: ${headers}">
-<!-- 										<a -->
-<!-- 											class="btn btn-primary" th:if="${header == 'Acción'}" -->
-<!-- 											th:href="@{/admin/aprobar/{id}(id=${row.get('Acción')})}">Aprobar</a> -->
-
-<!-- 											<a class="btn btn-danger" th:if="${header == 'Acción'}" -->
-<!-- 											th:href="@{/admin/rechazar/{id}(id=${row.get('Acción')})}" -->
-<!-- 											onclick="return confirm('Confirme que desea proceder a rechazar esta solicitud');">Rechazar</a> -->
-
+										<!-- <td th:each="header: ${headers}">
 <a
 											class="btn btn-primary" th:if="${header == 'Acción'}"
 											th:href="#">Aprobar</a>
@@ -86,7 +78,11 @@
 
 											<span th:if="${header != 'Aprobación'}"
 											th:text="${row.get(header)}"></span></td>
-									</tr>
+									</tr> -->
+									<td th:text="${row.nombre}"></td>
+									<td th:text="${row.semestre}"></td>
+									
+								</tr>
 								</tbody>
 							</table>
 						</div>

@@ -176,17 +176,18 @@ public class AdministradorControlador {
 	@GetMapping("/materias")
 	public String listaDeMaterias (Model model){
 		List<Materia> materias = this.materiaService.getAll();
-		List<String> headers = Arrays.asList("Nombre","# de Créditos","Semestre", "Acción");
-		List<Map<String, Object>> rows = materias.stream().map(materia -> {
-			Map<String, Object> um = new HashMap<>();
-			um.put(headers.get(0), materia.getNombre());
-			um.put(headers.get(1), materia.getCreditos());
-			um.put(headers.get(2), materia.getSemestre());
-			um.put(headers.get(2), materia.getId());
-			return um;
-		}).collect(Collectors.toList());
-		model.addAttribute("headers", headers);
-		model.addAttribute("rows", rows);
+		 List<String> headers = Arrays.asList("Nombre","# de Créditos","Semestre", "Acción");
+		// List<Map<String, Object>> rows = materias.stream().map(materia -> {
+		// 	Map<String, Object> um = new HashMap<>();
+		// 	um.put(headers.get(0), materia.getNombre());
+		// 	um.put(headers.get(1), materia.getCreditos());
+		// 	um.put(headers.get(2), materia.getSemestre());
+		// 	um.put(headers.get(2), materia.getId());
+		// 	return um;
+		// }).collect(Collectors.toList());
+		 model.addAttribute("headers", headers);
+		// model.addAttribute("rows", rows);
+		model.addAttribute("rows", materias);
 		return "materias";
 	}
 }

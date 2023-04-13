@@ -1,10 +1,13 @@
 package com.planeador.modelo;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -12,7 +15,6 @@ import lombok.Data;
 
 @Entity
 @Table(name = "docente", uniqueConstraints = { @UniqueConstraint(name = "unique_email", columnNames = { "email" }) })
-@Data
 public class Docente {
 
 	@Id
@@ -30,6 +32,9 @@ public class Docente {
 
 	@Column
 	private Boolean aprobado;
+
+	@OneToMany(mappedBy = "docente")
+	private List<Curso> cursos;
 
 	public Integer getId() {
 		return id;

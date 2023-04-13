@@ -7,10 +7,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "curso")
+@Table(name = "microcurriculo")
 
 public class Microcurriculo {
 
@@ -20,6 +19,7 @@ public class Microcurriculo {
 	private String nombre;
 	private String codigoCurso;
 	private Boolean tipoCurso;
+
 	@ManyToOne
 	@JoinColumn(name = "materia_id")
 	private Materia materia;

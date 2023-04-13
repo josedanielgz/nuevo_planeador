@@ -16,6 +16,6 @@ public interface RepositorioMateria extends CrudRepository<Materia, Integer> {
 	
 	List<Materia> findAll();
 	
-	@Query("select m from microcurriculo m join m.materia n where n.id = :materiaId")
-	List<Microcurriculo> microcurriculoByMateriaID(@Param("materiaId") Integer materiaId);
+	// @Query("select m from microcurriculo m join m.materia n where n.id = :materiaId")
+	// List<Microcurriculo> microcurriculoByMateriaID(@Param("materiaId") Integer materiaId);
 }
