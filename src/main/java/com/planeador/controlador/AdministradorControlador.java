@@ -85,6 +85,7 @@ public class AdministradorControlador {
 
 		if (admin != null) {
 			request.getSession().setAttribute("admin_id", admin.getId());
+			model.addAttribute("admin", admin);
 //			En proceso de refactorizar, comentar esta linea si es necesario
 //			request.getSession().setAttribute("admin", admin);
 			return "redirect:/admin/main";

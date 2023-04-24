@@ -3,6 +3,9 @@ package com.planeador.servicio;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +32,15 @@ public class MateriaServicioImpl extends GenericServiceImp<Materia, Integer> imp
 		return repositorioMateria.findAll();
 	}
 	
-	public List<Microcurriculo> microcurriculosPorMateria(Integer idMicrocurriculo){
-		return repositorioMateria.microcurriculoByMateriaID(idMicrocurriculo);
+	@Override
+	public Page<Materia> paginaDeMaterias(int pagina, int nroDeElementos){
+		 PageRequest request = PageRequest.of(pagina - 1, nroDeElementos, Sort.by(Sort.Direction.ASC, "id"));
+		 Page<Materia> paginaMaterias = repositorioMateria.findAll(request);
+		 return paginaMaterias;
 	}
+	
+//	public List<Microcurriculo> microcurriculosPorMateria(Integer idMicrocurriculo){
+//		return repositorioMateria.microcurriculoByMateriaID(idMicrocurriculo);
+//	}
 
 }

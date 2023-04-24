@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.planeador.servicio.DocenteServicio;
-import com.planeador.modelo.Administrador;
+import com.planeador.servicio.MateriaServicio;
 import com.planeador.modelo.Docente;
 
 @Controller
@@ -23,10 +23,13 @@ public class DocenteControlador {
 
 	@Autowired
 	private DocenteServicio DocenteService;
-	
+
+	@Autowired
+	private MateriaServicio MateriaServicio;
+
 	@ModelAttribute("docente")
 	public Docente getDocenteActual(Model model, HttpServletRequest request) {
-		Docente docente = (Docente) model.getAttribute("admin");
+		Docente docente = (Docente) model.getAttribute("docente");
 		if (docente == null || docente.isEmpty()) {
 			int docente_id;
 			try {
@@ -59,9 +62,10 @@ public class DocenteControlador {
 		Docente docente = DocenteService.select(email, password);
 
 		if (docente != null) {
-			
+
 			if (docente.getAprobado()) {
 				request.getSession().setAttribute("docente_id", docente.getId());
+				model.addAttribute("docente", docente);
 				return "redirect:/docente/main";
 			}
 
@@ -113,6 +117,15 @@ public class DocenteControlador {
 //		Docente doc = this.DocenteService.get(docente_id);
 //		model.addAttribute("docente", doc);
 		return "perfil";
+	}
+
+	@GetMapping("/materias")
+	public String nuevaPaginaDeMaterias(
+			@RequestParam(value = "pagina", required = false, defaultValue = "1") int pagina,
+			@RequestParam(value = "nroDeElementos", required = false, defaultValue = "5") int nroDeElementos,
+			Model model) {
+		model.addAttribute("rows", MateriaServicio.paginaDeMaterias(pagina, nroDeElementos));
+		return "";
 	}
 
 }

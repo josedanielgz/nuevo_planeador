@@ -22,6 +22,7 @@
 				<!-- Topbar -->
 				<nav
 					th:replace="${session.admin_id != 0} ? ~{fragments/topbar :: top_bar('_admin')} : ~{fragments/topbar :: top_bar('_docente')}"></nav>
+					
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
@@ -563,7 +564,7 @@
 	</a>
 
 	<div
-		th:replace="${session.admin_id != 0} ? ~{fragments/topbar :: logout_modal(admin)} : ~{fragments/topbar :: logout_modal(docente)}"></div>
+		th:replace="${session.admin_id != 0} ? ~{fragments/topbar :: logout_modal('_admin')} : ~{fragments/topbar :: logout_modal('_docente')}"></div>
 
 	<!-- 	<!-- Logout Modal-->
 	-->
