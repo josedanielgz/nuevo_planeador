@@ -4,15 +4,16 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
+//import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.planeador.modelo.Materia;
 import com.planeador.modelo.Microcurriculo;
 
 
-public interface RepositorioMateria extends CrudRepository<Materia, Integer> {
+public interface RepositorioMateria extends JpaRepository<Materia, Integer> {
 
 //	public abstract Curso findByEmailAndPassword(String email, String password);
 	
@@ -20,5 +21,5 @@ public interface RepositorioMateria extends CrudRepository<Materia, Integer> {
 	// @Query("select m from microcurriculo m join m.materia n where n.id = :materiaId")
 	// List<Microcurriculo> microcurriculoByMateriaID(@Param("materiaId") Integer materiaId);
 
-	Page<Materia> findAll(PageRequest request);
+//	Page<Materia> findAll(PageRequest request);
 }

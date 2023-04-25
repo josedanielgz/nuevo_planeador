@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.planeador.servicio.DocenteServicio;
 import com.planeador.servicio.MateriaServicio;
 import com.planeador.modelo.Docente;
+import com.planeador.modelo.Materia;
 
 @Controller
 @RequestMapping("/docente")
@@ -121,11 +123,13 @@ public class DocenteControlador {
 
 	@GetMapping("/materias")
 	public String nuevaPaginaDeMaterias(
-			@RequestParam(value = "pagina", required = false, defaultValue = "1") int pagina,
-			@RequestParam(value = "nroDeElementos", required = false, defaultValue = "5") int nroDeElementos,
+			@RequestParam(value = "pagina", required = false, defaultValue = "2") int pagina,
+			@RequestParam(value = "nroDeElementos", required = false, defaultValue = "3") int nroDeElementos,
 			Model model) {
-		model.addAttribute("rows", MateriaServicio.paginaDeMaterias(pagina, nroDeElementos));
-		return "";
+		Page<Materia> paraElControlador = MateriaServicio.paginaDeMaterias(pagina, nroDeElementos);
+		System.out.println(paraElControlador);
+		model.addAttribute("rows", paraElControlador);
+		return "materias";
 	}
 
 }
