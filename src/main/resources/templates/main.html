@@ -11,7 +11,7 @@
 	<div id="wrapper">
 
 		<ul
-			th:replace="${session.admin_id != null} ? ~{fragments/sidebar :: _sidebar(admin)} : ~{fragments/sidebar :: _sidebar(docente)}"></ul>
+			th:replace="${session.admin_id != 0} ? ~{fragments/sidebar :: _sidebar('_admin')} : ~{fragments/sidebar :: _sidebar('_docente')}"></ul>
 
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
@@ -21,7 +21,8 @@
 
 				<!-- Topbar -->
 				<nav
-					th:replace="${session.admin_id != null} ? ~{fragments/topbar :: top_bar(admin)} : ~{fragments/topbar :: top_bar(docente)}"></nav>
+					th:replace="${session.admin_id != 0} ? ~{fragments/topbar :: top_bar('_admin')} : ~{fragments/topbar :: top_bar('_docente')}"></nav>
+					
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
@@ -563,7 +564,7 @@
 	</a>
 
 	<div
-		th:replace="${session.admin_id != null} ? ~{fragments/topbar :: logout_modal(admin)} : ~{fragments/topbar :: logout_modal(docente)}"></div>
+		th:replace="${session.admin_id != 0} ? ~{fragments/topbar :: logout_modal('_admin')} : ~{fragments/topbar :: logout_modal('_docente')}"></div>
 
 	<!-- 	<!-- Logout Modal-->
 	-->

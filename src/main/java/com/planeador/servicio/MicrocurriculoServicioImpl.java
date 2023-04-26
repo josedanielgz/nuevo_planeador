@@ -7,8 +7,11 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import com.planeador.generico.GenericServiceImp;
+import com.planeador.modelo.Materia;
 import com.planeador.modelo.Microcurriculo;
+import com.planeador.repositorio.RepositorioMateria;
 import com.planeador.repositorio.RepositorioMicrocurriculo;
+import com.planeador.servicio.MateriaServicio;
 
 @Service
 public class MicrocurriculoServicioImpl extends GenericServiceImp<Microcurriculo, Integer>
@@ -23,7 +26,6 @@ public class MicrocurriculoServicioImpl extends GenericServiceImp<Microcurriculo
 		return repositorioMicrocurriculo;
 	}
 
-//	https://stackoverflow.com/q/56499565
 	@Override
 	public List<Microcurriculo> listaDeMicrocurriculos() {
 		// TODO Auto-generated method stub

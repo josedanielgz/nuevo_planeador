@@ -1,6 +1,7 @@
 package com.planeador.servicio;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
@@ -24,6 +25,12 @@ public class DocenteServicioImpl extends GenericServiceImp<Docente, Integer> imp
 	@Override
 	public Docente select(String email, String password) {
 		return repositorioDocente.findByEmailAndPassword(email, password);
+	}
+
+	@Override
+	public List<Docente> findPendingRequests() {
+		// TODO Auto-generated method stub
+		return repositorioDocente.findPendingRequests();
 	}
 
 }

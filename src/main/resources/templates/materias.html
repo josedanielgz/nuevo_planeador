@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="fragments/header :: head(~{::title})">
+<title>Planeador Académico - Lista de Materias</title>
+</head>
+
+<body id="page-top">
+
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+
+		<ul
+			th:replace="${session.admin_id != null} ? ~{fragments/sidebar :: _sidebar(_admin)} : ~{fragments/sidebar :: _sidebar(_docente)}"></ul>
+
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<!-- Main Content -->
+			<div id="content">
+
+
+				<!-- Topbar -->
+				<nav
+					th:replace="${session.admin_id != null} ? ~{fragments/topbar :: top_bar(_admin)} : ~{fragments/topbar :: top_bar(_docente)}"></nav>
+
+				<div th:if="${msjAprobacion != null}"
+					class="alert alert-primary alert-dismissible fade show"
+					role="alert">
+					<label th:text="${msjRechazo}"></label>
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div th:if="${msjRechazo != null}"
+					class="alert alert-primary alert-dismissible fade show"
+					role="alert">
+					<label th:text="${msjRechazo}"></label>
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div class="card shadow mb-4">
+					<div class="card-header py-3">
+						<h6 class="m-0 font-weight-bold text-primary">Materias en el
+							sistema</h6>
+					</div>
+
+					<div class="card-body">
+						<div class="table-responsive">
+							<table class="table table-bordered" id="dataTable" width="100%"
+								cellspacing="0">
+								<thead>
+
+									<tr>
+										<!-- 										<th th:each="header: ${headers}" th:text="${header}"></th> -->
+										<td>Nombre</td>
+										<td>Código</td>
+										<td>Semestre</td>
+									</tr>
+
+								</thead>
+								<tfoot>
+									<tr>
+										<!-- 										<th th:each="header: ${headers}" th:text="${header}"></th> -->
+										<td>Nombre</td>
+										<td>Código</td>
+										<td>Semestre</td>
+									</tr>
+
+
+								</tfoot>
+								<tbody>
+									<tr th:each="row: ${rows}">
+										<!-- <td th:each="header: ${headers}">
+<a
+											class="btn btn-primary" th:if="${header == 'Acción'}"
+											th:href="#">Aprobar</a>
+
+											<a class="btn btn-danger" th:if="${header == 'Acción'}"
+											th:href="#"
+											onclick="return confirm('Diálogo de Placeholder');">Rechazar</a>
+
+
+											<span th:if="${header != 'Aprobación'}"
+											th:text="${row.get(header)}"></span></td>
+									</tr> -->
+										<td th:text="${row.nombre}"></td>
+										<td th:text="${row.creditos}"></td>
+										<td th:text="${row.semestre}"></td>
+
+									</tr>
+								</tbody>
+							</table>
+
+<!-- 							<nav aria-label="Page navigation" class="paging"> -->
+<!-- 								<ul class="pagination" th:if="${rows.page.totalPages > 1}"> -->
+<!-- 									<li class="page-item" -->
+<!-- 										th:classappend="${!rows.paging.isPrevEnabled()? 'disabled' : ''}"> -->
+<!-- 										<a class="page-link" -->
+<!-- 										th:href="@{'/?pageNumber=' + ${rows.paging.pageNumber - 1}}" -->
+<!-- 										tabindex="-1">Previous</a> -->
+<!-- 									</li> -->
+<!-- 									<th:block th:each="item : ${rows.paging.getItems()}"> -->
+<!-- 										<li class="page-item" -->
+<!-- 											th:classappend="${item.index == rows.paging.pageNumber? 'active' : ''}" -->
+<!-- 											th:if="${item.pageItemType.name() == 'PAGE'}"><a -->
+<!-- 											class="page-link" -->
+<!-- 											th:href="@{'/?pageNumber=' + ${item.index}}" -->
+<!-- 											th:text="${item.index}"></a></li> -->
+<!-- 										<li class="page-item disabled" -->
+<!-- 											th:if="${item.pageItemType.name() == 'DOTS'}"><a -->
+<!-- 											class="page-link" href="#">...</a></li> -->
+<!-- 									</th:block> -->
+<!-- 									<li class="page-item" -->
+<!-- 										th:classappend="${!rows.paging.isNextEnabled()? 'disabled' : ''}"> -->
+<!-- 										<a class="page-link" -->
+<!-- 										th:href="@{'/?pageNumber=' + ${rows.paging.pageNumber + 1}}">Next</a> -->
+<!-- 									</li> -->
+<!-- 								</ul> -->
+<!-- 							</nav> -->
+						</div>
+					</div>
+				</div>
+
+				<!-- Scroll to Top Button-->
+				<a class="scroll-to-top rounded" href="#page-top"> <i
+					class="fas fa-angle-up"></i>
+				</a>
+
+				<div
+					th:replace="${session.admin_id != 0} ? ~{fragments/topbar :: logout_modal('_admin')} : ~{fragments/topbar :: logout_modal('_docente')}"></div>
+</body>
+
+</html>
