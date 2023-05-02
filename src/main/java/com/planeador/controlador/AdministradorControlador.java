@@ -1,17 +1,18 @@
 package com.planeador.controlador;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+//import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,8 +39,8 @@ public class AdministradorControlador {
 	@Autowired
 	private DocenteServicio docenteService;
 	@Autowired
-	private MateriaServicio materiaService;
-
+	private MateriaServicio MateriaServicio;
+	
 //	De manera temporal para rastrear las sesiones de Admin, buscar una
 //	solución más estable en el futuro
 	@ModelAttribute("admin")
@@ -173,22 +174,33 @@ public class AdministradorControlador {
 		return "redirect:/admin/solicitudes/";
 
 	}
-	
+
+//	@GetMapping("/materias")
+//	public String listaDeMaterias (Model model){
+//		List<Materia> materias = this.materiaService.getAll();
+//		 List<String> headers = Arrays.asList("Nombre","# de Créditos","Semestre", "Acción");
+//		// List<Map<String, Object>> rows = materias.stream().map(materia -> {
+//		// 	Map<String, Object> um = new HashMap<>();
+//		// 	um.put(headers.get(0), materia.getNombre());
+//		// 	um.put(headers.get(1), materia.getCreditos());
+//		// 	um.put(headers.get(2), materia.getSemestre());
+//		// 	um.put(headers.get(2), materia.getId());
+//		// 	return um;
+//		// }).collect(Collectors.toList());
+//		 model.addAttribute("headers", headers);
+//		// model.addAttribute("rows", rows);
+//		model.addAttribute("rows", materias);
+//		return "materias";
+//	}
+
 	@GetMapping("/materias")
-	public String listaDeMaterias (Model model){
-		List<Materia> materias = this.materiaService.getAll();
-		 List<String> headers = Arrays.asList("Nombre","# de Créditos","Semestre", "Acción");
-		// List<Map<String, Object>> rows = materias.stream().map(materia -> {
-		// 	Map<String, Object> um = new HashMap<>();
-		// 	um.put(headers.get(0), materia.getNombre());
-		// 	um.put(headers.get(1), materia.getCreditos());
-		// 	um.put(headers.get(2), materia.getSemestre());
-		// 	um.put(headers.get(2), materia.getId());
-		// 	return um;
-		// }).collect(Collectors.toList());
-		 model.addAttribute("headers", headers);
-		// model.addAttribute("rows", rows);
-		model.addAttribute("rows", materias);
+	public String nuevaPaginaDeMaterias(
+			@RequestParam(value = "pagina", required = false, defaultValue = "1") int pagina,
+			@RequestParam(value = "nroDeElementos", required = false, defaultValue = "5") int nroDeElementos,
+			Model model) {
+		Page<Materia> paraElControlador = MateriaServicio.paginaDeMaterias(pagina, nroDeElementos);
+		System.out.println(paraElControlador);
+		model.addAttribute("rows", paraElControlador);
 		return "materias";
 	}
 }

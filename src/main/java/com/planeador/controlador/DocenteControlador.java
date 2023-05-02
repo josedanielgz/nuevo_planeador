@@ -121,15 +121,4 @@ public class DocenteControlador {
 		return "perfil";
 	}
 
-	@GetMapping("/materias")
-	public String nuevaPaginaDeMaterias(
-			@RequestParam(value = "pagina", required = false, defaultValue = "2") int pagina,
-			@RequestParam(value = "nroDeElementos", required = false, defaultValue = "3") int nroDeElementos,
-			Model model) {
-		Page<Materia> paraElControlador = MateriaServicio.paginaDeMaterias(pagina, nroDeElementos);
-		System.out.println(paraElControlador);
-		model.addAttribute("rows", paraElControlador);
-		return "materias";
-	}
-
 }
