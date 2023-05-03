@@ -193,14 +193,18 @@ public class AdministradorControlador {
 //		return "materias";
 //	}
 
+//	https://www.kindsonthegenius.com/part-2-how-to-implement-pagination-in-spring-boot-with-thymeleaf/
 	@GetMapping("/materias")
 	public String nuevaPaginaDeMaterias(
 			@RequestParam(value = "pagina", required = false, defaultValue = "1") int pagina,
 			@RequestParam(value = "nroDeElementos", required = false, defaultValue = "5") int nroDeElementos,
 			Model model) {
 		Page<Materia> paraElControlador = MateriaServicio.paginaDeMaterias(pagina, nroDeElementos);
+		// Indica el número total de páginas para dibujar en la plantilla
+		int totalPages = paraElControlador.getTotalPages();
 		System.out.println(paraElControlador);
 		model.addAttribute("rows", paraElControlador);
+		model.addAttribute("pageNumbers", totalPages);
 		return "materias";
 	}
 }

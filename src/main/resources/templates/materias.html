@@ -49,7 +49,9 @@
 						<h6 class="m-0 font-weight-bold text-primary">Materias en el
 							sistema</h6>
 					</div>
-
+					
+					Página [[${rows.number+1}]] de [[${rows.totalPages}]]
+					
 					<div class="card-body">
 						<div class="table-responsive">
 							<table class="table table-bordered" id="dataTable" width="100%"
@@ -57,7 +59,6 @@
 								<thead>
 
 									<tr>
-										<!-- 										<th th:each="header: ${headers}" th:text="${header}"></th> -->
 										<td>Nombre</td>
 										<td>Código</td>
 										<td>Semestre</td>
@@ -66,7 +67,6 @@
 								</thead>
 								<tfoot>
 									<tr>
-										<!-- 										<th th:each="header: ${headers}" th:text="${header}"></th> -->
 										<td>Nombre</td>
 										<td>Código</td>
 										<td>Semestre</td>
@@ -74,26 +74,11 @@
 
 
 								</tfoot>
-								<tbody>
-									<!-- <td th:each="header: ${headers}">
-<a
-											class="btn btn-primary" th:if="${header == 'Acción'}"
-											th:href="#">Aprobar</a>
-
-											<a class="btn btn-danger" th:if="${header == 'Acción'}"
-											th:href="#"
-											onclick="return confirm('Diálogo de Placeholder');">Rechazar</a>
-
-
-											<span th:if="${header != 'Aprobación'}"
-											th:text="${row.get(header)}"></span></td>
-									</tr> -->
-									
+								<tbody>									
 									<tr th:each="row: ${rows.content}">
 										<td th:text="${row.nombre}"></td>
 										<td th:text="${row.creditos}"></td>
 										<td th:text="${row.semestre}"></td>
-
 									</tr>
 								</tbody>
 							</table>
@@ -102,29 +87,29 @@
 								<ul class="pagination justify-content-center">
 									<li class="page-item" th:classappend="${rows.first} ? disabled">
 										<a class="page-link"
-										th:href="@{/listBooks(size=${rows.size}, page=1)}"
-										tabindex="-1">First</a>
+										th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=1)}"
+										tabindex="-1">Primera</a>
 									</li>
 									<li class="page-item"
 										th:classappend="${rows.hasPrevious() == false} ? disabled">
 										<a class="page-link"
-										th:href="@{/listBooks(size=${rows.size}, page=${rows.number})}"
-										tabindex="-1">Previous</a>
+										th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=${rows.number})}"
+										tabindex="-1">Anterior</a>
 									</li>
-									<li class="page-item" th:each="pageNumber : ${pageNumbers}"
+									<li class="page-item" th:each="pageNumber : ${#numbers.sequence(1,pageNumbers)}"
 										th:classappend="${pageNumber == rows.number + 1} ? active">
 										<a class="page-link"
-										th:href="@{/listBooks(size=${rows.size}, page=${pageNumber})}"
+										th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=${pageNumber})}"
 										th:text="${pageNumber}">1</a>
 									</li>
 									<li class="page-item"
 										th:classappend="${rows.hasNext() == false} ? disabled"><a
 										class="page-link"
-										th:href="@{/listBooks(size=${rows.size}, page=${rows.number + 2})}">Next</a>
+										th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=${rows.number + 2})}">Siguiente</a>
 									</li>
 									<li class="page-item" th:classappend="${rows.last} ? disabled">
 										<a class="page-link"
-										th:href="@{/listBooks(size=${rows.size}, page=${rows.totalPages})}">Last</a>
+										th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=${rows.totalPages})}">Última</a>
 									</li>
 								</ul>
 							</nav>
