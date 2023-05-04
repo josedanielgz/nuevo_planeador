@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head th:replace="fragments/header :: head(~{::title})">
-<title>Planeador Académico - Lista de Microcurrículos</title>
+	<title>Planeador Académico - Lista de Microcurrículos</title>
 </head>
 
 <body id="page-top">
@@ -11,7 +11,8 @@
 	<div id="wrapper">
 
 		<ul
-			th:replace="${session.admin_id != null} ? ~{fragments/sidebar :: _sidebar(_admin)} : ~{fragments/sidebar :: _sidebar(_docente)}"></ul>
+			th:replace="${session.admin_id != null} ? ~{fragments/sidebar :: _sidebar(_admin)} : ~{fragments/sidebar :: _sidebar(_docente)}">
+		</ul>
 
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
@@ -22,75 +23,85 @@
 
 				<!-- Topbar -->
 				<nav
-					th:replace="${session.admin_id != null} ? ~{fragments/topbar :: top_bar(_admin)} : ~{fragments/topbar :: top_bar(_docente)}"></nav>
+					th:replace="${session.admin_id != null} ? ~{fragments/topbar :: top_bar(_admin)} : ~{fragments/topbar :: top_bar(_docente)}">
+				</nav>
 
-				<div th:if="${msjAprobacion != null}"
-					class="alert alert-primary alert-dismissible fade show"
+				<div th:if="${msjAprobacion != null}" class="alert alert-primary alert-dismissible fade show"
 					role="alert">
 					<label th:text="${msjRechazo}"></label>
-					<button type="button" class="close" data-dismiss="alert"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 
-				<div th:if="${msjRechazo != null}"
-					class="alert alert-primary alert-dismissible fade show"
-					role="alert">
+				<div th:if="${msjRechazo != null}" class="alert alert-primary alert-dismissible fade show" role="alert">
 					<label th:text="${msjRechazo}"></label>
-					<button type="button" class="close" data-dismiss="alert"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 
-				<div class="card shadow mb-4">
-					<div class="card-header py-3">
-						<h6 class="m-0 font-weight-bold text-primary">Solicitudes de
-							admisión</h6>
-					</div>
 
-					<div class="card-body">
-						<div class="table-responsive">
-							<table class="table table-bordered" id="dataTable" width="100%"
-								cellspacing="0">
-								<thead>
+				<div class="container-fluid">
 
-									<tr>
-										<th th:each="header: ${headers}" th:text="${header}"></th>
-									</tr>
-								</thead>
-								<tfoot>
-									<tr>
-										<th th:each="header: ${headers}" th:text="${header}"></th>
-									</tr>
-								</tfoot>
-								<tbody>
-									<tr th:each="row: ${rows}">
-										<td th:each="header: ${headers}"><a
-											class="btn btn-primary" th:if="${header == 'Aprobación'}"
-											th:href="@{/admin/aprobar/{id}(id=${row.get('Aprobación')})}">Aprobar</a>
+					<div class="row">
 
-											<a class="btn btn-danger" th:if="${header == 'Aprobación'}"
-											th:href="@{/admin/rechazar/{id}(id=${row.get('Aprobación')})}"
-											onclick="return confirm('Confirme que desea proceder a rechazar esta solicitud');">Rechazar</a>
+						<div class="col-md-12"  style="text-align: center;">
 
-											<span th:if="${header != 'Aprobación'}"
-											th:text="${row.get(header)}"></span></td>
-									</tr>
-								</tbody>
-							</table>
+
+
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">Solicitudes de
+										admisión</h6>
+								</div>
+
+								<div class="card-body">
+									<div class="table-responsive">
+										<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+											<thead>
+
+												<tr>
+													<th th:each="header: ${headers}" th:text="${header}"></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="row: ${rows}">
+													<td th:each="header: ${headers}"><a class="btn btn-primary"
+															th:if="${header == 'Aprobación'}"
+															th:href="@{/admin/aprobar/{id}(id=${row.get('Aprobación')})}">Aprobar</a>
+
+														<a class="btn btn-danger" th:if="${header == 'Aprobación'}"
+															th:href="@{/admin/rechazar/{id}(id=${row.get('Aprobación')})}"
+															onclick="return confirm('Confirme que desea proceder a rechazar esta solicitud');">Rechazar</a>
+
+														<span th:if="${header != 'Aprobación'}"
+															th:text="${row.get(header)}"></span>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+
+
+
 						</div>
+
 					</div>
+
+
 				</div>
+
 
 				<!-- Scroll to Top Button-->
-				<a class="scroll-to-top rounded" href="#page-top"> <i
-					class="fas fa-angle-up"></i>
+				<a class="scroll-to-top rounded" href="#page-top"> <i class="fas fa-angle-up"></i>
 				</a>
 
 				<div
-					th:replace="${session.admin_id != 0} ? ~{fragments/topbar :: logout_modal('_admin')} : ~{fragments/topbar :: logout_modal('_docente')}"></div>
+					th:replace="${session.admin_id != 0} ? ~{fragments/topbar :: logout_modal('_admin')} : ~{fragments/topbar :: logout_modal('_docente')}">
+				</div>
 </body>
 
 </html>
