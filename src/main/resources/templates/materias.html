@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head th:replace="fragments/header :: head(~{::title})">
-<title>Planeador Académico - Lista de Materias</title>
+	<title>Planeador Académico - Lista de Materias</title>
 </head>
 
 <body id="page-top">
@@ -11,7 +11,8 @@
 	<div id="wrapper">
 
 		<ul
-			th:replace="${session.admin_id != null} ? ~{fragments/sidebar :: _sidebar(_admin)} : ~{fragments/sidebar :: _sidebar(_docente)}"></ul>
+			th:replace="${session.admin_id != null} ? ~{fragments/sidebar :: _sidebar(_admin)} : ~{fragments/sidebar :: _sidebar(_docente)}">
+		</ul>
 
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
@@ -22,110 +23,108 @@
 
 				<!-- Topbar -->
 				<nav
-					th:replace="${session.admin_id != null} ? ~{fragments/topbar :: top_bar(_admin)} : ~{fragments/topbar :: top_bar(_docente)}"></nav>
+					th:replace="${session.admin_id != null} ? ~{fragments/topbar :: top_bar(_admin)} : ~{fragments/topbar :: top_bar(_docente)}">
+				</nav>
 
-				<div th:if="${msjAprobacion != null}"
-					class="alert alert-primary alert-dismissible fade show"
+				<div th:if="${msjAprobacion != null}" class="alert alert-primary alert-dismissible fade show"
 					role="alert">
 					<label th:text="${msjRechazo}"></label>
-					<button type="button" class="close" data-dismiss="alert"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 
-				<div th:if="${msjRechazo != null}"
-					class="alert alert-primary alert-dismissible fade show"
-					role="alert">
+				<div th:if="${msjRechazo != null}" class="alert alert-primary alert-dismissible fade show" role="alert">
 					<label th:text="${msjRechazo}"></label>
-					<button type="button" class="close" data-dismiss="alert"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 
-				<div class="card shadow mb-4">
-					<div class="card-header py-3">
-						<h6 class="m-0 font-weight-bold text-primary">Materias en el
-							sistema</h6>
-					</div>
-					
-					Página [[${rows.number+1}]] de [[${rows.totalPages}]]
-					
-					<div class="card-body">
-						<div class="table-responsive">
-							<table class="table table-bordered" id="dataTable" width="100%"
-								cellspacing="0">
-								<thead>
-
-									<tr>
-										<td>Nombre</td>
-										<td>Código</td>
-										<td>Semestre</td>
-									</tr>
-
-								</thead>
-								<tfoot>
-									<tr>
-										<td>Nombre</td>
-										<td>Código</td>
-										<td>Semestre</td>
-									</tr>
+				<div class="container-fluid">
 
 
-								</tfoot>
-								<tbody>									
-									<tr th:each="row: ${rows.content}">
-										<td th:text="${row.nombre}"></td>
-										<td th:text="${row.creditos}"></td>
-										<td th:text="${row.semestre}"></td>
-									</tr>
-								</tbody>
-							</table>
-
-							<nav aria-label="Page navigation">
-								<ul class="pagination justify-content-center">
-									<li class="page-item" th:classappend="${rows.first} ? disabled">
-										<a class="page-link"
-										th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=1)}"
-										tabindex="-1">Primera</a>
-									</li>
-									<li class="page-item"
-										th:classappend="${rows.hasPrevious() == false} ? disabled">
-										<a class="page-link"
-										th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=${rows.number})}"
-										tabindex="-1">Anterior</a>
-									</li>
-									<li class="page-item" th:each="pageNumber : ${#numbers.sequence(1,pageNumbers)}"
-										th:classappend="${pageNumber == rows.number + 1} ? active">
-										<a class="page-link"
-										th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=${pageNumber})}"
-										th:text="${pageNumber}">1</a>
-									</li>
-									<li class="page-item"
-										th:classappend="${rows.hasNext() == false} ? disabled"><a
-										class="page-link"
-										th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=${rows.number + 2})}">Siguiente</a>
-									</li>
-									<li class="page-item" th:classappend="${rows.last} ? disabled">
-										<a class="page-link"
-										th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=${rows.totalPages})}">Última</a>
-									</li>
-								</ul>
-							</nav>
 
 
+					<div class="card shadow mb-4" style="text-align: center;">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">Materias</h6>
+						</div>
+
+						<!-- Página [[${rows.number+1}]] de [[${rows.totalPages}]] -->
+
+						<div class="card-body">
+							<div class="table-responsive">
+								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+									<thead>
+
+										<tr>
+											<td>Nombre</td>
+											<td>Código</td>
+											<td>Semestre</td>
+										</tr>
+
+									</thead>
+
+									<tbody>
+										<tr th:each="row: ${rows.content}">
+											<td th:text="${row.nombre}"></td>
+											<td th:text="${row.creditos}"></td>
+											<td th:text="${row.semestre}"></td>
+										</tr>
+									</tbody>
+								</table>
+
+								<nav aria-label="Page navigation">
+									<ul class="pagination justify-content-center">
+										<li class="page-item" th:classappend="${rows.first} ? disabled">
+											<a class="page-link"
+												th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=1)}"
+												tabindex="-1">Primera</a>
+										</li>
+										<li class="page-item"
+											th:classappend="${rows.hasPrevious() == false} ? disabled">
+											<a class="page-link"
+												th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=${rows.number})}"
+												tabindex="-1">Anterior</a>
+										</li>
+										<li class="page-item" th:each="pageNumber : ${#numbers.sequence(1,pageNumbers)}"
+											th:classappend="${pageNumber == rows.number + 1} ? active">
+											<a class="page-link"
+												th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=${pageNumber})}"
+												th:text="${pageNumber}">1</a>
+										</li>
+										<li class="page-item" th:classappend="${rows.hasNext() == false} ? disabled"><a
+												class="page-link"
+												th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=${rows.number + 2})}">Siguiente</a>
+										</li>
+										<li class="page-item" th:classappend="${rows.last} ? disabled">
+											<a class="page-link"
+												th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=${rows.totalPages})}">Última</a>
+										</li>
+									</ul>
+								</nav>
+
+
+							</div>
 						</div>
 					</div>
+
 				</div>
 
+
+
+
 				<!-- Scroll to Top Button-->
-				<a class="scroll-to-top rounded" href="#page-top"> <i
-					class="fas fa-angle-up"></i>
+				<a class="scroll-to-top rounded" href="#page-top"> <i class="fas fa-angle-up"></i>
 				</a>
 
 				<div
-					th:replace="${session.admin_id != 0} ? ~{fragments/topbar :: logout_modal('_admin')} : ~{fragments/topbar :: logout_modal('_docente')}"></div>
+					th:replace="${session.admin_id != 0} ? ~{fragments/topbar :: logout_modal('_admin')} : ~{fragments/topbar :: logout_modal('_docente')}">
+				</div>
+
+
 </body>
+
 
 </html>
