@@ -1,4 +1,4 @@
-package com.planeador.servicio;
+package com.planeador.servicio.impl;
 
 import java.io.Serializable;
 
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.planeador.generico.GenericServiceImp;
 import com.planeador.modelo.Administrador;
 import com.planeador.repositorio.RepositorioAdministrador;
+import com.planeador.servicio.AdministradorServicio;
 
 
 @Service

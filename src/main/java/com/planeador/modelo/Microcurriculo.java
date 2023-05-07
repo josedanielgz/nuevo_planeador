@@ -27,16 +27,16 @@ public class Microcurriculo {
 	@Column
 	@Enumerated(EnumType.STRING)
 	private TipoCurso tipoCurso;
-	
+
 	@Column
 	private int horas_directas;
-	
+
 	@Column
 	private int horas_independientes;
-	
-	
+
+	@Column
 	private LocalDate fecha_registro;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "materia_id")
 	private Materia materia;

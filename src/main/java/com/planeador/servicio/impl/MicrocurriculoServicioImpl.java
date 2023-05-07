@@ -1,4 +1,4 @@
-package com.planeador.servicio;
+package com.planeador.servicio.impl;
 
 import java.util.List;
 
@@ -12,6 +12,7 @@ import com.planeador.modelo.Microcurriculo;
 import com.planeador.repositorio.RepositorioMateria;
 import com.planeador.repositorio.RepositorioMicrocurriculo;
 import com.planeador.servicio.MateriaServicio;
+import com.planeador.servicio.MicrocurriculoServicio;
 
 @Service
 public class MicrocurriculoServicioImpl extends GenericServiceImp<Microcurriculo, Integer>

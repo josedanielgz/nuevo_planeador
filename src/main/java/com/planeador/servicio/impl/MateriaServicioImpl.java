@@ -1,4 +1,4 @@
-package com.planeador.servicio;
+package com.planeador.servicio.impl;
 
 import java.util.List;
 

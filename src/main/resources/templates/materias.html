@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head th:replace="fragments/header :: head(~{::title})">
-	<title>Planeador Académico - Lista de Materias</title>
+<title>Planeador Académico - Lista de Materias</title>
 </head>
 
 <body id="page-top">
@@ -26,17 +27,22 @@
 					th:replace="${session.admin_id != null} ? ~{fragments/topbar :: top_bar(_admin)} : ~{fragments/topbar :: top_bar(_docente)}">
 				</nav>
 
-				<div th:if="${msjAprobacion != null}" class="alert alert-primary alert-dismissible fade show"
+				<div th:if="${msjAprobacion != null}"
+					class="alert alert-primary alert-dismissible fade show"
 					role="alert">
 					<label th:text="${msjRechazo}"></label>
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 
-				<div th:if="${msjRechazo != null}" class="alert alert-primary alert-dismissible fade show" role="alert">
+				<div th:if="${msjRechazo != null}"
+					class="alert alert-primary alert-dismissible fade show"
+					role="alert">
 					<label th:text="${msjRechazo}"></label>
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
@@ -55,7 +61,8 @@
 
 						<div class="card-body">
 							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+								<table class="table table-bordered" id="dataTable" width="100%"
+									cellspacing="0">
 									<thead>
 
 										<tr>
@@ -75,32 +82,41 @@
 									</tbody>
 								</table>
 
+<!-- 								rows es un objeto Page de Spring Data, revisar AdministradorControlador para más contexto -->
 								<nav aria-label="Page navigation">
 									<ul class="pagination justify-content-center">
-										<li class="page-item" th:classappend="${rows.first} ? disabled">
-											<a class="page-link"
-												th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=1)}"
-												tabindex="-1">Primera</a>
-										</li>
+<!-- 									Desactiva el elemento clickeable si ya se encuentra parado en la primera página -->
+										<li class="page-item"
+											th:classappend="${rows.first} ? disabled"><a
+											class="page-link"
+											th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=1)}"
+											tabindex="-1">Primera</a></li>
+<!-- 											Desactiva condicionalmente el elemento clickeable si la Page devuelta se encuentra en la primera página -->
 										<li class="page-item"
 											th:classappend="${rows.hasPrevious() == false} ? disabled">
 											<a class="page-link"
-												th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=${rows.number})}"
-												tabindex="-1">Anterior</a>
+											th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=${rows.number})}"
+											tabindex="-1">Anterior</a>
 										</li>
-										<li class="page-item" th:each="pageNumber : ${#numbers.sequence(1,pageNumbers)}"
+<!-- 										Utiliza una secuencia para dibujar la cantidad de páginas necesarias para mostrar todos los registros, de -->
+<!-- 										acuerdo con el objeto Page -->
+<!-- 											NOTA: Page utiliza un numerado interno de 0 a n-1 incluso si el Pager utiliza n. de página de 1 a n-->
+										<li class="page-item"
+											th:each="pageNumber : ${#numbers.sequence(1,pageNumbers)}"
 											th:classappend="${pageNumber == rows.number + 1} ? active">
 											<a class="page-link"
-												th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=${pageNumber})}"
-												th:text="${pageNumber}">1</a>
+											th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=${pageNumber})}"
+											th:text="${pageNumber}">1</a>
 										</li>
-										<li class="page-item" th:classappend="${rows.hasNext() == false} ? disabled"><a
-												class="page-link"
-												th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=${rows.number + 2})}">Siguiente</a>
+<!-- 										El atributo pagina aquí sería el equivalente a saltar a la posición n+1 dentro de este objeto Page -->
+										<li class="page-item"
+											th:classappend="${rows.hasNext() == false} ? disabled"><a
+											class="page-link"
+											th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=${rows.number + 2})}">Siguiente</a>
 										</li>
 										<li class="page-item" th:classappend="${rows.last} ? disabled">
 											<a class="page-link"
-												th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=${rows.totalPages})}">Última</a>
+											th:href="@{/admin/materias(nroDeElementos=${rows.size}, pagina=${rows.totalPages})}">Última</a>
 										</li>
 									</ul>
 								</nav>
@@ -111,19 +127,20 @@
 					</div>
 
 				</div>
+			</div>
+		</div>
+	</div>
 
 
 
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
 
-				<!-- Scroll to Top Button-->
-				<a class="scroll-to-top rounded" href="#page-top"> <i class="fas fa-angle-up"></i>
-				</a>
-
-				<div
-					th:replace="${session.admin_id != 0} ? ~{fragments/topbar :: logout_modal('_admin')} : ~{fragments/topbar :: logout_modal('_docente')}">
-				</div>
-
-
+	<div
+		th:replace="${session.admin_id != 0} ? ~{fragments/topbar :: logout_modal('_admin')} : ~{fragments/topbar :: logout_modal('_docente')}">
+	</div>
 </body>
 
 

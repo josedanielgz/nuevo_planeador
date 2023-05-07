@@ -19,6 +19,7 @@ import com.planeador.servicio.MateriaServicio;
 import com.planeador.modelo.Docente;
 import com.planeador.modelo.Materia;
 
+//Este controlador administra todas las rutas del aplicativo que se van como /docente/{lo que sea}
 @Controller
 @RequestMapping("/docente")
 public class DocenteControlador {
@@ -26,9 +27,13 @@ public class DocenteControlador {
 	@Autowired
 	private DocenteServicio DocenteService;
 
-	@Autowired
-	private MateriaServicio MateriaServicio;
+//	@Autowired
+//	private MateriaServicio MateriaServicio;
 
+//	Esto vendría a sustituir lo que estaba en ProductoController.java del ejercicio de refencia, 
+//	básicamente para recuperar los datos del docente. y mostrarlos en la topbar a lo largo de la
+//	sesión
+	
 	@ModelAttribute("docente")
 	public Docente getDocenteActual(Model model, HttpServletRequest request) {
 		Docente docente = (Docente) model.getAttribute("docente");
@@ -50,7 +55,7 @@ public class DocenteControlador {
 	}
 
 	@GetMapping("")
-	public String login(HttpServletRequest request, HttpSession session, Model model) {
+	public String rutaPorDefectoDocente(HttpServletRequest request, HttpSession session, Model model) {
 		if (request.getSession().getAttribute("docente_id") != null) {
 			return "redirect:/docente/main";
 		} else
@@ -58,14 +63,17 @@ public class DocenteControlador {
 	}
 
 	@PostMapping("/login")
-	public String validate(RedirectAttributes att, @RequestParam String email, @RequestParam String password,
+	public String validarInicioSesionDocente(RedirectAttributes att, @RequestParam String email, @RequestParam String password,
 			HttpServletRequest request, HttpSession session, Model model) {
 
 		Docente docente = DocenteService.select(email, password);
 
 		if (docente != null) {
 
+			// Tuve que resetear el valor "admin_id" para solucionar un bug extraño con los inicios de sesión, pendiente
+			// revisar a profundidad
 			if (docente.getAprobado()) {
+				request.getSession().setAttribute("admin_id", 0);
 				request.getSession().setAttribute("docente_id", docente.getId());
 				model.addAttribute("docente", docente);
 				return "redirect:/docente/main";
@@ -81,13 +89,13 @@ public class DocenteControlador {
 	}
 
 	@GetMapping("/logout")
-	public String logout(HttpServletRequest request, HttpSession session, Model model) {
+	public String cerrarSesionDocente(HttpServletRequest request, HttpSession session, Model model) {
 		request.getSession().invalidate();
 		return "redirect:/docente/";
 	}
 
 	@PostMapping("/save")
-	public String insertdocente(RedirectAttributes att, Docente docente, Model model) {
+	public String guardarDocente(RedirectAttributes att, Docente docente, Model model) {
 		docente.setAprobado(false);
 		DocenteService.save(docente);
 		att.addFlashAttribute("accion", "Docente registrado con éxito!");
@@ -95,30 +103,22 @@ public class DocenteControlador {
 	}
 
 	@GetMapping("/new")
-	public String showForm(Model model) {
+	public String formularioDeRegistroDocente(Model model) {
 		return "register_docente";
 	}
 
-//	Esto está basado en ProductoController.java del ejercicio de refencia, luego
-//	pensamos bien si moverlo a otro lado, básicamente para recuperar los datos
-//	del docente. y mostrarlos en el perfil
-
 	@GetMapping("/main")
-	public String perfilDocente(HttpServletRequest request, Model model) {
-//		Probando si el ModelAttribute funciona
-//		int docente_id = (int) request.getSession().getAttribute("docente_id");
-//		Docente doc = this.DocenteService.get(docente_id);
-//		model.addAttribute("docente", doc);
+	public String seccionPrincipalDocente(HttpServletRequest request, Model model) {
 		return "main";
 	}
 
-	@GetMapping("/perfil")
-	public String elPerfil(HttpServletRequest request, Model model) {
-//		Probando si el ModelAttribute funciona
-//		int docente_id = (int) request.getSession().getAttribute("docente_id");
-//		Docente doc = this.DocenteService.get(docente_id);
-//		model.addAttribute("docente", doc);
-		return "perfil";
-	}
+//EN PAUSA
+//El siguiente código se utilizó en algún punto temprano y se conserva como referencia, pero posiblemente
+//sea desechado en el futuro
+	
+//	@GetMapping("/perfil")
+//	public String elPerfil(HttpServletRequest request, Model model) {
+//		return "perfil";
+//	}
 
 }
