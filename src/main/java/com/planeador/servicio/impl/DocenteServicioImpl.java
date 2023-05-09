@@ -1,4 +1,4 @@
-package com.planeador.servicio;
+package com.planeador.servicio.impl;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.planeador.generico.GenericServiceImp;
 import com.planeador.modelo.Docente;
 import com.planeador.repositorio.RepositorioDocente;
+import com.planeador.servicio.DocenteServicio;
 
 @Service
 public class DocenteServicioImpl extends GenericServiceImp<Docente, Integer> implements DocenteServicio {
