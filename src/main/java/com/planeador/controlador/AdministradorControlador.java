@@ -26,9 +26,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.planeador.servicio.AdministradorServicio;
 import com.planeador.servicio.DocenteServicio;
 import com.planeador.servicio.MateriaServicio;
+import com.planeador.servicio.MicrocurriculoServicio;
 import com.planeador.modelo.Administrador;
 import com.planeador.modelo.Docente;
 import com.planeador.modelo.Materia;
+import com.planeador.modelo.Microcurriculo;
 
 //Este controlador administra todas las rutas del aplicativo que se van como /admin/{lo que sea}
 @Controller
@@ -41,10 +43,13 @@ public class AdministradorControlador {
 	private DocenteServicio docenteService;
 	@Autowired
 	private MateriaServicio MateriaServicio;
-	
+
+	@Autowired
+	private MicrocurriculoServicio microcurriculoServicio;
+
 //	De manera temporal para rastrear el objeto Admin a lo largo de la sesión, buscar una
 //	solución más estable en el futuro
-	
+
 	@ModelAttribute("admin")
 	public Administrador getAdministradorActual(Model model, HttpServletRequest request) {
 		Administrador admin = (Administrador) model.getAttribute("admin");
@@ -74,14 +79,15 @@ public class AdministradorControlador {
 	}
 
 	@PostMapping("/login")
-	public String validarInicioSesionAdmin(RedirectAttributes att, @RequestParam String email, @RequestParam String password,
-			HttpServletRequest request, HttpSession session, Model model) {
+	public String validarInicioSesionAdmin(RedirectAttributes att, @RequestParam String email,
+			@RequestParam String password, HttpServletRequest request, HttpSession session, Model model) {
 
 		Administrador admin = administradorService.select(email, password);
 
 		if (admin != null) {
-			
-			// Tuve que resetear el valor "docente_id" para solucionar un bug extraño con los inicios de sesión, pendiente
+
+			// Tuve que resetear el valor "docente_id" para solucionar un bug extraño con
+			// los inicios de sesión, pendiente
 			// revisar a profundidad
 			request.getSession().setAttribute("docente_id", 0);
 			request.getSession().setAttribute("admin_id", admin.getId());
@@ -92,7 +98,6 @@ public class AdministradorControlador {
 			return "redirect:/admin";
 		}
 	}
-	
 
 	@GetMapping("/logout")
 	public String cerrarSesionAdmin(HttpServletRequest request, HttpSession session) {
@@ -127,7 +132,7 @@ public class AdministradorControlador {
 //		un Map para asociarlo con los atributos correspondientes de cada objeto docente. Funciona de momento.
 		List<Docente> solicitudes = this.docenteService.findPendingRequests();
 		List<String> headers = Arrays.asList("Nombre", "Email", "Aprobación");
-		
+
 		List<Map<String, Object>> rows = solicitudes.stream().map(docente -> {
 			Map<String, Object> um = new HashMap<>();
 			um.put(headers.get(0), docente.getNombre());
@@ -169,12 +174,41 @@ public class AdministradorControlador {
 //		Utiliza un método del servicio para extraer una consulta paginada de la lista de objetos almacenados
 //		en la BBDD. El objeto Page tiene varias propiedades que son de utilidad en la plantilla final
 		Page<Materia> paraElControlador = MateriaServicio.paginaDeMaterias(pagina, nroDeElementos);
-		// Indica el número total de páginas totales en que se puede dividir toda la lista de objetos traía de la BBDD
+		// Indica el número total de páginas totales en que se puede dividir toda la
+		// lista de objetos traía de la BBDD
 		int totalPages = paraElControlador.getTotalPages();
 		model.addAttribute("rows", paraElControlador);
 		model.addAttribute("pageNumbers", totalPages);
 		return "materias";
 	}
+
+	@GetMapping("/microcurriculos")
+	public String casoDefault(HttpServletRequest request, HttpSession session, Model model) {
+//		return "redirect:/admin/microcurriculos/lista";
+		return "lista_microcurriculos";
+	}
+
+	@GetMapping("/microcurriculos/lista")
+	public String listaDeMicrocurriculos(HttpServletRequest request, Model model) {
+		List<Microcurriculo> microcurriculos = this.microcurriculoServicio.listaDeMicrocurriculos();
+		model.addAttribute("microcurriculos", microcurriculos);
+		return "lista_microcurriculos";
+	}
+
+//	Redirigimos la página actual a donde va a estar el nuevo microcurrículo
+	@GetMapping("/microcurriculos/nuevo")
+	public String formularioDeMicrocurriculos(HttpServletRequest request, HttpSession session, Model model) {
+		return "crear_microcurriculo";
+	}
+
+//	Hablamos con el backend para que guarde el microcurriculo
+	@PostMapping("/microcurriculos/nuevo")
+	public String subirMicrocurriculos(@ModelAttribute Microcurriculo microcurriculo, Model model, RedirectAttributes att) {
+		this.microcurriculoServicio.save(microcurriculo);
+		att.addFlashAttribute("accion", "Microcurrículo creado con éxito!");
+		return "redirect:/admin/microcurriculos";
+	}
+
 }
 
 //EN PAUSA

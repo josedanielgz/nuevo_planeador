@@ -26,7 +26,7 @@ public class Microcurriculo {
 
 	@Column
 	@Enumerated(EnumType.STRING)
-	private TipoCurso tipoCurso;
+	private TipoCurso tipo_Curso;
 
 	@Column
 	private int horas_directas;
