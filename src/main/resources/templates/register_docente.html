@@ -21,8 +21,7 @@
 					<div class="col-lg-7">
 						<div class="p-5">
 							<div class="text-center">
-								<h1 class="h4 text-gray-900 mb-4">Crear un Usuario
-									Docente</h1>
+								<h1 class="h4 text-gray-900 mb-4">Crear un Usuario Docente</h1>
 							</div>
 							<form action="#" class="user" th:action="@{/docente/save}"
 								method="post">
@@ -31,11 +30,7 @@
 										<input type="text" class="form-control" name="nombre"
 											placeholder="Nombre" required="required">
 									</div>
-									<!-- 									<div class="col-sm-6"> -->
-									<!-- 										<input type="text" class="form-control" name="email" -->
-									<!-- 											aria-describedby="emailHelp" placeholder="Correo" -->
-									<!-- 											required="required"> -->
-									<!-- 									</div> -->
+
 								</div>
 
 								<div class="form-group row">
@@ -48,28 +43,10 @@
 										<input type="password" class="form-control" name="password"
 											placeholder="Contraseña" required="required">
 									</div>
-									<!-- 									<div class="col-sm-6"> -->
-									<!-- 										<input type="password" class="form-control form-control-user" -->
-									<!-- 											id="exampleRepeatPassword" placeholder="Repeat Password"> -->
-									<!-- 									</div> -->
 								</div>
 								<button type="submit" class="btn btn-info px-5 mb-5 w-100">Registrar</button>
-
-								<!-- 								<a href="login.html" class="btn btn-primary btn-user btn-block"> -->
-								<!-- 									Register Account </a> -->
-								<!-- 								<hr> -->
-								<!-- 								<a href="index.html" class="btn btn-google btn-user btn-block"> -->
-								<!-- 									<i class="fab fa-google fa-fw"></i> Register with Google -->
-								<!-- 								</a> <a href="index.html" -->
-								<!-- 									class="btn btn-facebook btn-user btn-block"> <i -->
-								<!-- 									class="fab fa-facebook-f fa-fw"></i> Register with Facebook -->
-								<!-- 								</a> -->
 							</form>
 							<hr>
-							<!-- 							<div class="text-center"> -->
-							<!-- 								<a class="small" href="forgot-password.html">Forgot -->
-							<!-- 									Password?</a> -->
-							<!-- 							</div> -->
 							<div id="emailHelp" class="form-text text-center mb-5 text-dark">
 								¿Ya estás registrado? <a th:href="@{/docente}"><br>Inicia
 									sesión</a>
