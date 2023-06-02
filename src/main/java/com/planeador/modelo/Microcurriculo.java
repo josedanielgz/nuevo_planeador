@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.planeador.modelo.enums.TipoCurso;
 
 @Entity
@@ -24,18 +26,19 @@ public class Microcurriculo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column
 	@Enumerated(EnumType.STRING)
-	private TipoCurso tipo_Curso;
+	@Column(name = "tipo_curso")
+	private TipoCurso tipoCurso;
 
-	@Column
-	private int horas_directas;
+	@Column(name = "horas_directas")
+	int horasDirectas;
 
-	@Column
-	private int horas_independientes;
+	@Column(name = "horas_independientes")
+	private int horasIndependientes;
 
-	@Column
-	private LocalDate fecha_registro;
+	@Column(name = "fecha_registro")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private LocalDate fechaRegistro;
 
 	@ManyToOne
 	@JoinColumn(name = "materia_id")
@@ -46,6 +49,62 @@ public class Microcurriculo {
 
 	public Microcurriculo() {
 		super();
+	}
+
+	public Microcurriculo(TipoCurso tipoCurso, int horasDirectas, int horasIndependientes, Materia materia) {
+		super();
+		this.tipoCurso = tipoCurso;
+		this.horasDirectas = horasDirectas;
+		this.horasIndependientes = horasIndependientes;
+		this.materia = materia;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public TipoCurso getTipoCurso() {
+		return tipoCurso;
+	}
+
+	public void setTipoCurso(TipoCurso tipoCurso) {
+		this.tipoCurso = tipoCurso;
+	}
+
+	public int getHorasDirectas() {
+		return horasDirectas;
+	}
+
+	public void setHorasDirectas(int horasDirectas) {
+		this.horasDirectas = horasDirectas;
+	}
+
+	public int getHorasIndependientes() {
+		return horasIndependientes;
+	}
+
+	public void setHorasIndependientes(int horasIndependientes) {
+		this.horasIndependientes = horasIndependientes;
+	}
+
+	public LocalDate getFechaRegistro() {
+		return fechaRegistro;
+	}
+
+	public void setFechaRegistro(LocalDate fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
+	}
+
+	public Materia getMateria() {
+		return materia;
+	}
+
+	public void setMateria(Materia materia) {
+		this.materia = materia;
 	}
 
 }

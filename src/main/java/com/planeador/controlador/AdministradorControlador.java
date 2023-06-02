@@ -183,7 +183,7 @@ public class AdministradorControlador {
 	}
 
 	@GetMapping("/microcurriculos")
-	public String casoDefault(HttpServletRequest request, HttpSession session, Model model) {
+	public String casoPorDefecto(HttpServletRequest request, HttpSession session, Model model) {
 //		return "redirect:/admin/microcurriculos/lista";
 		return "lista_microcurriculos";
 	}
@@ -197,7 +197,9 @@ public class AdministradorControlador {
 
 //	Redirigimos la página actual a donde va a estar el nuevo microcurrículo
 	@GetMapping("/microcurriculos/nuevo")
-	public String formularioDeMicrocurriculos(HttpServletRequest request, HttpSession session, Model model) {
+	public String formularioDeMicrocurriculos(@ModelAttribute Microcurriculo microcurriculo, HttpServletRequest request, HttpSession session, Model model) {
+		List<Materia> listaDeMaterias = MateriaServicio.listaDeMaterias();
+		model.addAttribute("listaDeMaterias", listaDeMaterias);
 		return "crear_microcurriculo";
 	}
 
