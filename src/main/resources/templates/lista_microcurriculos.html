@@ -20,27 +20,77 @@
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 					<div class="row" style="text-align: center">
-						<table class="table table-bordered" id="dataTable" width="100%"
-							cellspacing="0">
+
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">Microcurrículos</h6>
+						</div>
+
+						<div class="alert alert-info"
+							th:if="${paginaDeMicrocurriculos.isEmpty()}">
+							<label>No se han registrado microcurrículos en el
+								sistema.</label>
+						</div>
+
+						<table class="table table-bordered" width="100%" cellspacing="0"
+							th:unless="${paginaDeMicrocurriculos.isEmpty()}">
 							<thead>
 								<tr>
 									<th>Nombre</th>
 									<th>Código</th>
 									<th>Tipo de Curso</th>
-									<th>Número de Créditos</th>
+									<th>Horas Directas</th>
 									<th>Semestre</th>
 								</tr>
 							</thead>
-<!-- 							<tbody th:each=" mc: ${microcurriculos}"> -->
-<!-- 								<tr> -->
-<!-- 									<td th:text="${mc.nombre}"></td> -->
-<!-- 									<td th:text="${mc.codigoCurso}"></td> -->
-<!-- 									<td th:text="${mc.tipoCurso}"></td> -->
-<!-- 									<td th:text="${mc.numeroCreditos}"></td> -->
-<!-- 									<td th:text="${mc.semestre}"></td> -->
-<!-- 								</tr> -->
-<!-- 							</tbody> -->
+							<tbody th:each=" mc: ${paginaDeMicrocurriculos}">
+								<tr>
+									<td th:text="${mc.nombre}"></td>
+									<td th:text="${mc.materia.id}"></td>
+									<td th:text="${mc.tipoCurso}"></td>
+									<td th:text="${mc.horasDirectas}"></td>
+									<td th:text="${mc.materia.semestre}"></td>
+								</tr>
+							</tbody>
 						</table>
+
+						<nav aria-label="Page navigation">
+							<ul class="pagination justify-content-center">
+								<!-- 									Desactiva el elemento clickeable si ya se encuentra parado en la primera página -->
+								<li class="page-item"
+									th:classappend="${paginaDeMicrocurriculos.first} ? disabled"><a
+									class="page-link"
+									th:href="@{/admin/solicitudes(nroDeElementos=${paginaDeMicrocurriculos.size}, pagina=1)}"
+									tabindex="-1">Primera</a></li>
+								<!-- 											Desactiva condicionalmente el elemento clickeable si la Page devuelta se encuentra en la primera página -->
+								<li class="page-item"
+									th:classappend="${paginaDeMicrocurriculos.hasPrevious() == false} ? disabled">
+									<a class="page-link"
+									th:href="@{/admin/solicitudes(nroDeElementos=${paginaDeMicrocurriculos.size}, pagina=${paginaDeMicrocurriculos.number})}"
+									tabindex="-1">Anterior</a>
+								</li>
+								<!-- 										Utiliza una secuencia para dibujar la cantidad de páginas necesarias para mostrar todos los registros, de -->
+								<!-- 										acuerdo con el objeto Page -->
+								<!-- 											NOTA: Page utiliza un numerado interno de 0 a n-1 incluso si el Pager utiliza n. de página de 1 a n-->
+								<li class="page-item"
+									th:each="numeroDePagina : ${#numbers.sequence(1,totalDePaginas)}"
+									th:classappend="${numeroDePagina == paginaDeMicrocurriculos.number + 1} ? active">
+									<a class="page-link"
+									th:href="@{/admin/solicitudes(nroDeElementos=${paginaDeMicrocurriculos.size}, pagina=${numeroDePagina})}"
+									th:text="${numeroDePagina}">1</a>
+								</li>
+								<!-- 										El atributo pagina aquí sería el equivalente a saltar a la posición n+1 dentro de este objeto Page -->
+								<li class="page-item"
+									th:classappend="${paginaDeMicrocurriculos.hasNext() == false} ? disabled"><a
+									class="page-link"
+									th:href="@{/admin/solicitudes(nroDeElementos=${paginaDeMicrocurriculos.size}, pagina=${paginaDeMicrocurriculos.number + 2})}">Siguiente</a>
+								</li>
+								<li class="page-item"
+									th:classappend="${paginaDeMicrocurriculos.last} ? disabled"><a
+									class="page-link"
+									th:href="@{/admin/solicitudes(nroDeElementos=${paginaDeMicrocurriculos.size}, pagina=${paginaDeMicrocurriculos.totalPages})}">Última</a>
+								</li>
+							</ul>
+						</nav>
 					</div>
 				</div>
 			</div>

@@ -26,6 +26,9 @@ public class Microcurriculo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+	@Column(name = "nombre")
+	private String nombre;
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_curso")
 	private TipoCurso tipoCurso;
@@ -37,7 +40,7 @@ public class Microcurriculo {
 	private int horasIndependientes;
 
 	@Column(name = "fecha_registro")
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fechaRegistro;
 
 	@ManyToOne
@@ -51,12 +54,22 @@ public class Microcurriculo {
 		super();
 	}
 
-	public Microcurriculo(TipoCurso tipoCurso, int horasDirectas, int horasIndependientes, Materia materia) {
+	public Microcurriculo(String nombre, TipoCurso tipoCurso, int horasDirectas, int horasIndependientes,
+			Materia materia) {
 		super();
+		this.nombre = nombre;
 		this.tipoCurso = tipoCurso;
 		this.horasDirectas = horasDirectas;
 		this.horasIndependientes = horasIndependientes;
 		this.materia = materia;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public long getId() {

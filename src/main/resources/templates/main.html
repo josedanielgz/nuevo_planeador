@@ -73,53 +73,74 @@
 						<div class="col-md-8">
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">Docentes</h6>
+									<h6 class="m-0 font-weight-bold text-primary">Solicitudes de registro recientes</h6>
 								</div>
 								<div class="card-body">
-									<div class="table-responsive">
+								<div class="alert alert-info" th:if="${solicitudes.isEmpty()}">
+									<label>No se han reportado solicitudes de registro nuevas recientemente.</label>
+								</div>
+								
+									<div class="table-responsive" th:unless="${solicitudes.isEmpty()}">
 										<table class="table table-bordered" id="dataTable"
 											width="100%" cellspacing="0">
 											<thead>
+<!-- 											Tabla creada con propósitos de maquetar, eliminar si no se necesita en el futuro -->
+<!-- 												<tr> -->
+<!-- 													<th>Nombre</th> -->
+<!-- 													<th>Email</th> -->
+<!-- 													<th>Codigo</th> -->
+<!-- 													<th>Estado</th> -->
+<!-- 												</tr> -->
 												<tr>
 													<th>Nombre</th>
-													<th>Email</th>
-													<th>Codigo</th>
+													<th>Email</th>											
 													<th>Estado</th>
 												</tr>
 											</thead>
-											<tbody th:each="adm: ${admin}">
+<!-- 											Tabla creada con propósitos de maquetar, eliminar si no se necesita en el futuro -->
+<!-- 											<tbody th:each="adm: ${admin}"> -->
+<!-- 												<tr> -->
+<!-- 													<td th:text="${adm.nombre}"></td> -->
+<!-- 													<td th:text="${adm.email}"></td> -->
+<!-- 													<td th:text="${adm.nombre}"></td> -->
+<!-- 													<td th:text="${adm.nombre}"></td> -->
+<!-- 												</tr> -->
+<!-- 												<tr> -->
+<!-- 													<td th:text="${adm.nombre}"></td> -->
+<!-- 													<td th:text="${adm.email}"></td> -->
+<!-- 													<td th:text="${adm.nombre}"></td> -->
+<!-- 													<td th:text="${adm.nombre}"></td> -->
+<!-- 												</tr> -->
+<!-- 												<tr> -->
+<!-- 													<td th:text="${adm.nombre}"></td> -->
+<!-- 													<td th:text="${adm.email}"></td> -->
+<!-- 													<td th:text="${adm.nombre}"></td> -->
+<!-- 													<td th:text="${adm.nombre}"></td> -->
+<!-- 												</tr> -->
+<!-- 												<tr> -->
+<!-- 													<td th:text="${adm.nombre}"></td> -->
+<!-- 													<td th:text="${adm.email}"></td> -->
+<!-- 													<td th:text="${adm.nombre}"></td> -->
+<!-- 													<td th:text="${adm.nombre}"></td> -->
+<!-- 												</tr> -->
+<!-- 												<tr> -->
+<!-- 													<td th:text="${adm.nombre}"></td> -->
+<!-- 													<td th:text="${adm.email}"></td> -->
+<!-- 													<td th:text="${adm.nombre}"></td> -->
+<!-- 													<td th:text="${adm.nombre}"></td> -->
+<!-- 												</tr> -->
+<!-- 											</tbody> -->
+												<tbody th:each="solicitud : ${solicitudes}">
+
 												<tr>
-													<td th:text="${adm.nombre}"></td>
-													<td th:text="${adm.email}"></td>
-													<td th:text="${adm.nombre}"></td>
-													<td th:text="${adm.nombre}"></td>
+													<td th:text="${solicitud.nombre}"></td>
+													<td th:text="${solicitud.email}"></td>
+													<td th:text="${solicitud.aprobado}"></td>
 												</tr>
-												<tr>
-													<td th:text="${adm.nombre}"></td>
-													<td th:text="${adm.email}"></td>
-													<td th:text="${adm.nombre}"></td>
-													<td th:text="${adm.nombre}"></td>
-												</tr>
-												<tr>
-													<td th:text="${adm.nombre}"></td>
-													<td th:text="${adm.email}"></td>
-													<td th:text="${adm.nombre}"></td>
-													<td th:text="${adm.nombre}"></td>
-												</tr>
-												<tr>
-													<td th:text="${adm.nombre}"></td>
-													<td th:text="${adm.email}"></td>
-													<td th:text="${adm.nombre}"></td>
-													<td th:text="${adm.nombre}"></td>
-												</tr>
-												<tr>
-													<td th:text="${adm.nombre}"></td>
-													<td th:text="${adm.email}"></td>
-													<td th:text="${adm.nombre}"></td>
-													<td th:text="${adm.nombre}"></td>
-												</tr>
+
 											</tbody>
 										</table>
+										<a th:href="@{/admin/solicitudes}">Ver más</a>
 									</div>
 								</div>
 							</div>
@@ -131,31 +152,47 @@
 								</div>
 								<div class="card-body">
 									<div class="table-responsive">
-										<table class="table table-bordered" id="dataTable"
+<!-- 									 id="dataTable" -->
+										<table class="table table-bordered"
 											width="100%" cellspacing="0">
 											<thead>
 												<tr>
-													<th>Nombre</th>
+<!-- 											Tabla creada con propósitos de maquetar, eliminar si no se necesita en el futuro -->											
+<!-- 													<th>Nombre</th> -->
+												<th>Nombre</th>
+												<th>Créditos</th>
+												<th>Semestre</th>
 												</tr>
+
 											</thead>
-											<tbody th:each="adm: ${admin}">
+<!-- 											Tabla creada con propósitos de maquetar, eliminar si no se necesita en el futuro -->											
+<!-- 											<tbody th:each="adm: ${admin}"> -->
+<!-- 												<tr> -->
+<!-- 													<td th:text="${adm.nombre}"></td> -->
+<!-- 												</tr> -->
+<!-- 												<tr> -->
+<!-- 													<td th:text="${adm.nombre}"></td> -->
+<!-- 												</tr> -->
+<!-- 												<tr> -->
+<!-- 													<td th:text="${adm.nombre}"></td> -->
+<!-- 												</tr> -->
+<!-- 												<tr> -->
+<!-- 													<td th:text="${adm.nombre}"></td> -->
+<!-- 												</tr> -->
+<!-- 												<tr> -->
+<!-- 													<td th:text="${adm.nombre}"></td> -->
+<!-- 												</tr> -->
+<!-- 											</tbody> -->
+												<tbody th:each="materia : ${materias}">
+
 												<tr>
-													<td th:text="${adm.nombre}"></td>
-												</tr>
-												<tr>
-													<td th:text="${adm.nombre}"></td>
-												</tr>
-												<tr>
-													<td th:text="${adm.nombre}"></td>
-												</tr>
-												<tr>
-													<td th:text="${adm.nombre}"></td>
-												</tr>
-												<tr>
-													<td th:text="${adm.nombre}"></td>
+													<td th:text="${materia.nombre}"></td>
+													<td th:text="${materia.creditos}"></td>
+													<td th:text="${materia.semestre}"></td>
 												</tr>
 											</tbody>
 										</table>
+										<a th:href="@{/admin/materias}">Ver más</a>
 									</div>
 								</div>
 							</div>

@@ -24,12 +24,18 @@
 												<form action="#" th:action="@{/admin/microcurriculos/nuevo}" th:object="${microcurriculo}"
 													method="post">
 													<div class="form-group">
+													
+														<label for="nombre">Nombre</label> <input
+															type="text" id="nombre"
+															name="nombre" class="form-control"
+															th:field="*{nombre}" />
+													
 														<label for="tipo">Tipo de Curso</label> <select id="tipoCurso"
 															name="tipo" class="form-control" th:field="*{tipoCurso}">
 															<option value="PRACTICO">Práctico</option>
 															<option value="TEORICO">Teórico</option>
 														</select>
-														<label for="fechaRegistro">Fecha de registrp</label> <input
+														<label for="fechaRegistro">Fecha de registro</label> <input
 															type="date" id="fechaRegistro" name="fechaRegistro"
 															class="form-control" th:field="*{fechaRegistro}"/>
 													</div>
