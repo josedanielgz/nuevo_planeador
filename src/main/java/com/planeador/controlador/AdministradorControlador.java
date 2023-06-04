@@ -1,5 +1,7 @@
 package com.planeador.controlador;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 //import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +34,7 @@ import com.planeador.modelo.Administrador;
 import com.planeador.modelo.Docente;
 import com.planeador.modelo.Materia;
 import com.planeador.modelo.Microcurriculo;
+import com.planeador.utils.PasswordHasher;
 
 //Este controlador administra todas las rutas del aplicativo que se van como /admin/{lo que sea}
 @Controller
@@ -79,10 +83,12 @@ public class AdministradorControlador {
 
 	@PostMapping("/login")
 	public String validarInicioSesionAdmin(RedirectAttributes att, @RequestParam String email,
-			@RequestParam String password, HttpServletRequest request, HttpSession session, Model model) {
-
+			@RequestParam String password, HttpServletRequest request, HttpSession session, Model model) throws NoSuchAlgorithmException, InvalidKeySpecException {
+// En lo posible quiero terminar de implementar el hasheado de la contraseña, pero necesito resolver ese bug de
+// la persistencia primero
+//		String new_password = PasswordHasher.generateStorngPasswordHash(password);
+//		Administrador admin = administradorServicio.select(email, new_password);
 		Administrador admin = administradorServicio.select(email, password);
-
 		if (admin != null) {
 
 			// Tuve que resetear el valor "docente_id" para solucionar un bug extraño con
@@ -105,7 +111,9 @@ public class AdministradorControlador {
 	}
 
 	@PostMapping("/save")
-	public String guardarAdmin(RedirectAttributes att, Administrador admin) {
+	public String guardarAdmin(RedirectAttributes att, Administrador admin) throws NoSuchAlgorithmException, InvalidKeySpecException {
+		String nueva_contraseña = PasswordHasher.generateStorngPasswordHash(admin.getPassword());
+		admin.setPassword(nueva_contraseña);
 		administradorServicio.save(admin);
 		att.addFlashAttribute("accion", "Administrador registrado con éxito!");
 		return "redirect:/admin/";

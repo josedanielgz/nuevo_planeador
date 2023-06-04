@@ -33,7 +33,7 @@ public class PasswordHasher {
 		System.out.println(matched);
 	}
 
-	private static String generateStorngPasswordHash(String password)
+	public static String generateStorngPasswordHash(String password)
 			throws NoSuchAlgorithmException, InvalidKeySpecException {
 		// The more iterations, the stronger the outputted hash will be, but the slower
 		// will be the
@@ -91,7 +91,7 @@ public class PasswordHasher {
 	// just got, other is supossed to be retrieved from eslewhere, like from a DB)
 	// and returns if they're the same or not.
 
-	private static boolean validatePassword(String originalPassword, String storedPassword)
+	public static boolean validatePassword(String originalPassword, String storedPassword)
 			throws NoSuchAlgorithmException, InvalidKeySpecException {
 		// The same amount of iterations used to encode the storedPassword should be
 		// used with the new one.

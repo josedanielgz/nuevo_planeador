@@ -7,11 +7,11 @@
 <body id="page-top">
 	<!-- Page Wrapper -->
 	<div id="wrapper">
-	
+
 		<!-- Sidebar -->
 		<ul
 			th:replace="${session.admin_id != 0} ? ~{fragments/sidebar :: _sidebar('_admin')} : ~{fragments/sidebar :: _sidebar('_docente')}"></ul>
-			
+
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
 			<!-- Main Content -->
@@ -20,186 +20,12 @@
 				<nav
 					th:replace="${session.admin_id != 0} ? ~{fragments/topbar :: top_bar('_admin')} : ~{fragments/topbar :: top_bar('_docente')}"></nav>
 				<!-- Begin Page Content -->
-				<div class="container-fluid">
-					<div class="row" style="text-align: center">
-						<div class="col-md-8">
-							<div class="card border-left-info shadow h-100 py-2">
-								<div class="card-body">
-									<div class="row no-gutters align-items-center">
-										<div class="col mr-2">
-											<div
-												class="text-xs font-weight-bold text-info text-uppercase mb-1">
-												Planeadores terminados</div>
-											<div class="row no-gutters align-items-center">
-												<div class="col-auto">
-													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">90%</div>
-												</div>
-												<div class="col">
-													<div class="progress progress-sm mr-2">
-														<div class="progress-bar bg-info" role="progressbar"
-															style="width: 90%" aria-valuenow="50" aria-valuemin="0"
-															aria-valuemax="100"></div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="col-auto">
-											<i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="card border-left-warning shadow h-100 py-2">
-								<div class="card-body">
-									<div class="row no-gutters align-items-center">
-										<div class="col mr-2">
-											<div
-												class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-												Solicitudes pendientes</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-										</div>
-										<div class="col-auto">
-											<i class="fas fa-comments fa-2x text-gray-300"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">&nbsp;</div>
-					<div class="row" style="text-align: center;">
-						<div class="col-md-8">
-							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">Solicitudes de registro recientes</h6>
-								</div>
-								<div class="card-body">
-								<div class="alert alert-info" th:if="${solicitudes.isEmpty()}">
-									<label>No se han reportado solicitudes de registro nuevas recientemente.</label>
-								</div>
-								
-									<div class="table-responsive" th:unless="${solicitudes.isEmpty()}">
-										<table class="table table-bordered" id="dataTable"
-											width="100%" cellspacing="0">
-											<thead>
-<!-- 											Tabla creada con propósitos de maquetar, eliminar si no se necesita en el futuro -->
-<!-- 												<tr> -->
-<!-- 													<th>Nombre</th> -->
-<!-- 													<th>Email</th> -->
-<!-- 													<th>Codigo</th> -->
-<!-- 													<th>Estado</th> -->
-<!-- 												</tr> -->
-												<tr>
-													<th>Nombre</th>
-													<th>Email</th>											
-													<th>Estado</th>
-												</tr>
-											</thead>
-<!-- 											Tabla creada con propósitos de maquetar, eliminar si no se necesita en el futuro -->
-<!-- 											<tbody th:each="adm: ${admin}"> -->
-<!-- 												<tr> -->
-<!-- 													<td th:text="${adm.nombre}"></td> -->
-<!-- 													<td th:text="${adm.email}"></td> -->
-<!-- 													<td th:text="${adm.nombre}"></td> -->
-<!-- 													<td th:text="${adm.nombre}"></td> -->
-<!-- 												</tr> -->
-<!-- 												<tr> -->
-<!-- 													<td th:text="${adm.nombre}"></td> -->
-<!-- 													<td th:text="${adm.email}"></td> -->
-<!-- 													<td th:text="${adm.nombre}"></td> -->
-<!-- 													<td th:text="${adm.nombre}"></td> -->
-<!-- 												</tr> -->
-<!-- 												<tr> -->
-<!-- 													<td th:text="${adm.nombre}"></td> -->
-<!-- 													<td th:text="${adm.email}"></td> -->
-<!-- 													<td th:text="${adm.nombre}"></td> -->
-<!-- 													<td th:text="${adm.nombre}"></td> -->
-<!-- 												</tr> -->
-<!-- 												<tr> -->
-<!-- 													<td th:text="${adm.nombre}"></td> -->
-<!-- 													<td th:text="${adm.email}"></td> -->
-<!-- 													<td th:text="${adm.nombre}"></td> -->
-<!-- 													<td th:text="${adm.nombre}"></td> -->
-<!-- 												</tr> -->
-<!-- 												<tr> -->
-<!-- 													<td th:text="${adm.nombre}"></td> -->
-<!-- 													<td th:text="${adm.email}"></td> -->
-<!-- 													<td th:text="${adm.nombre}"></td> -->
-<!-- 													<td th:text="${adm.nombre}"></td> -->
-<!-- 												</tr> -->
-<!-- 											</tbody> -->
-												<tbody th:each="solicitud : ${solicitudes}">
-
-												<tr>
-													<td th:text="${solicitud.nombre}"></td>
-													<td th:text="${solicitud.email}"></td>
-													<td th:text="${solicitud.aprobado}"></td>
-												</tr>
-
-											</tbody>
-										</table>
-										<a th:href="@{/admin/solicitudes}">Ver más</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">Materias</h6>
-								</div>
-								<div class="card-body">
-									<div class="table-responsive">
-<!-- 									 id="dataTable" -->
-										<table class="table table-bordered"
-											width="100%" cellspacing="0">
-											<thead>
-												<tr>
-<!-- 											Tabla creada con propósitos de maquetar, eliminar si no se necesita en el futuro -->											
-<!-- 													<th>Nombre</th> -->
-												<th>Nombre</th>
-												<th>Créditos</th>
-												<th>Semestre</th>
-												</tr>
-
-											</thead>
-<!-- 											Tabla creada con propósitos de maquetar, eliminar si no se necesita en el futuro -->											
-<!-- 											<tbody th:each="adm: ${admin}"> -->
-<!-- 												<tr> -->
-<!-- 													<td th:text="${adm.nombre}"></td> -->
-<!-- 												</tr> -->
-<!-- 												<tr> -->
-<!-- 													<td th:text="${adm.nombre}"></td> -->
-<!-- 												</tr> -->
-<!-- 												<tr> -->
-<!-- 													<td th:text="${adm.nombre}"></td> -->
-<!-- 												</tr> -->
-<!-- 												<tr> -->
-<!-- 													<td th:text="${adm.nombre}"></td> -->
-<!-- 												</tr> -->
-<!-- 												<tr> -->
-<!-- 													<td th:text="${adm.nombre}"></td> -->
-<!-- 												</tr> -->
-<!-- 											</tbody> -->
-												<tbody th:each="materia : ${materias}">
-
-												<tr>
-													<td th:text="${materia.nombre}"></td>
-													<td th:text="${materia.creditos}"></td>
-													<td th:text="${materia.semestre}"></td>
-												</tr>
-											</tbody>
-										</table>
-										<a th:href="@{/admin/materias}">Ver más</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				
+<!-- 				REVISAR EL FRAGMENTO EN /templates/fragments/main_body.html -->
+				<div
+					th:replace="${session.admin_id != 0} ? ~{fragments/main_body :: _main_body('_admin')} : ~{fragments/main_body :: _main_body('_docente')}"></div>
 				<!-- /.container-fluid -->
+				
 			</div>
 			<!-- End of Main Content -->
 		</div>
