@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head th:replace="fragments/header :: head(~{::title})">
-<title>Planeador Académico - Perfil de Administrador</title>
+<title>Planeador Académico - Perfil de Docente</title>
 </head>
 <body id="page-top">
 	<!-- Page Wrapper -->
@@ -20,37 +20,40 @@
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 					<div class="row" style="text-align: center">
-						<h2>Formulario para la creación de microcurrículo</h2>
-												<form action="#" th:action="@{/admin/microcurriculos/nuevo}" th:object="${microcurriculo}"
+						<h2>Formulario para la creación de instrumentos de evaluación</h2>
+												<form action="#" th:action="@{/docente/planeadores/nuevo}" th:object="${microcurriculo}"
 													method="post">
 													<div class="form-group">
 													
-														<label for="nombre">Nombre</label> <input
-															type="text" id="nombre"
+														<label for="docente">Planeador</label> <input
+															type="text" id="docente"
 															name="nombre" class="form-control"
-															th:field="*{nombre}" />
-													
-														<label for="fechaRegistro">Fecha de registro</label> <input
-															type="date" id="fechaRegistro" name="fechaRegistro"
-															class="form-control" th:field="*{fechaRegistro}"/>
-													</div>
-													<div class="form-group">
-														<label for="horasDirectas">Horas directas</label> <input
-															type="number" id="horasDirectas" name="horasDirectas"
-															class="form-control" th:field="*{horasDirectas}" />
-													</div>
-													<div class="form-group">
-														<label for="horasIndependientes">Horas independientes</label> <input
-															type="number" id="horasIndependientes"
-															name="horasIndependientes" class="form-control"
-															th:field="*{horasIndependientes}" />
-													</div>
-													<div class="form-group">
-														<label for="materia">Materia</label> <select id="materia"
-															name="materia" class="form-control" th:field="*{materia}">
-															<option th:each="item : ${listaDeMaterias}" th:value="${item.id}"
-																th:text="${item.nombre}">
+															th:field="*{planeador}" th:value="${planeador.id}" th:text="${planeador.id}" />
+															
+															<label for="descripcion">Descripción</label> <input
+															type="text" id="descripcion"
+															name="descripcion" class="form-control"
+															th:field="*{descripcion}" />
+															
+																													<label for="tipo">Tipo de Curso</label> <select id="tipoInstrumento"
+															name="tipo" class="form-control" th:field="*{corte}">
+															<option value="1">1</option>
+															<option value="2">2</option>
+															<option value="3">3</option>
 														</select>
+															
+														<label for="tipo">Tipo de Curso</label> <select id="tipoInstrumento"
+															name="tipo" class="form-control" th:field="*{tipoInstrumento}">
+															<option value="SABER">Saber</option>
+															<option value="HACER">Hacer</option>
+															<option value="CONOCER">Conocer</option>
+														</select>
+														
+															<label for="enlaceRecurso">Enlace al recurso (opcional)</label> <input
+															type="text" id="enlaceRecurso"
+															name="enlaceRecurso" class="form-control"
+															th:field="*{enlaceRecurso}" />
+													
 													</div>
 													<button type="submit" class="btn btn-primary">Enviar</button>
 												</form>

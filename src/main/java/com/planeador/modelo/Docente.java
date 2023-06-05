@@ -34,7 +34,7 @@ public class Docente {
 	private Boolean aprobado;
 
 	@OneToMany(mappedBy = "docente")
-	private List<Curso> cursos;
+	private List<Planeador> planeadores;
 
 	public Integer getId() {
 		return id;

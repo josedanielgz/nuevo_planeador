@@ -29,10 +29,6 @@ public class Microcurriculo {
 	@Column(name = "nombre")
 	private String nombre;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "tipo_curso")
-	private TipoCurso tipoCurso;
-
 	@Column(name = "horas_directas")
 	int horasDirectas;
 
@@ -54,11 +50,10 @@ public class Microcurriculo {
 		super();
 	}
 
-	public Microcurriculo(String nombre, TipoCurso tipoCurso, int horasDirectas, int horasIndependientes,
+	public Microcurriculo(String nombre, int horasDirectas, int horasIndependientes,
 			Materia materia) {
 		super();
 		this.nombre = nombre;
-		this.tipoCurso = tipoCurso;
 		this.horasDirectas = horasDirectas;
 		this.horasIndependientes = horasIndependientes;
 		this.materia = materia;
@@ -78,14 +73,6 @@ public class Microcurriculo {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public TipoCurso getTipoCurso() {
-		return tipoCurso;
-	}
-
-	public void setTipoCurso(TipoCurso tipoCurso) {
-		this.tipoCurso = tipoCurso;
 	}
 
 	public int getHorasDirectas() {
