@@ -21,31 +21,34 @@
 				<div class="container-fluid">
 					<div class="row" style="text-align: center">
 						<h2>Formulario para la creación de planeadores</h2>
-												<form action="#" th:action="@{/docente/planeadores/nuevo}" th:object="${microcurriculo}"
+												<form action="#" th:action="@{/docente/planeadores/nuevo}" th:object="${planeador}"
 													method="post">
 													<div class="form-group">
 													
-														<label for="docente">Docente</label> <input
-															type="text" id="docente"
+														<input
+															type="hidden" id="docente"
 															name="nombre" class="form-control"
-															th:field="*{docente}" th:value=${docente.id} th:text="${docente.nombre}" />
+															th:field="*{docente}" th:value="${docente}"/>
 															
 														<label for="tipo">Tipo de Curso</label> <select id="tipoCurso"
 															name="tipo" class="form-control" th:field="*{tipoCurso}">
 															<option value="PRACTICO">Práctico</option>
 															<option value="TEORICO">Teórico</option>
 														</select>
-														
-														<label for="materia">Microcurrículo</label> <select id="materia"
-															name="materia" class="form-control" th:field="*{microcurriculo}">
-															<option th:each="item : ${listaDeMicrocurriculos}" th:value="${item.id}"
-																th:text="${item.nombre}">
-														</select>
 													
 														<label for="fechaRegistro">Fecha de registro</label> <input
 															type="date" id="fechaRegistro" name="fechaRegistro"
 															class="form-control" th:field="*{fechaRegistro}"/>
 													</div>
+													
+													<div class="form-group">
+														<label for="microcurriculo">Microcurrículo</label> <select id="microcurriculo"
+															name="microcurriculo" class="form-control" th:field="*{microcurriculo}">
+															<option th:each="item : ${listaDeMicrocurriculos}" th:value="${item.id}"
+																th:text="${item.nombre}">
+														</select>
+													</div>
+													
 													<button type="submit" class="btn btn-primary">Enviar</button>
 												</form>
 						

@@ -110,22 +110,24 @@
 	<hr class="sidebar-divider my-0">
 	<!-- Nav Item - Dashboard -->
 
+	<!-- Nav Item - Utilities Collapse Menu -->
 	<li class="nav-item"><a class="nav-link collapsed" href="#"
-		data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-		aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i> <span>Cursos</span>
+		data-toggle="collapse" data-target="#collapseUtilities"
+		aria-expanded="true" aria-controls="collapseUtilities"> <i
+			class="fas fa-fw fa-wrench"></i> <span>Planeadores</span>
 	</a>
-		<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-			data-parent="#accordionSidebar">
+		<div id="collapseUtilities" class="collapse"
+			aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
-				<h6 class="collapse-header">Gestión de Cursos</h6>
-				<a class="collapse-item" href="buttons.html">Agregar</a>
-				<a class="collapse-item" href="buttons.html">Editar</a>
+				<h6 class="collapse-header">Gestionar planeadores</h6>
+				<a class="collapse-item" th:href="@{/docente/planeadores/}">Listado</a>
+				<a class="collapse-item" th:href="@{/docente/planeadores/nuevo}">Agregar</a>
 			</div>
 		</div></li>
 		
 	<li class="nav-item"><a class="nav-link"
-		th:href="@{/admin/microcurriculos/}"> <i
-			class="fas fa-fw fa-tachometer-alt"></i> <span>Planes</span>
+		th:href="@{/docente/planeadores/}"> <i
+			class="fas fa-fw fa-tachometer-alt"></i> <span>Instrumentos</span>
 	</a></li>
 	<!-- Divider -->
 	<hr class="sidebar-divider">

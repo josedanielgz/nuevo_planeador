@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head th:replace="fragments/header :: head(~{::title})">
-<title>Planeador Académico - Perfil de Administrador</title>
+<title>Planeador Académico - Perfil de Docente</title>
 </head>
 <body id="page-top">
 	<!-- Page Wrapper -->
@@ -22,12 +22,13 @@
 					<div class="row" style="text-align: center">
 
 						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">Microcurrículos</h6>
+							<h6 class="m-0 font-weight-bold text-primary">Mis
+								planeadores</h6>
 						</div>
 
 						<div class="alert alert-info"
 							th:if="${paginaDePlaneadores.isEmpty()}">
-							<label>No se han registrado microcurrículos en el
+							<label>No se han encontrado planeadores suyos en el
 								sistema.</label>
 						</div>
 
@@ -35,18 +36,20 @@
 							th:unless="${paginaDePlaneadores.isEmpty()}">
 							<thead>
 								<tr>
-									<th>Nombre</th>
+									<th>Materia</th>
 									<th>Código</th>
 									<th>Horas Directas</th>
+									<th>Horas Independientes</th>
 									<th>Semestre</th>
 								</tr>
 							</thead>
 							<tbody th:each=" planeador: ${paginaDePlaneadores}">
 								<tr>
-									<td th:text="${planeador.nombre}"></td>
-									<td th:text="${planeador.materia.id}"></td>
-									<td th:text="${planeador.horasDirectas}"></td>
-									<td th:text="${planeador.materia.semestre}"></td>
+									<td th:text="${planeador.microcurriculo.materia.nombre}"></td>
+									<td th:text="${planeador.microcurriculo.materia.id}"></td>
+									<td th:text="${planeador.microcurriculo.horasDirectas}"></td>
+									<td th:text="${planeador.microcurriculo.horasIndependientes}"></td>
+									<td th:text="${planeador.microcurriculo.materia.semestre}"></td>
 								</tr>
 							</tbody>
 						</table>

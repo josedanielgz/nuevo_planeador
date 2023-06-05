@@ -7,16 +7,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-
-import com.planeador.modelo.Materia;
-import com.planeador.modelo.Microcurriculo;
+import com.planeador.modelo.InstrumentoEvaluacion;
 
 
-public interface RepositorioInstrumento extends CrudRepository<Microcurriculo, Integer> {
+public interface RepositorioInstrumentoEvaluacion extends CrudRepository<InstrumentoEvaluacion, Integer> {
 
 //	public abstract Curso findByEmailAndPassword(String email, String password);
 	
-	Page<Microcurriculo> findAll(Pageable request);
+	Page<InstrumentoEvaluacion> findAll(Pageable request);
 	
-	List<Microcurriculo> findAll();
+	List<InstrumentoEvaluacion> findAll();
 }

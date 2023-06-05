@@ -10,35 +10,32 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import com.planeador.generico.GenericServiceImp;
-import com.planeador.modelo.Materia;
-import com.planeador.modelo.Microcurriculo;
-import com.planeador.repositorio.RepositorioMateria;
-import com.planeador.repositorio.RepositorioMicrocurriculo;
-import com.planeador.servicio.MateriaServicio;
-import com.planeador.servicio.MicrocurriculoServicio;
+import com.planeador.modelo.Planeador;
+import com.planeador.repositorio.RepositorioPlaneador;
+import com.planeador.servicio.PlaneadorServicio;
 
 @Service
-public class PlaneadorServicioImp extends GenericServiceImp<Microcurriculo, Integer>
-		implements MicrocurriculoServicio {
+public class PlaneadorServicioImp extends GenericServiceImp<Planeador, Integer>
+		implements PlaneadorServicio {
 
 	@Autowired
-	private RepositorioMicrocurriculo repositorioMicrocurriculo;
+	private RepositorioPlaneador repositorioPlaneador;
 
 	@Override
-	public CrudRepository<Microcurriculo, Integer> getDao() {
+	public CrudRepository<Planeador, Integer> getDao() {
 		// TODO Auto-generated method stub
-		return repositorioMicrocurriculo;
+		return repositorioPlaneador;
 	}
 
 	@Override
-	public List<Microcurriculo> listaDeMicrocurriculos() {
-		return this.repositorioMicrocurriculo.findAll();
+	public List<Planeador> listaDePlaneadors() {
+		return this.repositorioPlaneador.findAll();
 	}
 	
 	@Override
-	public Page<Microcurriculo> paginaDeMicrocurriculos(int pagina, int nroDeElementos){
+	public Page<Planeador> paginaDePlaneadores(int pagina, int nroDeElementos){
 		 Pageable request = PageRequest.of(pagina - 1, nroDeElementos);
-		 return repositorioMicrocurriculo.findAll(request);
+		 return repositorioPlaneador.findAll(request);
 	}
 
 }

@@ -5,14 +5,13 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import com.planeador.generico.GenericService;
-import com.planeador.modelo.Materia;
-import com.planeador.modelo.Microcurriculo;
+import com.planeador.modelo.Planeador;
 
 
-public interface PlaneadorServicio extends GenericService<Microcurriculo, Integer> {
+public interface PlaneadorServicio extends GenericService<Planeador, Integer> {
 	
-	public List<Microcurriculo> listaDeMicrocurriculos();
+	public List<Planeador> listaDePlaneadors();
 	
-	Page<Microcurriculo> paginaDeMicrocurriculos (int pagina, int nroDeElementos);
+	Page<Planeador> paginaDePlaneadores (int pagina, int nroDeElementos);
 
 }

@@ -10,35 +10,41 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import com.planeador.generico.GenericServiceImp;
+import com.planeador.modelo.InstrumentoEvaluacion;
 import com.planeador.modelo.Materia;
 import com.planeador.modelo.Microcurriculo;
 import com.planeador.repositorio.RepositorioMateria;
-import com.planeador.repositorio.RepositorioMicrocurriculo;
+import com.planeador.repositorio.RepositorioInstrumentoEvaluacion;
 import com.planeador.servicio.MateriaServicio;
-import com.planeador.servicio.MicrocurriculoServicio;
+import com.planeador.servicio.InstrumentoEvaluacionServicio;
 
 @Service
-public class InstrumentoServicioImpl extends GenericServiceImp<Microcurriculo, Integer>
-		implements MicrocurriculoServicio {
+public class InstrumentoEvaluacionServicioImpl extends GenericServiceImp<InstrumentoEvaluacion, Integer>
+		implements InstrumentoEvaluacionServicio {
 
 	@Autowired
-	private RepositorioMicrocurriculo repositorioMicrocurriculo;
+	private RepositorioInstrumentoEvaluacion repositorioInstrumentoEvaluacion;
 
 	@Override
-	public CrudRepository<Microcurriculo, Integer> getDao() {
+	public CrudRepository<InstrumentoEvaluacion, Integer> getDao() {
 		// TODO Auto-generated method stub
-		return repositorioMicrocurriculo;
+		return repositorioInstrumentoEvaluacion;
 	}
 
-	@Override
-	public List<Microcurriculo> listaDeMicrocurriculos() {
-		return this.repositorioMicrocurriculo.findAll();
-	}
 	
 	@Override
-	public Page<Microcurriculo> paginaDeMicrocurriculos(int pagina, int nroDeElementos){
+	public Page<InstrumentoEvaluacion> paginaDeInstrumentoEvaluacion(int pagina, int nroDeElementos){
 		 Pageable request = PageRequest.of(pagina - 1, nroDeElementos);
-		 return repositorioMicrocurriculo.findAll(request);
+		 return repositorioInstrumentoEvaluacion.findAll(request);
 	}
+
+
+	@Override
+	public List<InstrumentoEvaluacion> listaDeInstrumentoEvaluacions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 }

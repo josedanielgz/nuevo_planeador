@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.planeador.servicio.DocenteServicio;
-import com.planeador.servicio.InstrumentoServicio;
+import com.planeador.servicio.InstrumentoEvaluacionServicio;
 import com.planeador.servicio.MateriaServicio;
+import com.planeador.servicio.MicrocurriculoServicio;
 import com.planeador.servicio.PlaneadorServicio;
 import com.planeador.modelo.Docente;
 import com.planeador.modelo.Materia;
+import com.planeador.modelo.Microcurriculo;
 import com.planeador.modelo.Planeador;
 
 //Este controlador administra todas las rutas del aplicativo que se van como /docente/{lo que sea}
@@ -34,15 +36,17 @@ public class DocenteControlador {
 	@Autowired
 	private PlaneadorServicio planeadorServicio;
 	@Autowired
-	private InstrumentoServicio instrumentoServicio;
-	
+	private MicrocurriculoServicio microcurriculoServicio;
+	@Autowired
+	private InstrumentoEvaluacionServicio instrumentoServicio;
+
 //	@Autowired
 //	private MateriaServicio MateriaServicio;
 
 //	Esto vendría a sustituir lo que estaba en ProductoController.java del ejercicio de refencia, 
 //	básicamente para recuperar los datos del docente. y mostrarlos en la topbar a lo largo de la
 //	sesión
-	
+
 	@ModelAttribute("docente")
 	public Docente getDocenteActual(Model model, HttpServletRequest request) {
 		Docente docente = (Docente) model.getAttribute("docente");
@@ -72,14 +76,15 @@ public class DocenteControlador {
 	}
 
 	@PostMapping("/login")
-	public String validarInicioSesionDocente(RedirectAttributes att, @RequestParam String email, @RequestParam String password,
-			HttpServletRequest request, HttpSession session, Model model) {
+	public String validarInicioSesionDocente(RedirectAttributes att, @RequestParam String email,
+			@RequestParam String password, HttpServletRequest request, HttpSession session, Model model) {
 
 		Docente docente = docenteServicio.select(email, password);
 
 		if (docente != null) {
 
-			// Tuve que resetear el valor "admin_id" para solucionar un bug extraño con los inicios de sesión, pendiente
+			// Tuve que resetear el valor "admin_id" para solucionar un bug extraño con los
+			// inicios de sesión, pendiente
 			// revisar a profundidad
 			if (docente.getAprobado()) {
 				request.getSession().setAttribute("admin_id", 0);
@@ -120,23 +125,59 @@ public class DocenteControlador {
 	public String seccionPrincipalDocente(HttpServletRequest request, Model model) {
 		return "main";
 	}
-	
+
 // GESTION DE PLANEADORES
-	
+
 	@GetMapping("/planeadores")
 	public String casoPorDefecto(HttpServletRequest request, HttpSession session, Model model) {
-//		return "redirect:/docente/planeadores/lista";
+//			return "redirect:/docente/planeadores/lista";
 		return "redirect:/docente/planeadores/lista";
 	}
 
 	@GetMapping("/planeadores/lista")
-	public String listaDePlaneadors(
-			@RequestParam(value = "pagina", required = false, defaultValue = "1") int pagina,
+	public String listaDeInstrumentos(@RequestParam(value = "pagina", required = false, defaultValue = "1") int pagina,
+			@RequestParam(value = "nroDeElementos", required = false, defaultValue = "5") int nroDeElementos,
+			Model model) {
+//			List<Planeador> planeadors = this.instrumentoServicio.listaDeInstrumentos();
+		Page<Planeador> planeadors = this.planeadorServicio.paginaDePlaneadores(pagina, nroDeElementos);
+		Integer totalDePaginas = planeadors.getTotalPages();
+		model.addAttribute("paginaDePlaneadores", planeadors);
+		model.addAttribute("totalDePaginas", totalDePaginas);
+		return "lista_planeadores";
+	}
+
+//		Redirigimos la página actual a donde va a estar el nuevo microcurrículo
+	@GetMapping("/planeadores/nuevo")
+	public String formularioDeInstrumentos(@ModelAttribute Planeador planeador, HttpServletRequest request,
+			HttpSession session, Model model) {
+		List<Microcurriculo> listaDeMicrocurriculos = microcurriculoServicio.listaDeMicrocurriculos();
+		model.addAttribute("listaDeMicrocurriculos", listaDeMicrocurriculos);
+		return "crear_planeador";
+	}
+
+//		Hablamos con el backend para que guarde el planeador
+	@PostMapping("/planeadores/nuevo")
+	public String subirInstrumentos(@ModelAttribute Docente docente, @ModelAttribute Planeador planeador, Model model, RedirectAttributes att) {
+		planeador.setDocente(docente);
+		this.planeadorServicio.save(planeador);
+		att.addFlashAttribute("accion", "Microcurrículo creado con éxito!");
+		return "redirect:/docente/planeadores";
+	}
+
+// GESTION DE INSTRUMENTOS
+
+	@GetMapping("/instrumentos")
+	public String casoPlaneadoresPorDefecto(HttpServletRequest request, HttpSession session, Model model) {
+//		return "redirect:/docente/instrumentos/lista";
+		return "redirect:/docente/instrumentos/lista";
+	}
+
+	@GetMapping("/instrumentos/lista")
+	public String listaDePlaneadors(@RequestParam(value = "pagina", required = false, defaultValue = "1") int pagina,
 			@RequestParam(value = "nroDeElementos", required = false, defaultValue = "5") int nroDeElementos,
 			Model model) {
 //		List<Planeador> planeadors = this.planeadorServicio.listaDePlaneadors();
-		Page<Planeador> planeadors = this.planeadorServicio.paginaDePlaneadores(pagina,
-				nroDeElementos);
+		Page<Planeador> planeadors = this.planeadorServicio.paginaDePlaneadores(pagina, nroDeElementos);
 		Integer totalDePaginas = planeadors.getTotalPages();
 		model.addAttribute("paginaDePlaneadors", planeadors);
 		model.addAttribute("totalDePaginas", totalDePaginas);
@@ -144,72 +185,26 @@ public class DocenteControlador {
 	}
 
 //	Redirigimos la página actual a donde va a estar el nuevo microcurrículo
-	@GetMapping("/planeadores/nuevo")
+	@GetMapping("/instrumentos/nuevo")
 	public String formularioDePlaneadors(@ModelAttribute Planeador planeador, HttpServletRequest request,
 			HttpSession session, Model model) {
-		List<Materia> listaDeMaterias = MateriaServicio.listaDeMaterias();
-		model.addAttribute("listaDeMaterias", listaDeMaterias);
 		return "crear_planeador";
 	}
 
 //	Hablamos con el backend para que guarde el planeador
-	@PostMapping("/planeadores/nuevo")
-	public String subirPlaneadors(@ModelAttribute Planeador planeador, Model model,
-			RedirectAttributes att) {
+	@PostMapping("/instrumentos/nuevo")
+	public String subirPlaneadors(@ModelAttribute Planeador planeador, Model model, RedirectAttributes att) {
 		this.planeadorServicio.save(planeador);
 		att.addFlashAttribute("accion", "Microcurrículo creado con éxito!");
-		return "redirect:/docente/planeadores";
+		return "redirect:/docente/instrumentos";
 	}
 
 }
-
-//GESTION DE INSTRUMENTOS
-
-	@GetMapping("/planeadores")
-	public String casoPorDefecto(HttpServletRequest request, HttpSession session, Model model) {
-//		return "redirect:/docente/planeadores/lista";
-		return "redirect:/docente/planeadores/lista";
-	}
-
-	@GetMapping("/planeadores/lista")
-	public String listaDeInstrumentos(
-			@RequestParam(value = "pagina", required = false, defaultValue = "1") int pagina,
-			@RequestParam(value = "nroDeElementos", required = false, defaultValue = "5") int nroDeElementos,
-			Model model) {
-//		List<Planeador> planeadors = this.instrumentoServicio.listaDeInstrumentos();
-		Page<Planeador> planeadors = this.instrumentoServicio.paginaDePlaneadores(pagina,
-				nroDeElementos);
-		Integer totalDePaginas = planeadors.getTotalPages();
-		model.addAttribute("paginaDeInstrumentos", planeadors);
-		model.addAttribute("totalDePaginas", totalDePaginas);
-		return "lista_planeadors";
-	}
-
-//	Redirigimos la página actual a donde va a estar el nuevo microcurrículo
-	@GetMapping("/planeadores/nuevo")
-	public String formularioDeInstrumentos(@ModelAttribute Planeador planeador, HttpServletRequest request,
-			HttpSession session, Model model) {
-		List<Materia> listaDeMaterias = MateriaServicio.listaDeMaterias();
-		model.addAttribute("listaDeMaterias", listaDeMaterias);
-		return "crear_planeador";
-	}
-
-//	Hablamos con el backend para que guarde el planeador
-	@PostMapping("/planeadores/nuevo")
-	public String subirInstrumentos(@ModelAttribute Planeador planeador, Model model,
-			RedirectAttributes att) {
-		this.instrumentoServicio.save(planeador);
-		att.addFlashAttribute("accion", "Microcurrículo creado con éxito!");
-		return "redirect:/docente/planeadores";
-	}
-
-}
-	
 
 //EN PAUSA
 //El siguiente código se utilizó en algún punto temprano y se conserva como referencia, pero posiblemente
 //sea desechado en el futuro
-	
+
 //	@GetMapping("/perfil")
 //	public String elPerfil(HttpServletRequest request, Model model) {
 //		return "perfil";

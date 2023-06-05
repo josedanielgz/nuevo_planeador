@@ -4,19 +4,14 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
+import com.planeador.modelo.Planeador;
 
-import com.planeador.modelo.Materia;
-import com.planeador.modelo.Microcurriculo;
-
-
-public interface RepositorioPlaneador extends CrudRepository<Microcurriculo, Integer> {
+public interface RepositorioPlaneador extends CrudRepository<Planeador, Integer> {
 
 //	public abstract Curso findByEmailAndPassword(String email, String password);
-	
-	Page<Microcurriculo> findAll(Pageable request);
-	
-	List<Microcurriculo> findAll();
+
+	Page<Planeador> findAll(Pageable request);
+
+	List<Planeador> findAll();
 }
