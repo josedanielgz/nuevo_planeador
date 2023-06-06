@@ -25,7 +25,7 @@ public class Planeador {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Integer id;
 	
 	@Column(name = "fecha_registro")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -46,11 +46,11 @@ public class Planeador {
 	@OneToMany(mappedBy = "planeador")
 	List<InstrumentoEvaluacion> instrumentosEvaluacion;
 
-	public long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

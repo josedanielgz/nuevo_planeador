@@ -19,7 +19,7 @@ public class InstrumentoEvaluacion {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Integer id;
 	
 	@Column(name = "descripcion")
 	private String descripcion;
@@ -41,11 +41,11 @@ public class InstrumentoEvaluacion {
 	@Column(name = "enlace_recurso")
 	private String enlaceRecurso;
 
-	public long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

@@ -30,10 +30,12 @@ import com.planeador.servicio.AdministradorServicio;
 import com.planeador.servicio.DocenteServicio;
 import com.planeador.servicio.MateriaServicio;
 import com.planeador.servicio.MicrocurriculoServicio;
+import com.planeador.servicio.PlaneadorServicio;
 import com.planeador.modelo.Administrador;
 import com.planeador.modelo.Docente;
 import com.planeador.modelo.Materia;
 import com.planeador.modelo.Microcurriculo;
+import com.planeador.modelo.Planeador;
 import com.planeador.utils.PasswordHasher;
 
 //Este controlador administra todas las rutas del aplicativo que se van como /admin/{lo que sea}
@@ -49,7 +51,9 @@ public class AdministradorControlador {
 	private MateriaServicio MateriaServicio;
 	@Autowired
 	private MicrocurriculoServicio microcurriculoServicio;
-
+	@Autowired
+	private PlaneadorServicio planeadorServicio;
+	
 //	De manera temporal para rastrear el objeto Admin a lo largo de la sesión, buscar una
 //	solución más estable en el futuro
 
@@ -83,7 +87,8 @@ public class AdministradorControlador {
 
 	@PostMapping("/login")
 	public String validarInicioSesionAdmin(RedirectAttributes att, @RequestParam String email,
-			@RequestParam String password, HttpServletRequest request, HttpSession session, Model model) throws NoSuchAlgorithmException, InvalidKeySpecException {
+			@RequestParam String password, HttpServletRequest request, HttpSession session, Model model)
+			throws NoSuchAlgorithmException, InvalidKeySpecException {
 // En lo posible quiero terminar de implementar el hasheado de la contraseña, pero necesito resolver ese bug de
 // la persistencia primero
 //		String new_password = PasswordHasher.generateStorngPasswordHash(password);
@@ -111,7 +116,8 @@ public class AdministradorControlador {
 	}
 
 	@PostMapping("/save")
-	public String guardarAdmin(RedirectAttributes att, Administrador admin) throws NoSuchAlgorithmException, InvalidKeySpecException {
+	public String guardarAdmin(RedirectAttributes att, Administrador admin)
+			throws NoSuchAlgorithmException, InvalidKeySpecException {
 		String nueva_contraseña = PasswordHasher.generateStorngPasswordHash(admin.getPassword());
 		admin.setPassword(nueva_contraseña);
 		administradorServicio.save(admin);
@@ -133,6 +139,8 @@ public class AdministradorControlador {
 		model.addAttribute("materias", materiasPaginaPrincipal);
 		return "main";
 	}
+	
+// GESTION DE SOLICITUDES DE REGISTRO DE USUARIO	
 
 	@GetMapping("/solicitudes")
 	public String listarSolicitudesDocente(
@@ -164,6 +172,8 @@ public class AdministradorControlador {
 		return "redirect:/admin/solicitudes/";
 
 	}
+	
+// GESTION DE MATERIAS
 
 //	https://www.kindsonthegenius.com/part-2-how-to-implement-pagination-in-spring-boot-with-thymeleaf/
 	@GetMapping("/materias")
@@ -182,6 +192,8 @@ public class AdministradorControlador {
 		return "materias";
 	}
 
+// GESTION DE MICROCURRICULOS
+	
 	@GetMapping("/microcurriculos")
 	public String casoPorDefecto(HttpServletRequest request, HttpSession session, Model model) {
 //		return "redirect:/admin/microcurriculos/lista";
@@ -219,7 +231,24 @@ public class AdministradorControlador {
 		att.addFlashAttribute("accion", "Microcurrículo creado con éxito!");
 		return "redirect:/admin/microcurriculos";
 	}
+	
+// GESTION DE PLANEADORES
 
+	@GetMapping("/planeadores")
+	public String casoPlaneadorPorDefecto(HttpServletRequest request, HttpSession session, Model model) {
+		return "redirect:/docente/planeadores/lista";
+	}
+
+	@GetMapping("/planeadores/lista")
+	public String listaDeInstrumentos(@RequestParam(value = "pagina", required = false, defaultValue = "1") int pagina,
+			@RequestParam(value = "nroDeElementos", required = false, defaultValue = "5") int nroDeElementos,
+			@ModelAttribute Docente docente, Model model) {
+		Page<Planeador> planeadors = this.planeadorServicio.paginaDePlaneadores(pagina, nroDeElementos);
+		Integer totalDePaginas = planeadors.getTotalPages();
+		model.addAttribute("paginaDePlaneadores", planeadors);
+		model.addAttribute("totalDePaginas", totalDePaginas);
+		return "admin/lista_planeadores";
+	}
 }
 
 //EN PAUSA

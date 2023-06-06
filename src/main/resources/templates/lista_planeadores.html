@@ -41,6 +41,7 @@
 									<th>Horas Directas</th>
 									<th>Horas Independientes</th>
 									<th>Semestre</th>
+									<th>Instrumentos</th>
 								</tr>
 							</thead>
 							<tbody th:each=" planeador: ${paginaDePlaneadores}">
@@ -50,6 +51,13 @@
 									<td th:text="${planeador.microcurriculo.horasDirectas}"></td>
 									<td th:text="${planeador.microcurriculo.horasIndependientes}"></td>
 									<td th:text="${planeador.microcurriculo.materia.semestre}"></td>
+									
+									<td><a class="btn btn-primary"
+										th:href="@{/docente/planeadores/instrumentos/{planeador_id}(planeador_id=${planeador.id})}">Listar</a>
+
+										<a class="btn btn-danger"
+										th:href="@{/docente/planeadores/instrumentos/{planeador_id}/nuevo(planeador_id=${planeador.id})}">Agregar</a>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -60,13 +68,13 @@
 								<li class="page-item"
 									th:classappend="${paginaDePlaneadores.first} ? disabled"><a
 									class="page-link"
-									th:href="@{/admin/solicitudes(nroDeElementos=${paginaDePlaneadores.size}, pagina=1)}"
+									th:href="@{/docente/planeadores(nroDeElementos=${paginaDePlaneadores.size}, pagina=1)}"
 									tabindex="-1">Primera</a></li>
 								<!-- 											Desactiva condicionalmente el elemento clickeable si la Page devuelta se encuentra en la primera página -->
 								<li class="page-item"
 									th:classappend="${paginaDePlaneadores.hasPrevious() == false} ? disabled">
 									<a class="page-link"
-									th:href="@{/admin/solicitudes(nroDeElementos=${paginaDePlaneadores.size}, pagina=${paginaDePlaneadores.number})}"
+									th:href="@{/docente/planeadores(nroDeElementos=${paginaDePlaneadores.size}, pagina=${paginaDePlaneadores.number})}"
 									tabindex="-1">Anterior</a>
 								</li>
 								<!-- 										Utiliza una secuencia para dibujar la cantidad de páginas necesarias para mostrar todos los registros, de -->
@@ -76,19 +84,19 @@
 									th:each="numeroDePagina : ${#numbers.sequence(1,totalDePaginas)}"
 									th:classappend="${numeroDePagina == paginaDePlaneadores.number + 1} ? active">
 									<a class="page-link"
-									th:href="@{/admin/solicitudes(nroDeElementos=${paginaDePlaneadores.size}, pagina=${numeroDePagina})}"
+									th:href="@{/docente/planeadores(nroDeElementos=${paginaDePlaneadores.size}, pagina=${numeroDePagina})}"
 									th:text="${numeroDePagina}">1</a>
 								</li>
 								<!-- 										El atributo pagina aquí sería el equivalente a saltar a la posición n+1 dentro de este objeto Page -->
 								<li class="page-item"
 									th:classappend="${paginaDePlaneadores.hasNext() == false} ? disabled"><a
 									class="page-link"
-									th:href="@{/admin/solicitudes(nroDeElementos=${paginaDePlaneadores.size}, pagina=${paginaDePlaneadores.number + 2})}">Siguiente</a>
+									th:href="@{/docente/planeadores(nroDeElementos=${paginaDePlaneadores.size}, pagina=${paginaDePlaneadores.number + 2})}">Siguiente</a>
 								</li>
 								<li class="page-item"
 									th:classappend="${paginaDePlaneadores.last} ? disabled"><a
 									class="page-link"
-									th:href="@{/admin/solicitudes(nroDeElementos=${paginaDePlaneadores.size}, pagina=${paginaDePlaneadores.totalPages})}">Última</a>
+									th:href="@{/docente/planeadores(nroDeElementos=${paginaDePlaneadores.size}, pagina=${paginaDePlaneadores.totalPages})}">Última</a>
 								</li>
 							</ul>
 						</nav>

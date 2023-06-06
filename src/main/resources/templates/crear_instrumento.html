@@ -21,20 +21,25 @@
 				<div class="container-fluid">
 					<div class="row" style="text-align: center">
 						<h2>Formulario para la creación de instrumentos de evaluación</h2>
-												<form action="#" th:action="@{/docente/planeadores/nuevo}" th:object="${microcurriculo}"
+						<h3>Instrumento para el planeador [[${planeadorActual.id}]] de [[${planeadorActual.fechaRegistro}]]</h3>
+												<form action="#" th:action="@{/docente/planeadores/nuevo}" th:object="${instrumento}"
 													method="post">
 													<div class="form-group">
 													
-														<label for="docente">Planeador</label> <input
-															type="text" id="docente"
-															name="nombre" class="form-control"
-															th:field="*{planeador}" th:value="${planeador.id}" th:text="${planeador.id}" />
-															
+																											<input
+															type="hidden" id="planeador"
+															name="planeador" class="form-control"
+															th:field="*{planeador}" th:value="${planeadorActual}"/>
+													
 															<label for="descripcion">Descripción</label> <input
 															type="text" id="descripcion"
 															name="descripcion" class="form-control"
 															th:field="*{descripcion}" />
 															
+																<label for="porcentajeCalificacion">Porcentaje de calificación</label> <input
+															type="text" id="porcentajeCalificacion"
+															name="porcentajeCalificacion" class="form-control"
+															th:field="*{porcentajeCalificacion}" />
 																													<label for="tipo">Tipo de Curso</label> <select id="tipoInstrumento"
 															name="tipo" class="form-control" th:field="*{corte}">
 															<option value="1">1</option>
@@ -57,40 +62,6 @@
 													</div>
 													<button type="submit" class="btn btn-primary">Enviar</button>
 												</form>
-						
-<!-- ESTE FORMULARIO DE AQUÍ GUARDA OBJETOS CON CAMPOS NULOS, PRESERVAR SOLAMENTE COMO REFERENCIA -->
-
-<!-- 						<form action="#" class="user" -->
-<!-- 							th:action="@{/admin/microcurriculos/nuevo}" method="post"> -->
-<!-- 							<div class="form-group"> -->
-<!-- 								<label for="tipo">Tipo de Curso</label> <select id="tipoCurso" -->
-<!-- 									name="tipoCurso" class="form-control"> -->
-<!-- 									<option value="Práctico">PRACTICO</option> -->
-<!-- 									<option value="Teórico">TEORICO</option> -->
-<!-- 								</select> -->
-<!-- 							</div> -->
-<!-- 							<div class="form-group"> -->
-<!-- 								<label for="horasDirectas">Horas directas</label> <input -->
-<!-- 									type="number" id="horasDirectas" name="horasDirectas" -->
-<!-- 									class="form-control" /> -->
-<!-- 							</div> -->
-
-<!-- 							<div class="form-group"> -->
-<!-- 								<label for="horasIndependientes">Horas independientes</label> <input -->
-<!-- 									type="number" id="horasIndependientes" -->
-<!-- 									name="horasIndependientes" class="form-control" /> -->
-<!-- 							</div> -->
-
-<!-- 							<div class="form-group"> -->
-<!-- 								<label for="materia">Materia</label> <select id="materia" -->
-<!-- 									name="materia" class="form-control"> -->
-<!-- 									<option th:each="item : ${listaDeMaterias}" -->
-<!-- 										th:value="${item.id}"></option> -->
-<!-- 								</select> -->
-<!-- 							</div> -->
-<!-- 					<button type="submit" class="btn btn-info px-5 mb-5 w-100">Registrar</button> -->
-<!-- 					</form> -->
-
 				</div>
 			</div>
 		</div>

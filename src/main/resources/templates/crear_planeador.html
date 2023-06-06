@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head th:replace="fragments/header :: head(~{::title})">
-<title>Planeador Académico - Perfil de Administrador</title>
+<title>Planeador Académico - Perfil de Docente</title>
 </head>
 <body id="page-top">
 	<!-- Page Wrapper -->
@@ -21,15 +21,16 @@
 				<div class="container-fluid">
 					<div class="row" style="text-align: center">
 						<h2>Formulario para la creación de planeadores</h2>
-												<form action="#" th:action="@{/docente/planeadores/nuevo}" th:object="${planeador}"
+
+						<div class="alert alert-info"
+							th:if="${listaDeMicrocurriculos.isEmpty()}">
+							<label>No se habilitará la creación de planeadores hasta que haya microcurrículos cargados en el sistema.</label>
+						</div>
+						
+						<form th:unless="${listaDeMicrocurriculos.isEmpty()}" action="#" th:action="@{/docente/planeadores/nuevo}" th:object="${planeador}"
 													method="post">
 													<div class="form-group">
-													
-														<input
-															type="hidden" id="docente"
-															name="nombre" class="form-control"
-															th:field="*{docente}" th:value="${docente}"/>
-															
+																												
 														<label for="tipo">Tipo de Curso</label> <select id="tipoCurso"
 															name="tipo" class="form-control" th:field="*{tipoCurso}">
 															<option value="PRACTICO">Práctico</option>
@@ -51,40 +52,6 @@
 													
 													<button type="submit" class="btn btn-primary">Enviar</button>
 												</form>
-						
-<!-- ESTE FORMULARIO DE AQUÍ GUARDA OBJETOS CON CAMPOS NULOS, PRESERVAR SOLAMENTE COMO REFERENCIA -->
-
-<!-- 						<form action="#" class="user" -->
-<!-- 							th:action="@{/admin/microcurriculos/nuevo}" method="post"> -->
-<!-- 							<div class="form-group"> -->
-<!-- 								<label for="tipo">Tipo de Curso</label> <select id="tipoCurso" -->
-<!-- 									name="tipoCurso" class="form-control"> -->
-<!-- 									<option value="Práctico">PRACTICO</option> -->
-<!-- 									<option value="Teórico">TEORICO</option> -->
-<!-- 								</select> -->
-<!-- 							</div> -->
-<!-- 							<div class="form-group"> -->
-<!-- 								<label for="horasDirectas">Horas directas</label> <input -->
-<!-- 									type="number" id="horasDirectas" name="horasDirectas" -->
-<!-- 									class="form-control" /> -->
-<!-- 							</div> -->
-
-<!-- 							<div class="form-group"> -->
-<!-- 								<label for="horasIndependientes">Horas independientes</label> <input -->
-<!-- 									type="number" id="horasIndependientes" -->
-<!-- 									name="horasIndependientes" class="form-control" /> -->
-<!-- 							</div> -->
-
-<!-- 							<div class="form-group"> -->
-<!-- 								<label for="materia">Materia</label> <select id="materia" -->
-<!-- 									name="materia" class="form-control"> -->
-<!-- 									<option th:each="item : ${listaDeMaterias}" -->
-<!-- 										th:value="${item.id}"></option> -->
-<!-- 								</select> -->
-<!-- 							</div> -->
-<!-- 					<button type="submit" class="btn btn-info px-5 mb-5 w-100">Registrar</button> -->
-<!-- 					</form> -->
-
 				</div>
 			</div>
 		</div>

@@ -13,6 +13,7 @@ import com.planeador.generico.GenericServiceImp;
 import com.planeador.modelo.InstrumentoEvaluacion;
 import com.planeador.modelo.Materia;
 import com.planeador.modelo.Microcurriculo;
+import com.planeador.modelo.Planeador;
 import com.planeador.repositorio.RepositorioMateria;
 import com.planeador.repositorio.RepositorioInstrumentoEvaluacion;
 import com.planeador.servicio.MateriaServicio;
@@ -42,7 +43,14 @@ public class InstrumentoEvaluacionServicioImpl extends GenericServiceImp<Instrum
 	@Override
 	public List<InstrumentoEvaluacion> listaDeInstrumentoEvaluacions() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.repositorioInstrumentoEvaluacion.findAll();
+	}
+
+
+	@Override
+	public Page<InstrumentoEvaluacion> paginaDeInstrumentoEvaluacion(Planeador planeador, int pagina, int nroDeElementos) {
+		 Pageable request = PageRequest.of(pagina - 1, nroDeElementos);
+		 return repositorioInstrumentoEvaluacion.findByPlaneador(planeador, request);
 	}
 
 

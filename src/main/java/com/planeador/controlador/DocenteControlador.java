@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ import com.planeador.servicio.MateriaServicio;
 import com.planeador.servicio.MicrocurriculoServicio;
 import com.planeador.servicio.PlaneadorServicio;
 import com.planeador.modelo.Docente;
+import com.planeador.modelo.InstrumentoEvaluacion;
 import com.planeador.modelo.Materia;
 import com.planeador.modelo.Microcurriculo;
 import com.planeador.modelo.Planeador;
@@ -136,28 +138,28 @@ public class DocenteControlador {
 
 	@GetMapping("/planeadores/lista")
 	public String listaDeInstrumentos(@RequestParam(value = "pagina", required = false, defaultValue = "1") int pagina,
-			@RequestParam(value = "nroDeElementos", required = false, defaultValue = "5") int nroDeElementos,
+			@RequestParam(value = "nroDeElementos", required = false, defaultValue = "5") int nroDeElementos, @ModelAttribute Docente docente,
 			Model model) {
 //			List<Planeador> planeadors = this.instrumentoServicio.listaDeInstrumentos();
-		Page<Planeador> planeadors = this.planeadorServicio.paginaDePlaneadores(pagina, nroDeElementos);
+//		Page<Planeador> planeadors = this.planeadorServicio.paginaDePlaneadores(pagina, nroDeElementos);
+		Page<Planeador> planeadors = this.planeadorServicio.paginaDePlaneadores(docente, pagina, nroDeElementos);
 		Integer totalDePaginas = planeadors.getTotalPages();
 		model.addAttribute("paginaDePlaneadores", planeadors);
 		model.addAttribute("totalDePaginas", totalDePaginas);
 		return "lista_planeadores";
 	}
 
-//		Redirigimos la página actual a donde va a estar el nuevo microcurrículo
+
 	@GetMapping("/planeadores/nuevo")
-	public String formularioDeInstrumentos(@ModelAttribute Planeador planeador, HttpServletRequest request,
+	public String formularioDePlaneadores(@ModelAttribute Planeador planeador, HttpServletRequest request,
 			HttpSession session, Model model) {
 		List<Microcurriculo> listaDeMicrocurriculos = microcurriculoServicio.listaDeMicrocurriculos();
 		model.addAttribute("listaDeMicrocurriculos", listaDeMicrocurriculos);
 		return "crear_planeador";
 	}
 
-//		Hablamos con el backend para que guarde el planeador
 	@PostMapping("/planeadores/nuevo")
-	public String subirInstrumentos(@ModelAttribute Docente docente, @ModelAttribute Planeador planeador, Model model, RedirectAttributes att) {
+	public String subirPlaneadores(@ModelAttribute Docente docente, @ModelAttribute Planeador planeador, Model model, RedirectAttributes att) {
 		planeador.setDocente(docente);
 		this.planeadorServicio.save(planeador);
 		att.addFlashAttribute("accion", "Microcurrículo creado con éxito!");
@@ -166,37 +168,32 @@ public class DocenteControlador {
 
 // GESTION DE INSTRUMENTOS
 
-	@GetMapping("/instrumentos")
-	public String casoPlaneadoresPorDefecto(HttpServletRequest request, HttpSession session, Model model) {
-//		return "redirect:/docente/instrumentos/lista";
+	@GetMapping("/planeadores/instrumentos/{planeador_id}")
+	public String casoPlaneadoresPorDefecto(@RequestParam(value = "pagina", required = false, defaultValue = "1") int pagina,
+			@RequestParam(value = "nroDeElementos", required = false, defaultValue = "5") int nroDeElementos, @PathVariable Integer planeador_id, HttpServletRequest request, HttpSession session, Model model) {
+
+		Planeador actual = this.planeadorServicio.findById(planeador_id).get();
+		Page<InstrumentoEvaluacion> paginaDeInstrumentos = this.instrumentoServicio.paginaDeInstrumentoEvaluacion(actual, pagina, nroDeElementos);
+		model.addAttribute("paginaDeInstrumentos", paginaDeInstrumentos);
+		model.addAttribute("planeadorActual", actual);
 		return "redirect:/docente/instrumentos/lista";
 	}
 
-	@GetMapping("/instrumentos/lista")
-	public String listaDePlaneadors(@RequestParam(value = "pagina", required = false, defaultValue = "1") int pagina,
-			@RequestParam(value = "nroDeElementos", required = false, defaultValue = "5") int nroDeElementos,
-			Model model) {
-//		List<Planeador> planeadors = this.planeadorServicio.listaDePlaneadors();
-		Page<Planeador> planeadors = this.planeadorServicio.paginaDePlaneadores(pagina, nroDeElementos);
-		Integer totalDePaginas = planeadors.getTotalPages();
-		model.addAttribute("paginaDePlaneadors", planeadors);
-		model.addAttribute("totalDePaginas", totalDePaginas);
-		return "lista_planeadors";
+	
+	@GetMapping("/planeadores/instrumentos/{planeador_id}/nuevo")
+	public String formularioDeInstrumentos(HttpServletRequest request,
+			HttpSession session, @PathVariable Integer planeador_id, @ModelAttribute Planeador planeadorActual, @ModelAttribute InstrumentoEvaluacion instrumento, Model model) {
+		Planeador actual = this.planeadorServicio.findById(planeador_id).get();
+		model.addAttribute("planeadorActual", actual);
+		model.addAttribute("instrumento", new InstrumentoEvaluacion());
+		return "crear_instrumento";
 	}
-
-//	Redirigimos la página actual a donde va a estar el nuevo microcurrículo
-	@GetMapping("/instrumentos/nuevo")
-	public String formularioDePlaneadors(@ModelAttribute Planeador planeador, HttpServletRequest request,
-			HttpSession session, Model model) {
-		return "crear_planeador";
-	}
-
-//	Hablamos con el backend para que guarde el planeador
-	@PostMapping("/instrumentos/nuevo")
-	public String subirPlaneadors(@ModelAttribute Planeador planeador, Model model, RedirectAttributes att) {
-		this.planeadorServicio.save(planeador);
-		att.addFlashAttribute("accion", "Microcurrículo creado con éxito!");
-		return "redirect:/docente/instrumentos";
+	
+	@PostMapping("/planeadores/instrumentos/{planeador_id}/nuevo")
+	public String subirInstrumento(HttpServletRequest request,
+			HttpSession session, @ModelAttribute Planeador planeadorActual, @ModelAttribute InstrumentoEvaluacion instrumento, Model model) {
+		this.instrumentoServicio.save(instrumento);
+		return "crear_instrumento";
 	}
 
 }
