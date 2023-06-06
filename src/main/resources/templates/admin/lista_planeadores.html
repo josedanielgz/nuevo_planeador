@@ -42,6 +42,7 @@
 									<th>Horas Directas</th>
 									<th>Horas Independientes</th>
 									<th>Semestre</th>
+									<th>Instrumentos</th>
 								</tr>
 							</thead>
 							<tbody th:each=" planeador: ${paginaDePlaneadores}">
@@ -52,6 +53,9 @@
 									<td th:text="${planeador.microcurriculo.horasDirectas}"></td>
 									<td th:text="${planeador.microcurriculo.horasIndependientes}"></td>
 									<td th:text="${planeador.microcurriculo.materia.semestre}"></td>
+									<td><a class="btn btn-primary"
+										th:href="@{/admin/planeadores/instrumentos/{planeador_id}(planeador_id=${planeador.id})}">Listar</a>
+									</td>
 								</tr>
 							</tbody>
 						</table>

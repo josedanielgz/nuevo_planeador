@@ -27,13 +27,13 @@
 						</div>
 
 						<div class="alert alert-info"
-							th:if="${paginaDePlaneadores.isEmpty()}">
+							th:if="${paginaDePlaneadores == null || paginaDePlaneadores.isEmpty()}">
 							<label>No se han encontrado planeadores suyos en el
 								sistema.</label>
 						</div>
 
 						<table class="table table-bordered" width="100%" cellspacing="0"
-							th:unless="${paginaDePlaneadores.isEmpty()}">
+							th:unless="${paginaDePlaneadores == null || paginaDePlaneadores.isEmpty()}">
 							<thead>
 								<tr>
 									<th>Materia</th>

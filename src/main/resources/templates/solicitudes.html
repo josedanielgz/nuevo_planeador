@@ -64,12 +64,12 @@
 
 								<div class="card-body">
 
-									<div class="alert alert-info" th:if="${paginaDeSolicitudes.isEmpty()}">
+									<div class="alert alert-info" th:if="${paginaDeSolicitudes == null || paginaDeSolicitudes.isEmpty()}">
 										<label>No se han reportado solicitudes de registro
 											nuevas recientemente.</label>
 									</div>
 
-									<div class="table-responsive" th:unless="${paginaDeSolicitudes.isEmpty()}">
+									<div class="table-responsive" th:unless="${paginaDeSolicitudes == null || paginaDeSolicitudes.isEmpty()}">
 										<!-- Utiliza un Map y una lista de campos para dibujar todos los campos de la tabla solicitada -->
 										<!-- Referirse a AdministradorControlador para más detalles. -->
 										<table class="table table-bordered" id="dataTable"

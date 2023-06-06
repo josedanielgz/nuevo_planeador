@@ -28,11 +28,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.planeador.servicio.AdministradorServicio;
 import com.planeador.servicio.DocenteServicio;
+import com.planeador.servicio.InstrumentoEvaluacionServicio;
 import com.planeador.servicio.MateriaServicio;
 import com.planeador.servicio.MicrocurriculoServicio;
 import com.planeador.servicio.PlaneadorServicio;
 import com.planeador.modelo.Administrador;
 import com.planeador.modelo.Docente;
+import com.planeador.modelo.InstrumentoEvaluacion;
 import com.planeador.modelo.Materia;
 import com.planeador.modelo.Microcurriculo;
 import com.planeador.modelo.Planeador;
@@ -53,7 +55,9 @@ public class AdministradorControlador {
 	private MicrocurriculoServicio microcurriculoServicio;
 	@Autowired
 	private PlaneadorServicio planeadorServicio;
-	
+	@Autowired
+	private InstrumentoEvaluacionServicio instrumentoServicio;
+
 //	De manera temporal para rastrear el objeto Admin a lo largo de la sesión, buscar una
 //	solución más estable en el futuro
 
@@ -139,7 +143,7 @@ public class AdministradorControlador {
 		model.addAttribute("materias", materiasPaginaPrincipal);
 		return "main";
 	}
-	
+
 // GESTION DE SOLICITUDES DE REGISTRO DE USUARIO	
 
 	@GetMapping("/solicitudes")
@@ -172,7 +176,7 @@ public class AdministradorControlador {
 		return "redirect:/admin/solicitudes/";
 
 	}
-	
+
 // GESTION DE MATERIAS
 
 //	https://www.kindsonthegenius.com/part-2-how-to-implement-pagination-in-spring-boot-with-thymeleaf/
@@ -193,7 +197,7 @@ public class AdministradorControlador {
 	}
 
 // GESTION DE MICROCURRICULOS
-	
+
 	@GetMapping("/microcurriculos")
 	public String casoPorDefecto(HttpServletRequest request, HttpSession session, Model model) {
 //		return "redirect:/admin/microcurriculos/lista";
@@ -231,7 +235,7 @@ public class AdministradorControlador {
 		att.addFlashAttribute("accion", "Microcurrículo creado con éxito!");
 		return "redirect:/admin/microcurriculos";
 	}
-	
+
 // GESTION DE PLANEADORES
 
 	@GetMapping("/planeadores")
@@ -248,6 +252,22 @@ public class AdministradorControlador {
 		model.addAttribute("paginaDePlaneadores", planeadors);
 		model.addAttribute("totalDePaginas", totalDePaginas);
 		return "admin/lista_planeadores";
+	}
+
+	// GESTION DE INSTRUMENTOS
+
+	@GetMapping("/planeadores/instrumentos/{planeador_id}")
+	public String casoPlaneadoresPorDefecto(
+			@RequestParam(value = "pagina", required = false, defaultValue = "1") int pagina,
+			@RequestParam(value = "nroDeElementos", required = false, defaultValue = "5") int nroDeElementos,
+			@PathVariable Integer planeador_id, HttpServletRequest request, HttpSession session, Model model) {
+
+		Planeador actual = this.planeadorServicio.findById(planeador_id).get();
+		Page<InstrumentoEvaluacion> paginaDeInstrumentos = this.instrumentoServicio
+				.paginaDeInstrumentoEvaluacion(actual, pagina, nroDeElementos);
+		model.addAttribute("paginaDeInstrumentos", paginaDeInstrumentos);
+		model.addAttribute("planeadorActual", actual);
+		return "admin/lista_instrumentos";
 	}
 }
 

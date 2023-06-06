@@ -26,13 +26,13 @@
 						</div>
 
 						<div class="alert alert-info"
-							th:if="${paginaDeMicrocurriculos.isEmpty()}">
+							th:if="${paginaDeMicrocurriculos == null || paginaDeMicrocurriculos.isEmpty()}">
 							<label>No se han registrado microcurrículos en el
 								sistema.</label>
 						</div>
 
 						<table class="table table-bordered" width="100%" cellspacing="0"
-							th:unless="${paginaDeMicrocurriculos.isEmpty()}">
+							th:unless="${paginaDeMicrocurriculos == null || paginaDeMicrocurriculos.isEmpty()}">
 							<thead>
 								<tr>
 									<th>Nombre</th>

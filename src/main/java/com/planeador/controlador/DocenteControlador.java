@@ -176,7 +176,7 @@ public class DocenteControlador {
 		Page<InstrumentoEvaluacion> paginaDeInstrumentos = this.instrumentoServicio.paginaDeInstrumentoEvaluacion(actual, pagina, nroDeElementos);
 		model.addAttribute("paginaDeInstrumentos", paginaDeInstrumentos);
 		model.addAttribute("planeadorActual", actual);
-		return "redirect:/docente/instrumentos/lista";
+		return "lista_instrumentos";
 	}
 
 	
