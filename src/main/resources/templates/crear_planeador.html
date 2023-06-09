@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="fragments/header :: head(~{::title})">
+<title>Planeador Académico - Perfil de Docente</title>
+</head>
+<body id="page-top">
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+		<!-- Sidebar -->
+		<ul
+			th:replace="${session.admin_id != 0} ? ~{fragments/sidebar :: _sidebar('_admin')} : ~{fragments/sidebar :: _sidebar('_docente')}"></ul>
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+			<!-- Main Content -->
+			<div id="content">
+				<!-- Topbar -->
+				<nav
+					th:replace="${session.admin_id != 0} ? ~{fragments/topbar :: top_bar('_admin')} : ~{fragments/topbar :: top_bar('_docente')}"></nav>
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
+					<div class="row" style="text-align: center">
+						<h2>Formulario para la creación de planeadores</h2>
+
+						<div class="alert alert-info"
+							th:if="${listaDeMicrocurriculos.isEmpty()}">
+							<label>No se habilitará la creación de planeadores hasta que haya microcurrículos cargados en el sistema.</label>
+						</div>
+						
+						<form th:unless="${listaDeMicrocurriculos.isEmpty()}" action="#" th:action="@{/docente/planeadores/nuevo}" th:object="${planeador}"
+													method="post">
+													<div class="form-group">
+																												
+														<label for="tipo">Tipo de Curso</label> <select id="tipoCurso"
+															name="tipo" class="form-control" th:field="*{tipoCurso}">
+															<option value="PRACTICO">Práctico</option>
+															<option value="TEORICO">Teórico</option>
+														</select>
+													
+														<label for="fechaRegistro">Fecha de registro</label> <input
+															type="date" id="fechaRegistro" name="fechaRegistro"
+															class="form-control" th:field="*{fechaRegistro}"/>
+													</div>
+													
+													<div class="form-group">
+														<label for="microcurriculo">Microcurrículo</label> <select id="microcurriculo"
+															name="microcurriculo" class="form-control" th:field="*{microcurriculo}">
+															<option th:each="item : ${listaDeMicrocurriculos}" th:value="${item.id}"
+																th:text="${item.nombre}">
+														</select>
+													</div>
+													
+													<button type="submit" class="btn btn-primary">Enviar</button>
+												</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
+	<!-- Logout Modal-->
+	<div
+		th:replace="${session.admin_id != 0} ? ~{fragments/topbar :: logout_modal('_admin')} : ~{fragments/topbar :: logout_modal('_docente')}"></div>
+</body>
+</html>

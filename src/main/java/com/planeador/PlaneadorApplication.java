@@ -30,22 +30,19 @@ public class PlaneadorApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
+//		List<Materia> nuevosMaterias = new ArrayList<>();
+//		nuevosMaterias.add(new Materia("Análisis de Algoritmos",4,4));
+//		nuevosMaterias.add(new Materia("Análisis de Datos",3,8));
+//		nuevosMaterias.add(new Materia("Ingeniería de Datos",4,4));
+//		nuevosMaterias.add(new Materia("Análisis de Operaciones",4,5));
+//		nuevosMaterias.add(new Materia("Análisis de Algoritmos",4,4));
+//		nuevosMaterias.add(new Materia("Análisis de Datos",3,8));
+//		nuevosMaterias.add(new Materia("Ingeniería de Datos",4,4));
+//		nuevosMaterias.add(new Materia("Análisis de Operaciones",4,5));
 //
-		List<Materia> nuevosMaterias = new ArrayList<>();
-		nuevosMaterias.add(new Materia("Análisis de Algoritmos",4,4));
-		nuevosMaterias.add(new Materia("Análisis de Datos",3,8));
-		nuevosMaterias.add(new Materia("Ingeniería de Datos",4,4));
-		nuevosMaterias.add(new Materia("Análisis de Operaciones",4,5));
-		nuevosMaterias.add(new Materia("Análisis de Algoritmos",4,4));
-		nuevosMaterias.add(new Materia("Análisis de Datos",3,8));
-		nuevosMaterias.add(new Materia("Ingeniería de Datos",4,4));
-		nuevosMaterias.add(new Materia("Análisis de Operaciones",4,5));
-//
-//
-//
-		for (Materia m : nuevosMaterias) {
-			this.materias.save(m);
-		}
+//		for (Materia m : nuevosMaterias) {
+//			this.materias.save(m);
+//		}
 //
 //		admins.save(new Administrador("ElJajas","prueba@123.com","123456789"));
 

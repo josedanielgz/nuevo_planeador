@@ -1,5 +1,7 @@
 package com.planeador.controlador;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -9,15 +11,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.planeador.servicio.DocenteServicio;
+import com.planeador.servicio.InstrumentoEvaluacionServicio;
 import com.planeador.servicio.MateriaServicio;
+import com.planeador.servicio.MicrocurriculoServicio;
+import com.planeador.servicio.PlaneadorServicio;
 import com.planeador.modelo.Docente;
+import com.planeador.modelo.InstrumentoEvaluacion;
 import com.planeador.modelo.Materia;
+import com.planeador.modelo.Microcurriculo;
+import com.planeador.modelo.Planeador;
 
 //Este controlador administra todas las rutas del aplicativo que se van como /docente/{lo que sea}
 @Controller
@@ -25,7 +34,13 @@ import com.planeador.modelo.Materia;
 public class DocenteControlador {
 
 	@Autowired
-	private DocenteServicio DocenteService;
+	private DocenteServicio docenteServicio;
+	@Autowired
+	private PlaneadorServicio planeadorServicio;
+	@Autowired
+	private MicrocurriculoServicio microcurriculoServicio;
+	@Autowired
+	private InstrumentoEvaluacionServicio instrumentoServicio;
 
 //	@Autowired
 //	private MateriaServicio MateriaServicio;
@@ -33,7 +48,7 @@ public class DocenteControlador {
 //	Esto vendría a sustituir lo que estaba en ProductoController.java del ejercicio de refencia, 
 //	básicamente para recuperar los datos del docente. y mostrarlos en la topbar a lo largo de la
 //	sesión
-	
+
 	@ModelAttribute("docente")
 	public Docente getDocenteActual(Model model, HttpServletRequest request) {
 		Docente docente = (Docente) model.getAttribute("docente");
@@ -47,7 +62,7 @@ public class DocenteControlador {
 			if (docente_id == 0) {
 				docente = new Docente();
 			} else {
-				docente = this.DocenteService.get(docente_id);
+				docente = this.docenteServicio.get(docente_id);
 			}
 			model.addAttribute("docente", docente);
 		}
@@ -63,14 +78,15 @@ public class DocenteControlador {
 	}
 
 	@PostMapping("/login")
-	public String validarInicioSesionDocente(RedirectAttributes att, @RequestParam String email, @RequestParam String password,
-			HttpServletRequest request, HttpSession session, Model model) {
+	public String validarInicioSesionDocente(RedirectAttributes att, @RequestParam String email,
+			@RequestParam String password, HttpServletRequest request, HttpSession session, Model model) {
 
-		Docente docente = DocenteService.select(email, password);
+		Docente docente = docenteServicio.select(email, password);
 
 		if (docente != null) {
 
-			// Tuve que resetear el valor "admin_id" para solucionar un bug extraño con los inicios de sesión, pendiente
+			// Tuve que resetear el valor "admin_id" para solucionar un bug extraño con los
+			// inicios de sesión, pendiente
 			// revisar a profundidad
 			if (docente.getAprobado()) {
 				request.getSession().setAttribute("admin_id", 0);
@@ -97,7 +113,7 @@ public class DocenteControlador {
 	@PostMapping("/save")
 	public String guardarDocente(RedirectAttributes att, Docente docente, Model model) {
 		docente.setAprobado(false);
-		DocenteService.save(docente);
+		docenteServicio.save(docente);
 		att.addFlashAttribute("accion", "Docente registrado con éxito!");
 		return "redirect:/docente/";
 	}
@@ -112,13 +128,81 @@ public class DocenteControlador {
 		return "main";
 	}
 
+// GESTION DE PLANEADORES
+
+	@GetMapping("/planeadores")
+	public String casoPorDefecto(HttpServletRequest request, HttpSession session, Model model) {
+//			return "redirect:/docente/planeadores/lista";
+		return "redirect:/docente/planeadores/lista";
+	}
+
+	@GetMapping("/planeadores/lista")
+	public String listaDeInstrumentos(@RequestParam(value = "pagina", required = false, defaultValue = "1") int pagina,
+			@RequestParam(value = "nroDeElementos", required = false, defaultValue = "5") int nroDeElementos, @ModelAttribute Docente docente,
+			Model model) {
+//			List<Planeador> planeadors = this.instrumentoServicio.listaDeInstrumentos();
+//		Page<Planeador> planeadors = this.planeadorServicio.paginaDePlaneadores(pagina, nroDeElementos);
+		Page<Planeador> planeadors = this.planeadorServicio.paginaDePlaneadores(docente, pagina, nroDeElementos);
+		Integer totalDePaginas = planeadors.getTotalPages();
+		model.addAttribute("paginaDePlaneadores", planeadors);
+		model.addAttribute("totalDePaginas", totalDePaginas);
+		return "lista_planeadores";
+	}
+
+
+	@GetMapping("/planeadores/nuevo")
+	public String formularioDePlaneadores(@ModelAttribute Planeador planeador, HttpServletRequest request,
+			HttpSession session, Model model) {
+		List<Microcurriculo> listaDeMicrocurriculos = microcurriculoServicio.listaDeMicrocurriculos();
+		model.addAttribute("listaDeMicrocurriculos", listaDeMicrocurriculos);
+		return "crear_planeador";
+	}
+
+	@PostMapping("/planeadores/nuevo")
+	public String subirPlaneadores(@ModelAttribute Docente docente, @ModelAttribute Planeador planeador, Model model, RedirectAttributes att) {
+		planeador.setDocente(docente);
+		this.planeadorServicio.save(planeador);
+		att.addFlashAttribute("accion", "Microcurrículo creado con éxito!");
+		return "redirect:/docente/planeadores";
+	}
+
+// GESTION DE INSTRUMENTOS
+
+	@GetMapping("/planeadores/instrumentos/{planeador_id}")
+	public String casoPlaneadoresPorDefecto(@RequestParam(value = "pagina", required = false, defaultValue = "1") int pagina,
+			@RequestParam(value = "nroDeElementos", required = false, defaultValue = "5") int nroDeElementos, @PathVariable Integer planeador_id, HttpServletRequest request, HttpSession session, Model model) {
+
+		Planeador actual = this.planeadorServicio.findById(planeador_id).get();
+		Page<InstrumentoEvaluacion> paginaDeInstrumentos = this.instrumentoServicio.paginaDeInstrumentoEvaluacion(actual, pagina, nroDeElementos);
+		model.addAttribute("paginaDeInstrumentos", paginaDeInstrumentos);
+		model.addAttribute("planeadorActual", actual);
+		return "lista_instrumentos";
+	}
+
+	
+	@GetMapping("/planeadores/instrumentos/{planeador_id}/nuevo")
+	public String formularioDeInstrumentos(HttpServletRequest request,
+			HttpSession session, @PathVariable Integer planeador_id, @ModelAttribute Planeador planeadorActual, @ModelAttribute InstrumentoEvaluacion instrumento, Model model) {
+		Planeador actual = this.planeadorServicio.findById(planeador_id).get();
+		model.addAttribute("planeadorActual", actual);
+		model.addAttribute("instrumento", new InstrumentoEvaluacion());
+		return "crear_instrumento";
+	}
+	
+	@PostMapping("/planeadores/instrumentos/{planeador_id}/nuevo")
+	public String subirInstrumento(HttpServletRequest request,
+			HttpSession session, @ModelAttribute Planeador planeadorActual, @ModelAttribute InstrumentoEvaluacion instrumento, Model model) {
+		this.instrumentoServicio.save(instrumento);
+		return "crear_instrumento";
+	}
+
+}
+
 //EN PAUSA
 //El siguiente código se utilizó en algún punto temprano y se conserva como referencia, pero posiblemente
 //sea desechado en el futuro
-	
+
 //	@GetMapping("/perfil")
 //	public String elPerfil(HttpServletRequest request, Model model) {
 //		return "perfil";
 //	}
-
-}

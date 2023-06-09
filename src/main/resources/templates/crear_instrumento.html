@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="fragments/header :: head(~{::title})">
+<title>Planeador Académico - Perfil de Docente</title>
+</head>
+<body id="page-top">
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+		<!-- Sidebar -->
+		<ul
+			th:replace="${session.admin_id != 0} ? ~{fragments/sidebar :: _sidebar('_admin')} : ~{fragments/sidebar :: _sidebar('_docente')}"></ul>
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+			<!-- Main Content -->
+			<div id="content">
+				<!-- Topbar -->
+				<nav
+					th:replace="${session.admin_id != 0} ? ~{fragments/topbar :: top_bar('_admin')} : ~{fragments/topbar :: top_bar('_docente')}"></nav>
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
+					<div class="row" style="text-align: center">
+						<h2>Formulario para la creación de instrumentos de evaluación</h2>
+						<h3>Instrumento para el planeador [[${planeadorActual.id}]] de [[${planeadorActual.fechaRegistro}]]</h3>
+												<form action="#" th:action="@{/docente/planeadores/nuevo}" th:object="${instrumento}"
+													method="post">
+													<div class="form-group">
+													
+																											<input
+															type="hidden" id="planeador"
+															name="planeador" class="form-control"
+															th:field="*{planeador}" th:value="${planeadorActual}"/>
+													
+															<label for="descripcion">Descripción</label> <input
+															type="text" id="descripcion"
+															name="descripcion" class="form-control"
+															th:field="*{descripcion}" />
+															
+																<label for="porcentajeCalificacion">Porcentaje de calificación</label> <input
+															type="text" id="porcentajeCalificacion"
+															name="porcentajeCalificacion" class="form-control"
+															th:field="*{porcentajeCalificacion}" />
+																													<label for="tipo">Tipo de Curso</label> <select id="tipoInstrumento"
+															name="tipo" class="form-control" th:field="*{corte}">
+															<option value="1">1</option>
+															<option value="2">2</option>
+															<option value="3">3</option>
+														</select>
+															
+														<label for="tipo">Tipo de Curso</label> <select id="tipoInstrumento"
+															name="tipo" class="form-control" th:field="*{tipoInstrumento}">
+															<option value="SABER">Saber</option>
+															<option value="HACER">Hacer</option>
+															<option value="CONOCER">Conocer</option>
+														</select>
+														
+															<label for="enlaceRecurso">Enlace al recurso (opcional)</label> <input
+															type="text" id="enlaceRecurso"
+															name="enlaceRecurso" class="form-control"
+															th:field="*{enlaceRecurso}" />
+													
+													</div>
+													<button type="submit" class="btn btn-primary">Enviar</button>
+												</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
+	<!-- Logout Modal-->
+	<div
+		th:replace="${session.admin_id != 0} ? ~{fragments/topbar :: logout_modal('_admin')} : ~{fragments/topbar :: logout_modal('_docente')}"></div>
+</body>
+</html>
