@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head th:replace="fragments/header :: head(~{::title})">
-<title>Planeador Académico - Perfil de Administrador</title>
+<title>Planeador Académico - Perfil de Docente</title>
 </head>
 <body id="page-top">
 	<!-- Page Wrapper -->
@@ -22,31 +22,30 @@
 					<div class="row" style="text-align: center">
 
 						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">Microcurrículos</h6>
+							<h6 class="m-0 font-weight-bold text-primary">Instrumento para el planeador [[${planeadorActual.id}]] de [[${planeadorActual.fechaRegistro}]]</h6>
 						</div>
 
 						<div class="alert alert-info"
-							th:if="${paginaDeMicrocurriculos == null || paginaDeMicrocurriculos.isEmpty()}">
-							<label>No se han registrado microcurrículos en el
-								sistema.</label>
+							th:if="${paginaDeInstrumentos == null || paginaDeInstrumentos.isEmpty()}">
+							<label>No existen instrumentos de evaluación registrados para este planeador.</label>
 						</div>
 
 						<table class="table table-bordered" width="100%" cellspacing="0"
-							th:unless="${paginaDeMicrocurriculos == null || paginaDeMicrocurriculos.isEmpty()}">
+							th:unless="${paginaDeInstrumentos == null || paginaDeInstrumentos.isEmpty()}">
 							<thead>
 								<tr>
-									<th>Nombre</th>
-									<th>Código</th>
-									<th>Horas Directas</th>
-									<th>Semestre</th>
+									<th>Descripción</th>
+									<th>Corte</th>
+									<th>Tipo de Instrumento</th>
+									<th>Enlace del recurso</th>
 								</tr>
 							</thead>
-							<tbody th:each=" mc: ${paginaDeMicrocurriculos}">
+							<tbody th:each=" mc: ${paginaDeInstrumentos}">
 								<tr>
-									<td th:text="${mc.nombre}"></td>
-									<td th:text="${mc.materia.id}"></td>
-									<td th:text="${mc.horasDirectas}"></td>
-									<td th:text="${mc.materia.semestre}"></td>
+									<td th:text="${mc.descripcion}"></td>
+									<td th:text="${mc.corte}"></td>
+									<td th:text="${mc.tipoInstrumento}"></td>
+									<td th:text="${mc.enlaceRecurso}"></td>
 								</tr>
 							</tbody>
 						</table>
@@ -55,15 +54,15 @@
 							<ul class="pagination justify-content-center">
 								<!-- 									Desactiva el elemento clickeable si ya se encuentra parado en la primera página -->
 								<li class="page-item"
-									th:classappend="${paginaDeMicrocurriculos.first} ? disabled"><a
+									th:classappend="${paginaDeInstrumentos.first} ? disabled"><a
 									class="page-link"
-									th:href="@{/admin/solicitudes(nroDeElementos=${paginaDeMicrocurriculos.size}, pagina=1)}"
+									th:href="@{/admin/planeadores/instrumentos/{planeador_id}(planeador_id=${planeadorActual.id}, nroDeElementos=${paginaDeInstrumentos.size}, pagina=1)}"
 									tabindex="-1">Primera</a></li>
 								<!-- 											Desactiva condicionalmente el elemento clickeable si la Page devuelta se encuentra en la primera página -->
 								<li class="page-item"
-									th:classappend="${paginaDeMicrocurriculos.hasPrevious() == false} ? disabled">
+									th:classappend="${paginaDeInstrumentos.hasPrevious() == false} ? disabled">
 									<a class="page-link"
-									th:href="@{/admin/solicitudes(nroDeElementos=${paginaDeMicrocurriculos.size}, pagina=${paginaDeMicrocurriculos.number})}"
+									th:href="@{/admin/planeadores/instrumentos/{planeador_id}(planeador_id=${planeadorActual.id}, nroDeElementos=${paginaDeInstrumentos.size}, pagina=${paginaDeInstrumentos.number})}"
 									tabindex="-1">Anterior</a>
 								</li>
 								<!-- 										Utiliza una secuencia para dibujar la cantidad de páginas necesarias para mostrar todos los registros, de -->
@@ -71,21 +70,21 @@
 								<!-- 											NOTA: Page utiliza un numerado interno de 0 a n-1 incluso si el Pager utiliza n. de página de 1 a n-->
 								<li class="page-item"
 									th:each="numeroDePagina : ${#numbers.sequence(1,totalDePaginas)}"
-									th:classappend="${numeroDePagina == paginaDeMicrocurriculos.number + 1} ? active">
+									th:classappend="${numeroDePagina == paginaDeInstrumentos.number + 1} ? active">
 									<a class="page-link"
-									th:href="@{/admin/solicitudes(nroDeElementos=${paginaDeMicrocurriculos.size}, pagina=${numeroDePagina})}"
+									th:href="@{/admin/planeadores/instrumentos/{planeador_id}(planeador_id=${planeadorActual.id}, nroDeElementos=${paginaDeInstrumentos.size}, pagina=${numeroDePagina})}"
 									th:text="${numeroDePagina}">1</a>
 								</li>
 								<!-- 										El atributo pagina aquí sería el equivalente a saltar a la posición n+1 dentro de este objeto Page -->
 								<li class="page-item"
-									th:classappend="${paginaDeMicrocurriculos.hasNext() == false} ? disabled"><a
+									th:classappend="${paginaDeInstrumentos.hasNext() == false} ? disabled"><a
 									class="page-link"
-									th:href="@{/admin/solicitudes(nroDeElementos=${paginaDeMicrocurriculos.size}, pagina=${paginaDeMicrocurriculos.number + 2})}">Siguiente</a>
+									th:href="@{/admin/planeadores/instrumentos/{planeador_id}(planeador_id=${planeadorActual.id}, nroDeElementos=${paginaDeInstrumentos.size}, pagina=${paginaDeInstrumentos.number + 2})}">Siguiente</a>
 								</li>
 								<li class="page-item"
-									th:classappend="${paginaDeMicrocurriculos.last} ? disabled"><a
+									th:classappend="${paginaDeInstrumentos.last} ? disabled"><a
 									class="page-link"
-									th:href="@{/admin/solicitudes(nroDeElementos=${paginaDeMicrocurriculos.size}, pagina=${paginaDeMicrocurriculos.totalPages})}">Última</a>
+									th:href="@{/admin/planeadores/instrumentos/{planeador_id}(planeador_id=${planeadorActual.id}, nroDeElementos=${paginaDeInstrumentos.size}, pagina=${paginaDeInstrumentos.totalPages})}">Última</a>
 								</li>
 							</ul>
 						</nav>

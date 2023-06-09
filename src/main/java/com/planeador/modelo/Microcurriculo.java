@@ -1,6 +1,7 @@
 package com.planeador.modelo;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,9 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.planeador.modelo.enums.TipoCurso;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "microcurriculo")
@@ -22,30 +24,97 @@ public class Microcurriculo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Integer id;
 
-	@Column
-	@Enumerated(EnumType.STRING)
-	private TipoCurso tipo_Curso;
+	@Column(name = "nombre")
+	private String nombre;
 
-	@Column
-	private int horas_directas;
+	@Column(name = "horas_directas")
+	int horasDirectas;
 
-	@Column
-	private int horas_independientes;
+	@Column(name = "horas_independientes")
+	private int horasIndependientes;
 
-	@Column
-	private LocalDate fecha_registro;
+	@Column(name = "fecha_registro")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate fechaRegistro;
 
 	@ManyToOne
 	@JoinColumn(name = "materia_id")
 	private Materia materia;
 
-//	Por hacer:
-//	Arreglo de Clase unidad
+	@OneToMany(mappedBy = "microcurriculo")
+	List<Planeador> planeadores;
 
 	public Microcurriculo() {
 		super();
 	}
+
+	public Microcurriculo(String nombre, int horasDirectas, int horasIndependientes,
+			Materia materia) {
+		super();
+		this.nombre = nombre;
+		this.horasDirectas = horasDirectas;
+		this.horasIndependientes = horasIndependientes;
+		this.materia = materia;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public int getHorasDirectas() {
+		return horasDirectas;
+	}
+
+	public void setHorasDirectas(int horasDirectas) {
+		this.horasDirectas = horasDirectas;
+	}
+
+	public int getHorasIndependientes() {
+		return horasIndependientes;
+	}
+
+	public void setHorasIndependientes(int horasIndependientes) {
+		this.horasIndependientes = horasIndependientes;
+	}
+
+	public List<Planeador> getPlaneadores() {
+		return planeadores;
+	}
+
+	public void setPlaneadores(List<Planeador> planeadores) {
+		this.planeadores = planeadores;
+	}
+
+	public LocalDate getFechaRegistro() {
+		return fechaRegistro;
+	}
+
+	public void setFechaRegistro(LocalDate fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
+	}
+
+	public Materia getMateria() {
+		return materia;
+	}
+
+	public void setMateria(Materia materia) {
+		this.materia = materia;
+	}
+	
+	
 
 }

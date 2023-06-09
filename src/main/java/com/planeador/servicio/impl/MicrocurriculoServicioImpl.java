@@ -3,6 +3,9 @@ package com.planeador.servicio.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +32,13 @@ public class MicrocurriculoServicioImpl extends GenericServiceImp<Microcurriculo
 
 	@Override
 	public List<Microcurriculo> listaDeMicrocurriculos() {
-		// TODO Auto-generated method stub
 		return this.repositorioMicrocurriculo.findAll();
+	}
+	
+	@Override
+	public Page<Microcurriculo> paginaDeMicrocurriculos(int pagina, int nroDeElementos){
+		 Pageable request = PageRequest.of(pagina - 1, nroDeElementos);
+		 return repositorioMicrocurriculo.findAll(request);
 	}
 
 }
