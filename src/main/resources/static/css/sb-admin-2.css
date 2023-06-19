@@ -10860,11 +10860,18 @@ a:focus {
   }
 }
 
+/* .bg-login-image { */
+/*   background: url("https://source.unsplash.com/K4mSJ7kc0As/600x800"); */
+/*   background-position: center; */
+/*   background-size: cover; */
+/* } */
+
 .bg-login-image {
-  background: url("https://source.unsplash.com/K4mSJ7kc0As/600x800");
+  background: url("https://th.bing.com/th/id/R.d8bff0644162d47672634e2e5bedb857?rik=lj0%2fOCp9U1hFtw&pid=ImgRaw&r=0");
   background-position: center;
   background-size: cover;
 }
+
 
 .bg-register-image {
   background: url("https://source.unsplash.com/Mv9hjnEUHR4/600x800");

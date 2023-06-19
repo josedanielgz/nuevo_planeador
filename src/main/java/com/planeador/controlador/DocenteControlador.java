@@ -174,7 +174,9 @@ public class DocenteControlador {
 
 		Planeador actual = this.planeadorServicio.findById(planeador_id).get();
 		Page<InstrumentoEvaluacion> paginaDeInstrumentos = this.instrumentoServicio.paginaDeInstrumentoEvaluacion(actual, pagina, nroDeElementos);
+		Integer totalDePaginas = paginaDeInstrumentos.getTotalPages();
 		model.addAttribute("paginaDeInstrumentos", paginaDeInstrumentos);
+		model.addAttribute("totalDePaginas", totalDePaginas);
 		model.addAttribute("planeadorActual", actual);
 		return "lista_instrumentos";
 	}
@@ -191,9 +193,12 @@ public class DocenteControlador {
 	
 	@PostMapping("/planeadores/instrumentos/{planeador_id}/nuevo")
 	public String subirInstrumento(HttpServletRequest request,
-			HttpSession session, @ModelAttribute Planeador planeadorActual, @ModelAttribute InstrumentoEvaluacion instrumento, Model model) {
+			HttpSession session, @PathVariable Integer planeador_id, @ModelAttribute Planeador planeadorActual, @ModelAttribute InstrumentoEvaluacion instrumento, Model model) {
+		Planeador actual = this.planeadorServicio.findById(planeador_id).get();
+		model.addAttribute("planeadorActual", actual);
 		this.instrumentoServicio.save(instrumento);
-		return "crear_instrumento";
+		
+		return "redirect://planeadores/instrumentos/{planeador_id}";
 	}
 
 }

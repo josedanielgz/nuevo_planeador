@@ -11,10 +11,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.springframework.lang.NonNull;
+
 import lombok.Data;
 
 @Entity
-@Table(name = "docente", uniqueConstraints = { @UniqueConstraint(name = "unique_email", columnNames = { "email" }) })
+@Table(name = "docente")
 public class Docente {
 
 	@Id
@@ -25,6 +27,7 @@ public class Docente {
 	private String nombre;
 
 	@Column(unique = true)
+	@NonNull
 	private String email;
 
 	@Column
